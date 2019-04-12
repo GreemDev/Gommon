@@ -46,5 +46,11 @@ namespace Gommon
         public static bool ShouldBePlural(this int val) => val != 1;
 
         #endregion
+
+        #region Object
+
+        public static T Cast<T>(this object obj) => obj is T o ? o : default;
+
+        #endregion
     }
 }
