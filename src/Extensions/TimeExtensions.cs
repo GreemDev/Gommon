@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gommon.Extensions
+namespace Gommon
 {
     public static class TimeExtensions
     {

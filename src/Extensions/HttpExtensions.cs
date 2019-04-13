@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Gommon.Extensions
+namespace Gommon
 {
     public static class HttpExtensions
     {
