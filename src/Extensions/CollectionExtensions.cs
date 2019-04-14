@@ -11,7 +11,7 @@ namespace Gommon
         ///     Converts the specified <code>IEnumerable&lt;byte&gt;</code> to a <see cref="MemoryStream"/>.
         /// </summary>
         /// <param name="bytes">Byte enumerable to convert.</param>
-        /// <returns></returns>
+        /// <returns>The resulting <see cref="MemoryStream"/>, seek-ed to position 0.</returns>
         public static Stream ToStream(this IEnumerable<byte> bytes)
             => new MemoryStream(bytes.Cast<byte[]>() ?? bytes.ToArray(), false) { Position = 0 };
 
@@ -40,7 +40,7 @@ namespace Gommon
         /// </summary>
         /// <param name="list">Current Enumerable</param>
         /// <param name="separator">String separator</param>
-        /// <returns><see cref="string"/> Contents of the Enumerable, joined.</returns>
+        /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
         public static string Join(this IEnumerable<string> list, string separator)
             => string.Join(separator, list);
 
@@ -49,7 +49,7 @@ namespace Gommon
         /// </summary>
         /// <param name="list">Current Enumerable</param>
         /// <param name="separator">Char separator</param>
-        /// <returns><see cref="string"/> Contents of the Enumerable, joined.</returns>
+        /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
         public static string Join(this IEnumerable<string> list, char separator)
             => string.Join($"{separator}", list);
 
@@ -57,7 +57,7 @@ namespace Gommon
         ///     Get a random element in the current string array.
         /// </summary>
         /// <param name="arr">Current array.</param>
-        /// <returns>Random element in the current array.</returns>
+        /// <returns>Random element in the current string array.</returns>
         public static string Random(this string[] arr)
             => arr[new Random().Next(0, arr.Length)];
     }

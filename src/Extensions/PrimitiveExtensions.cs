@@ -75,7 +75,7 @@ namespace Gommon
         ///     Checks whether or not the current integer implies plural grammatically.
         /// </summary>
         /// <param name="val">Current string</param>
-        /// <returns><see cref="bool"/></returns>
+        /// <returns>True if you should make accommodations for plurals, false if not.</returns>
         public static bool ShouldBePlural(this int val) 
             => val != 1;
 
