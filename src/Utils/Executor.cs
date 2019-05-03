@@ -12,8 +12,8 @@ namespace Gommon
         /// <param name="delay">Delay, in TimeSpan.</param>
         /// <param name="func">Function, typically async.</param>
         /// <returns><see cref="Task"/></returns>
-        public static async Task ExecuteAfterDelayAsync(TimeSpan delay, Func<Task> func)
-            => await Task.Delay(delay).ContinueWith(async _ => await func());
+        public static Task ExecuteAfterDelayAsync(TimeSpan delay, Func<Task> func)
+            => Task.Delay(delay).ContinueWith(async _ => await func());
 
         /// <summary>
         ///     Executes the <paramref name="func"/> asynchronously after the specified <paramref name="ms"/> delay.
@@ -21,22 +21,22 @@ namespace Gommon
         /// <param name="ms">Delay, in milliseconds.</param>
         /// <param name="func">Function, typically async.</param>
         /// <returns><see cref="Task"/></returns>
-        public static async Task ExecuteAfterDelayAsync(int ms, Func<Task> func)
-            => await Task.Delay(ms).ContinueWith(async _ => await func());
+        public static Task ExecuteAfterDelayAsync(int ms, Func<Task> func)
+            => Task.Delay(ms).ContinueWith(async _ => await func());
 
         /// <summary>
         ///     Executes the <paramref name="func"/> asynchronously.
         /// </summary>
         /// <param name="func">Function, typically async.</param>
         /// <returns><see cref="Task"/></returns>
-        public static async Task ExecuteAsync(Func<Task> func)
-            => await Task.Run(async () => await func());
+        public static Task ExecuteAsync(Func<Task> func)
+            => Task.Run(async () => await func());
 
         /// <summary>
         ///     Executes the <paramref name="action"/> synchronously in a separate thread after the specified <paramref name="delay"/> delay.
         /// </summary>
         /// <param name="delay">Delay, in TimeSpan.</param>
-        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier.</param>
+        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code>.</param>
         public static void ExecuteAfterDelay(TimeSpan delay, Action action)
             => new Thread(() =>
             {
