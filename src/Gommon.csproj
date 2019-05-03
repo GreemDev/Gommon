@@ -9,9 +9,9 @@
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy, so I don't have duplicate code in my repositories.</Description>
-    <NeutralLanguage>az-Cyrl</NeutralLanguage>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>fix namespaces</PackageReleaseNotes>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>xmldocs for public use</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

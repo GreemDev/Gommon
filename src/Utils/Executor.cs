@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Gommon
 {
-    public static class ExecutorUtil
+    public static class Executor
     {
         /// <summary>
         ///     Executes the <paramref name="func"/> asynchronously after the specified <paramref name="delay"/>.
@@ -48,7 +48,7 @@ namespace Gommon
         ///     Executes the <paramref name="action"/> synchronously in a separate thread after the specified <paramref name="ms"/> delay.
         /// </summary>
         /// <param name="ms">Delay, in milliseconds.</param>
-        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier.</param>
+        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code>.</param>
         public static void ExecuteAfterDelay(int ms, Action action)
             => new Thread(() =>
             {
