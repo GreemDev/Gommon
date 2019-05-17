@@ -1,8 +1,11 @@
 .idea/
 .vs/
-src/bin/
-src/obj/
-src/Properties/
+src/Gommon/bin/
+src/Gommon/obj/
+src/Gommon/Properties/
+src/Gommon.Discord/bin/
+src/Gommon.Discord/obj/
+src/Gommon.Discord/Properties/
 *.user
 *.vspscc
 *.vssscc
