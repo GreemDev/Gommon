@@ -86,24 +86,22 @@ namespace Gommon
 
         #region Boolean
 
-        /// <summary>
-        ///     Checks whether or not the current integer implies plural grammatically.
-        /// </summary>
-        /// <param name="val">Current string</param>
-        /// <returns>True if you should make accommodations for plurals, false if not.</returns>
+        [Obsolete("Use Humanzier's string#ToQuantity() method.")]
         public static bool ShouldBePlural(this int val) 
             => val != 1;
 
         #endregion
 
         #region Object
+
         /// <summary>
         ///     Casts the current object to the specified type. Returns that type's default if the current object is not of that type, usually null.
         /// </summary>
         /// <typeparam name="T">Type to cast to</typeparam>
         /// <param name="obj">Current object</param>
         /// <returns><paramref name="obj"/>, cast to the type of <typeparam name="T"/></returns>
-        public static T Cast<T>(this object obj) => obj is T o ? o : default;
+        public static T Cast<T>(this object obj)
+            => obj is T o ? o : default;
 
         #endregion
     }
