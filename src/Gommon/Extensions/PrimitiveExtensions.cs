@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace Gommon
 {
@@ -13,11 +15,8 @@ namespace Gommon
         /// <param name="str">Current string</param>
         /// <param name="otherString">String to compare</param>
         /// <returns><see cref="bool"/></returns>
-        public static bool EqualsIgnoreCase(this string str, string otherString)
-        {
-            if (str is null) return false;
-            return str.Equals(otherString, StringComparison.OrdinalIgnoreCase);
-        }
+        public static bool EqualsIgnoreCase(this string str, string otherString) 
+            => !(str is null) && str.Equals(otherString, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         ///     Checks whether or not <paramref name="value"/> is included in the current string, ignoring case.
@@ -26,10 +25,7 @@ namespace Gommon
         /// <param name="value">String to compare</param>
         /// <returns><see cref="bool"/></returns>
         public static bool ContainsIgnoreCase(this string str, string value)
-        {
-            if (str is null) return false;
-            return str.ToLower().Contains(value.ToLower());
-        }
+            => !(str is null) && str.ToLower().Contains(value.ToLower());
 
         /// <summary>
         ///     Checks whether or not the current string is null or entirely whitespace.
@@ -51,7 +47,7 @@ namespace Gommon
         ///     Gets the current string's unicode points. Typically for unicode emojis.
         /// </summary>
         /// <param name="str">Current string</param>
-        /// <returns>Enumerable of integers</returns>
+        /// <returns>Enumerable of Unicode code points</returns>
         public static IEnumerable<int> GetUnicodePoints(this string str)
         {
             var pts = new List<int>(str.Length);
@@ -66,6 +62,25 @@ namespace Gommon
 
             return pts;
         }
+
+        /// <summary>
+        ///     Returns whether or not the current string starts with another string, ignoring case.
+        /// </summary>
+        /// <param name="str">Current string</param>
+        /// <param name="otherString">String to compare</param>
+        /// <returns><see cref="bool"/></returns>
+        public static bool StartsWithIgnoreCase(this string str, string otherString) 
+            => !(str is null) && str.StartsWith(otherString, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        ///     Returns whether or not the current string ends with another string, ignoring case.
+        /// </summary>
+        /// <param name="str">Current string</param>
+        /// <param name="otherString">String to compare</param>
+        /// <returns><see cref="bool"/></returns>
+        public static bool EndsWithIgnoreCase(this string str, string otherString)
+            => !(str is null) && str.EndsWith(otherString, StringComparison.OrdinalIgnoreCase);
+
 
         #endregion
 
