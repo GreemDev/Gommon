@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gommon
 {
-    public static class PrimitiveExtensions
+    public static partial class Extensions
     {
         #region String
 

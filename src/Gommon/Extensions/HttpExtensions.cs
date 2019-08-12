@@ -2,7 +2,7 @@
 
 namespace Gommon
 {
-    public static class HttpExtensions
+    public static partial class Extensions
     {
         /// <summary>
         ///     Checks whether or not the current <see cref="HttpResponseMessage"/> leads to an image.

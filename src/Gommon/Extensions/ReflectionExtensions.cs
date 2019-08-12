@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Gommon
 {
-    public static class ReflectionExtensions
+    public static partial class Extensions
     {
         /// <summary>
         ///     Checks whether or not the current <see cref="MemberInfo"/> has the given <typeparam name="T"/> attribute.

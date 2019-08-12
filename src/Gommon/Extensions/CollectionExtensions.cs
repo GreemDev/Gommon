@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Gommon
 {
-    public static class CollectionExtensions
+    public static partial class Extensions
     {
         /// <summary>
         ///     Converts the specified <code>IEnumerable&lt;byte&gt;</code> to a <see cref="MemoryStream"/>.

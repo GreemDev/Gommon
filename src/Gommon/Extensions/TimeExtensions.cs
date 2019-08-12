@@ -2,7 +2,7 @@
 
 namespace Gommon
 {
-    public static class TimeExtensions
+    public static partial class Extensions
     {
         /// <summary>
         ///     Format the current <see cref="DateTimeOffset"/>'s time by the <code>"hh:mm:ss tt"</code> format.
@@ -28,7 +28,13 @@ namespace Gommon
         public static string FormatDate(this DateTimeOffset offset)
             => offset.ToString("MM/dd/yyyy");
 
-        public static ulong ToDiscordSnowflake(this DateTimeOffset offset) 
+        /// <summary>
+        ///     Transforms the current <see cref="DateTimeOffset"/> to a Discord pseudo-snowflake.
+        ///     Note that the resulting snowflake is not guaranteed to be tied to any Discord entity.
+        /// </summary>
+        /// <param name="offset">The current <see cref="DateTimeOffset"/></param>
+        /// <returns> A <see cref="UInt64" /> representing the newly generated snowflake ID</returns>
+        public static ulong ToDiscordSnowflake(this DateTimeOffset offset)
             => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
     }
 }
