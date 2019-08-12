@@ -25,6 +25,7 @@ namespace Gommon
 
         /// <summary>
         ///     Checks whether or not the current <see cref="Type"/> inherits/implements the given <typeparam name="T"/>, whether that be a class or an interface.
+        ///     Note: this also checks implicit type conversions, so it may not be 100% correct!
         /// </summary>
         /// <typeparam name="T">The type to compare with</typeparam>
         /// <param name="type">The type to check for inheritance</param>

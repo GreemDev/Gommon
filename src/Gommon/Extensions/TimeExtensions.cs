@@ -27,5 +27,8 @@ namespace Gommon
         /// <returns>Formatted <see cref="string"/></returns>
         public static string FormatDate(this DateTimeOffset offset)
             => offset.ToString("MM/dd/yyyy");
+
+        public static ulong ToDiscordSnowflake(this DateTimeOffset offset) 
+            => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
     }
 }

@@ -48,7 +48,7 @@ namespace Gommon
         ///     Executes the <paramref name="action"/> synchronously in a separate thread after the specified <paramref name="ms"/> delay.
         /// </summary>
         /// <param name="ms">Delay, in milliseconds.</param>
-        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code>.</param>
+        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code> which can crash your program.</param>
         public static void ExecuteAfterDelay(int ms, Action action)
             => new Thread(() =>
             {
@@ -59,7 +59,7 @@ namespace Gommon
         /// <summary>
         ///     Executes the <paramref name="action"/> synchronously in a separate thread.
         /// </summary>
-        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier.</param>
+        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code> which can crash your program.</param>
         public static void Execute(Action action)
             => new Thread(action.Invoke).Start();
     }

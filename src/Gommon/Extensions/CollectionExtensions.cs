@@ -12,7 +12,7 @@ namespace Gommon
         /// </summary>
         /// <param name="bytes">Byte enumerable to convert.</param>
         /// <returns>The resulting <see cref="MemoryStream"/>, seek-ed to position 0.</returns>
-        public static Stream ToStream(this IEnumerable<byte> bytes)
+        public static MemoryStream ToStream(this IEnumerable<byte> bytes)
             => new MemoryStream(bytes.Cast<byte[]>() ?? bytes.ToArray(), false) { Position = 0 };
 
         /// <summary>
@@ -54,11 +54,11 @@ namespace Gommon
             => string.Join($"{separator}", list);
 
         /// <summary>
-        ///     Get a random element in the current string array.
+        ///     Get a random element in the current array.
         /// </summary>
         /// <param name="arr">Current array.</param>
-        /// <returns>Random element in the current string array.</returns>
-        public static string Random(this string[] arr)
+        /// <returns>Random element in the current array.</returns>
+        public static object Random(this object[] arr)
             => arr[new Random().Next(0, arr.Length)];
     }
 }
