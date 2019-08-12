@@ -16,15 +16,6 @@ namespace Gommon
             => await Task.Delay(delay).ContinueWith(async _ => await func().ConfigureAwait(false)).ConfigureAwait(false);
 
         /// <summary>
-        ///     Executes the <paramref name="func"/> asynchronously after the specified <paramref name="ms"/> delay.
-        /// </summary>
-        /// <param name="ms">Delay, in milliseconds.</param>
-        /// <param name="func">Function, typically async.</param>
-        /// <returns><see cref="Task"/></returns>
-        public static async Task ExecuteAfterDelayAsync(int ms, Func<Task> func)
-            => await Task.Delay(ms).ContinueWith(async _ => await func().ConfigureAwait(false)).ConfigureAwait(false);
-
-        /// <summary>
         ///     Executes the <paramref name="func"/> asynchronously.
         /// </summary>
         /// <param name="func">Function, typically async.</param>
@@ -41,18 +32,6 @@ namespace Gommon
             => new Thread(() =>
             {
                 Thread.Sleep(delay);
-                action();
-            }).Start();
-
-        /// <summary>
-        ///     Executes the <paramref name="action"/> synchronously in a separate thread after the specified <paramref name="ms"/> delay.
-        /// </summary>
-        /// <param name="ms">Delay, in milliseconds.</param>
-        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code> which can crash your program.</param>
-        public static void ExecuteAfterDelay(int ms, Action action)
-            => new Thread(() =>
-            {
-                Thread.Sleep(ms);
                 action();
             }).Start();
 
