@@ -10,10 +10,17 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy, so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>ExecutorUtil renamed to Executor.
-
-ExecutorUtil methods now directly return the awaitable Task as opposed to awaiting it automatically.</PackageReleaseNotes>
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>
+      XML docs updated.
+      string#EndsWithIgnoreCase/StartsWithIgnoreCase extensions.
+      BREAKING: removed millisecond overloads for ExecuteAfterDelay/Async methods in Executor.
+      int#ShouldBePlural is now deprecated. Use Humanizer's ToQuantity extension instead.
+      Type#Inherits extension method added.
+      All extension classes are now partial.
+      Add DateTimeOffset#ToDiscordSnowflake() extension method with XML docs.
+      Use Task#ConfigureAwait(false) where applicable.
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
