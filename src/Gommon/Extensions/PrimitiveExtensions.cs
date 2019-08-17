@@ -80,6 +80,26 @@ namespace Gommon
             => !(str is null) && str.EndsWith(otherString, StringComparison.OrdinalIgnoreCase);
 
 
+        /// <summary>
+        ///     Reverses the content of the current string.
+        ///
+        ///     Example:
+        ///         "Hello!" => "!olleH"
+        /// </summary>
+        /// <example>
+        ///     Input: "Hello!"
+        ///     Output: "!olleH"
+        /// </example>
+        /// <param name="str">Current string</param>
+        /// <returns>The current string, but reversed.</returns>
+        public static string Reverse(this string str)
+        {
+            var arr = str.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
+        }
+
+
         #endregion
 
         #region Boolean
@@ -97,9 +117,19 @@ namespace Gommon
         /// </summary>
         /// <typeparam name="T">Type to cast to</typeparam>
         /// <param name="obj">Current object</param>
-        /// <returns><paramref name="obj"/>, cast to the type of <typeparam name="T"/></returns>
+        /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/></returns>
         public static T Cast<T>(this object obj)
             => obj is T o ? o : default;
+
+
+        /// <summary>
+        ///     "Hard" casts the current object to the specified type. Throws an exception if the current object is not of that type, so <see cref="Cast{T}"/> might be preferable.
+        /// </summary>
+        /// <typeparam name="T">Type to cast to</typeparam>
+        /// <param name="obj">Current object</param>
+        /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
+        public static T HardCast<T>(this object obj)
+            => (T)obj;
 
         #endregion
     }
