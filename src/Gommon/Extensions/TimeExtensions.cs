@@ -29,11 +29,35 @@ namespace Gommon
             => offset.ToString("MM/dd/yyyy");
 
         /// <summary>
+        ///     Format the current <see cref="DateTime"/>'s date by the <code>"MM/dd/yyyy"</code> format.
+        /// </summary>
+        /// <param name="dt">Current <see cref="DateTime"/></param>
+        /// <returns>Formatted <see cref="string"/></returns>
+        public static string FormatDate(this DateTime dt)
+            => dt.ToString("MM/dd/yyyy");
+
+        /// <summary>
+        ///     Format the current <see cref="DateTime"/>'s time by the <code>"hh:mm:ss tt"</code> format.
+        /// </summary>
+        /// <param name="dt">Current <see cref="DateTime"/></param>
+        /// <returns>Formatted <see cref="string"/></returns>
+        public static string FormatFullTime(this DateTime dt)
+            => dt.ToString("hh:mm:ss tt");
+
+        /// <summary>
+        ///     Format the current <see cref="DateTime"/>'s time by the <code>"mm:ss tt"</code> format.
+        /// </summary>
+        /// <param name="dt">Current <see cref="DateTime"/></param>
+        /// <returns>Formatted <see cref="string"/></returns>
+        public static string FormatPartialTime(this DateTime dt)
+            => dt.ToString("mm:ss tt");
+
+        /// <summary>
         ///     Transforms the current <see cref="DateTimeOffset"/> to a Discord pseudo-snowflake.
         ///     Note that the resulting snowflake is not guaranteed to be tied to any Discord entity.
         /// </summary>
         /// <param name="offset">The current <see cref="DateTimeOffset"/></param>
-        /// <returns> A <see cref="UInt64" /> representing the newly generated snowflake ID</returns>
+        /// <returns> A <see cref="UInt64" /> representing the newly generated Snowflake ID</returns>
         public static ulong ToDiscordSnowflake(this DateTimeOffset offset)
             => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
     }
