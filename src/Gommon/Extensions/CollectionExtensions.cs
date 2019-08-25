@@ -36,18 +36,18 @@ namespace Gommon
             => coll.GroupBy(selector).Select(x => x.FirstOrDefault());
 
         /// <summary>
-        ///     Join the current Enumerable by the given string <paramref name="separator"/>.
+        ///     Join the current string Enumerable by the given string <paramref name="separator"/>.
         /// </summary>
-        /// <param name="list">Current Enumerable</param>
+        /// <param name="list">Current string Enumerable</param>
         /// <param name="separator">String separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
         public static string Join(this IEnumerable<string> list, string separator)
             => string.Join(separator, list);
 
         /// <summary>
-        ///     Join the current Enumerable by the given char <paramref name="separator"/>.
+        ///     Join the current string Enumerable by the given char <paramref name="separator"/>.
         /// </summary>
-        /// <param name="list">Current Enumerable</param>
+        /// <param name="list">Current string Enumerable</param>
         /// <param name="separator">Char separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
         public static string Join(this IEnumerable<string> list, char separator)
@@ -60,5 +60,17 @@ namespace Gommon
         /// <returns>Random element in the current array.</returns>
         public static object Random(this object[] arr)
             => arr[new Random().Next(0, arr.Length)];
+
+
+        /// <summary>
+        ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable">The current enumerable.</param>
+        /// <param name="action">The action to perform.</param>
+        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (var item in enumerable) action(item);
+        }
     }
 }

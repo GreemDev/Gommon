@@ -53,11 +53,31 @@ namespace Gommon
             => dt.ToString("mm:ss tt");
 
         /// <summary>
+        ///     Formats the current <see cref="DateTime"/> to a pretty string such as "at 12:14:02 PM, on 04/16/2002"
+        ///     Uses the American date format, "MM/dd/yyyy".
+        /// </summary>
+        /// <param name="dt">Current <see cref="DateTime"/></param>
+        /// <param name="usePartialTime">Whether or not to show hours in the time.</param>
+        /// <returns></returns>
+        public static string FormatPrettyString(this DateTime dt, bool usePartialTime = false)
+            => $"at {(usePartialTime ? dt.FormatPartialTime() : dt.FormatFullTime())}, on {dt.FormatDate()}";
+
+        /// <summary>
+        ///     Formats the current <see cref="DateTimeOffset"/> to a pretty string such as "at 12:14:02 PM, on 04/16/2002"
+        ///     Uses the American date format, "MM/dd/yyyy".
+        /// </summary>
+        /// <param name="offset">Current <see cref="DateTimeOffset"/></param>
+        /// <param name="usePartialTime">Whether or not to show hours in the time.</param>
+        /// <returns></returns>
+        public static string FormatPrettyString(this DateTimeOffset offset, bool usePartialTime = false)
+            => $"at {(usePartialTime ? offset.FormatPartialTime() : offset.FormatFullTime())}, on {offset.FormatDate()}";
+
+        /// <summary>
         ///     Transforms the current <see cref="DateTimeOffset"/> to a Discord pseudo-snowflake.
         ///     Note that the resulting snowflake is not guaranteed to be tied to any Discord entity.
         /// </summary>
         /// <param name="offset">The current <see cref="DateTimeOffset"/></param>
-        /// <returns> A <see cref="UInt64" /> representing the newly generated Snowflake ID</returns>
+        /// <returns> A <see cref="ulong" /> representing the newly generated Snowflake ID</returns>
         public static ulong ToDiscordSnowflake(this DateTimeOffset offset)
             => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
     }
