@@ -13,4 +13,4 @@ jobs:
       with: 
         dotnet-version: '3.0.100-preview3-010431'
     - name: build the damn project
-      run: dotnet publish
+      run: dotnet build
