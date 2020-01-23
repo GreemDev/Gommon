@@ -72,5 +72,19 @@ namespace Gommon
         {
             foreach (var item in enumerable) action(item);
         }
+
+        /// <summary>
+        ///     Converts any given Collection to a human-readable string.
+        /// </summary>
+        /// <typeparam name="T">Type of the current Collection.</typeparam>
+        /// <param name="coll">The current Collection.</param>
+        /// <returns>A string representing the contents of the Collection.</returns>
+
+        public static string ToReadableString<T>(this ICollection<T> coll)
+        {
+            var stringColl = coll.Select(x => $"\"{x.ToString()}\"");
+            return $"[{stringColl.Join(", ")}]";
+
+        }
     }
 }

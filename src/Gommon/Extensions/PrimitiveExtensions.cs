@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Gommon
 {
@@ -102,18 +103,11 @@ namespace Gommon
 
         #endregion
 
-        #region Boolean
-
-        [Obsolete("Use Humanzier's string#ToQuantity() method.")]
-        public static bool ShouldBePlural(this int val) 
-            => val != 1;
-
-        #endregion
-
         #region Object
 
         /// <summary>
         ///     Casts the current object to the specified type. Returns that type's default if the current object is not of that type, usually null.
+        ///     This extension never throws an exception.
         /// </summary>
         /// <typeparam name="T">Type to cast to</typeparam>
         /// <param name="obj">Current object</param>
@@ -123,10 +117,12 @@ namespace Gommon
 
 
         /// <summary>
-        ///     "Hard" casts the current object to the specified type. Throws an exception if the current object is not of that type, so <see cref="Cast{T}"/> might be preferable.
+        ///     "Hard" casts the current object to the specified type. Throws an <see cref="InvalidCastException"/> if the current object is not assignable to that type,
+        /// so <see cref="Cast{T}"/> might be preferable.
         /// </summary>
         /// <typeparam name="T">Type to cast to</typeparam>
         /// <param name="obj">Current object</param>
+        /// <exception cref="InvalidCastException"></exception>
         /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
         public static T HardCast<T>(this object obj)
             => (T)obj;
