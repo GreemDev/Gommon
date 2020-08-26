@@ -1,16 +1,31 @@
-name: CI
+name: Volte CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - v4
+  pull_request:
+    branches:
+      - v4
 
 jobs:
   build:
+    runs-on: windows-latest
 
-    runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-dotnet@master
-      with: 
-        dotnet-version: '3.0.100-preview3-010431'
-    - name: build the damn project
-      run: dotnet build
+      - uses: actions/checkout@main
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.100-preview.7.20366.6'
+      - name: Compile
+        run: bash build.sh
+      - name: Upload Linux binary
+        uses: actions/upload-artifact@main
+        with:
+          name: Volte-Linux
+          path: src/bin/Release/net5.0/linux-x64/publish/Volte
+      - name: Upload Windows binary
+        uses: actions/upload-artifact@main
+        with:
+          name: Volte-Windows
+          path: src/bin/Release/net5.0/win10-x64/publish/Volte.exe

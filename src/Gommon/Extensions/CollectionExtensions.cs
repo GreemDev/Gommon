@@ -26,6 +26,7 @@ namespace Gommon
 
         /// <summary>
         ///     Effectively "filters" the current IEnumerable by removing duplicates by the return type of the <paramref name="selector"/>.
+        ///     Automatically removes null entries, which shouldn't happen.
         /// </summary>
         /// <typeparam name="T">In type.</typeparam>
         /// <typeparam name="TKey">Type to check.</typeparam>
@@ -33,7 +34,7 @@ namespace Gommon
         /// <param name="selector">Selector function.</param>
         /// <returns>The filtered <code>IEnumerable&lt;<typeparam name="T"/>&gt;</code></returns>
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> coll, Func<T, TKey> selector)
-            => coll.GroupBy(selector).Select(x => x.FirstOrDefault());
+            => coll.GroupBy(selector).Select(x => x.FirstOrDefault()).Where(x => x != null);
 
         /// <summary>
         ///     Join the current string Enumerable by the given string <paramref name="separator"/>.
@@ -58,7 +59,7 @@ namespace Gommon
         /// </summary>
         /// <param name="arr">Current array.</param>
         /// <returns>Random element in the current array.</returns>
-        public static object Random(this object[] arr)
+        public static T Random<T>(this T[] arr)
             => arr[new Random().Next(0, arr.Length)];
 
 
@@ -74,17 +75,25 @@ namespace Gommon
         }
 
         /// <summary>
-        ///     Converts any given Collection to a human-readable string.
+        ///     Converts the current IEnumerable to a human-readable string.
         /// </summary>
         /// <typeparam name="T">Type of the current Collection.</typeparam>
-        /// <param name="coll">The current Collection.</param>
+        /// <param name="coll">The current Enumerable.</param>
         /// <returns>A string representing the contents of the Collection.</returns>
 
-        public static string ToReadableString<T>(this ICollection<T> coll)
+        public static string ToReadableString<T>(this IEnumerable<T> coll)
         {
-            var stringColl = coll.Select(x => $"\"{x.ToString()}\"");
+            var stringColl = coll.Select(x => $"\"{x}\"");
             return $"[{stringColl.Join(", ")}]";
-
         }
+        
+        /// <summary>
+        ///     Checks whether or not the current IEnumerable is empty.
+        /// </summary>
+        /// <param name="coll">The current Enumerable.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>True if the current IEnumerable has any elements; false otherwise.</returns>
+
+        public static bool IsEmpty<T>(this IEnumerable<T> coll) => !coll.Any();
     }
 }
