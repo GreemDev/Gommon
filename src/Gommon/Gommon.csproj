@@ -8,12 +8,11 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
-    <Description>Common classes/utilities used in my projects. Made for redundancy, so I don't have duplicate code in my repositories.</Description>
+    <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <PackageReleaseNotes>
-      Ported some extensions over from Volte and gave them XML docs.
-      Other random extensions added.
+      removed the System.Math extension since it was causing ambiguous reference errors.
     </PackageReleaseNotes>
   </PropertyGroup>
 
