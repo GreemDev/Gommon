@@ -10,16 +10,10 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy, so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <PackageReleaseNotes>
-      XML docs updated.
-      string#EndsWithIgnoreCase/StartsWithIgnoreCase extensions.
-      BREAKING: removed millisecond overloads for ExecuteAfterDelay/Async methods in Executor.
-      int#ShouldBePlural is now deprecated. Use Humanizer's ToQuantity extension instead.
-      Type#Inherits extension method added.
-      All extension classes are now partial.
-      Add DateTimeOffset#ToDiscordSnowflake() extension method with XML docs.
-      Use Task#ConfigureAwait(false) where applicable.
+      Ported some extensions over from Volte and gave them XML docs.
+      Other random extensions added.
     </PackageReleaseNotes>
   </PropertyGroup>
 
