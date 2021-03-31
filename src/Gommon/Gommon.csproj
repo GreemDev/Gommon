@@ -10,9 +10,10 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.2.2</Version>
+    <Version>1.3</Version>
     <PackageReleaseNotes>
-      removed the System.Math extension since it was causing ambiguous reference errors.
+      Type#AsPrettyString is now called recursively on its generic type parameters
+      Added IEnumerable#AnyGet
     </PackageReleaseNotes>
   </PropertyGroup>
 

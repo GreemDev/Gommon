@@ -18,9 +18,9 @@ namespace Gommon
         /// <returns>A pretty string that shows what this type is.</returns>
         public static string AsPrettyString(this Type type)
         {
-            string FormatTypeName(Type t)
+            string FormatTypeName(string typeName)
             {
-                switch (t.Name)
+                switch (typeName)
                 {
                     case "Boolean": return "bool";
                     case "Byte": return "byte";
@@ -33,16 +33,21 @@ namespace Gommon
                     case "UInt64": return "ulong";
                     case "Char": return "char";
                     case "String": return "string";
-                    default: return t.Name;
+                    default: return typeName;
                 }
+            }
+            
+            string FormatType(Type t)
+            {
+                return FormatTypeName(t.Name);
             }
 
             var types = type.GenericTypeArguments;
 
             //thanks .NET for putting an annoying ass backtick and number at the end of type names.
-            var vs = FormatTypeName(type).Replace($"`{types.Length}", "");
+            var vs = FormatType(type).Replace($"`{types.Length}", "");
 
-            if (!types.IsEmpty()) vs += $"<{types.Select(FormatTypeName).Join(", ")}>";
+            if (!types.IsEmpty()) vs += $"<{types.Select(x => x.AsPrettyString()).Select(FormatTypeName).Join(", ")}>";
 
             return vs;
         }

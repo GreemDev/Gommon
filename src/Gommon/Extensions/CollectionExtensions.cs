@@ -97,3 +97,24 @@ namespace Gommon
         public static bool IsEmpty<T>(this IEnumerable<T> coll) => !coll.Any();
     }
 }
+
+namespace System.Linq
+{
+    public static class LinqExtensions
+    {
+        public static bool AnyGet<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate,
+            out TSource value)
+        {
+            source = source.ToArray();
+            if (source.Any(predicate))
+            {
+                value = source.FirstOrDefault(predicate);
+                return true;
+            }
+            
+            value = default;
+            return false;
+            
+        }
+    }
+}
