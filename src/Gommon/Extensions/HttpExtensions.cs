@@ -22,9 +22,7 @@ namespace Gommon
         /// <param name="url">The target URL</param>
         /// <param name="json">JSON content to send</param>
         /// <returns>The resulting <see cref="HttpResponseMessage"/>.</returns>
-        public static async Task<HttpResponseMessage> PostJsonAsync(this HttpClient http, string url, string json)
-        {
-            return await http.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+        public static Task<HttpResponseMessage> PostJsonAsync(this HttpClient http, string url, string json) 
+            => http.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
         }
-    }
 }

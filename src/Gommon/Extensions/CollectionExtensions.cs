@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gommon
 {
@@ -66,12 +67,45 @@ namespace Gommon
         /// <summary>
         ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="action">The action to perform.</param>
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (var item in enumerable) action(item);
+        }
+        
+        /// <summary>
+        ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously.
+        /// </summary>
+        /// <param name="enumerable">The current enumerable.</param>
+        /// <param name="function">The asynchronous function to perform.</param>
+        public static async Task ForEachAsync<T>(this IEnumerable<T> enumerable, Func<T, Task> function)
+        {
+            foreach (var item in enumerable) await function(item);
+        }
+
+        /// <summary>
+        ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>; passing the current index as a parameter to the action.
+        /// </summary>
+        /// <param name="enumerable">The current enumerable.</param>
+        /// <param name="action">The action to perform.</param>
+        public static void ForEachIndexed<T>(this IEnumerable<T> enumerable, Action<T, int> action)
+        {
+            var coll = enumerable.ToArray();
+            for (var i = 0; i < coll.Length; i++)
+                action(coll[i], i);
+        }
+        
+        /// <summary>
+        ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously; passing the current index as a parameter to the function.
+        /// </summary>
+        /// <param name="enumerable">The current enumerable.</param>
+        /// <param name="function">The asynchronous function to perform.</param>
+        public static async Task ForEachIndexedAsync<T>(this IEnumerable<T> enumerable, Func<T, int, Task> function)
+        {
+            var coll = enumerable.ToArray();
+            for (var i = 0; i < coll.Length; i++)
+                await function(coll[i], i);
         }
 
         /// <summary>

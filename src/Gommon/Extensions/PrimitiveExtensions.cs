@@ -1,12 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Gommon
 {
     public static partial class Extensions
     {
         #region String
+
+        /// <summary>
+        ///     Repeats <paramref name="str"/> <paramref name="times"/> times.
+        /// </summary>
+        /// <param name="str">Current string</param>
+        /// <param name="times">The amount of times the string should be repeated.</param>
+        /// <returns>The resulting string.</returns>
+        public static string Repeat(this string str, int times) 
+            => new StringBuilder().Apply(sb => times.For(() => sb.Append(str))).ToString();
+        
+        /// <summary>
+        ///     Prepends <paramref name="other"/> to the beginning of <paramref name="str"/> and returns it.
+        /// </summary>
+        /// <param name="str">Current string</param>
+        /// <param name="other">The value to prepend</param>
+        /// <returns><paramref name="str"/> with <paramref name="other"/> prepended to it.</returns>
+        public static string Prepend(this string str, string other) => str.Insert(0, other);
+        
+        /// <summary>
+        ///     Checks whether or not the current string contains any of <paramref name="potentialMatches"/>, ignoring case.
+        /// </summary>
+        /// <param name="str">Current string</param>
+        /// <param name="potentialMatches">Strings to try and match</param>
+        /// <returns><see cref="bool"/></returns>
+        public static bool EqualsAnyIgnoreCase(this string str, params string[] potentialMatches) 
+            => potentialMatches.Any(str.EqualsIgnoreCase);
 
         /// <summary>
         ///     Checks whether or not <paramref name="otherString"/> is equal to the current string, ignoring case.
@@ -126,6 +155,32 @@ namespace Gommon
         /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
         public static T HardCast<T>(this object obj)
             => (T)obj;
+
+        #endregion
+
+        #region Int32
+
+        /// <summary>
+        ///     Creates a for loop that executes <paramref name="action"/> <paramref name="timesToLoop"/> times. Useful for one-liners and lambdas.
+        /// </summary>
+        /// <param name="timesToLoop">The amount of times to execute <paramref name="action"/>.</param>
+        /// <param name="action">The action to repeat.</param>
+        public static void For(this int timesToLoop, Action action)
+        {
+            for (var i = 0; i < timesToLoop; i++)
+                action();
+        }
+        
+        /// <summary>
+        ///     Creates a for loop that executes <paramref name="function"/> <paramref name="timesToLoop"/> times asynchronously. Useful for one-liners and lambdas.
+        /// </summary>
+        /// <param name="timesToLoop">The amount of times to execute <paramref name="function"/>.</param>
+        /// <param name="function">The async function to repeat.</param>
+        public static async Task ForAsync(this int timesToLoop, Func<Task> function)
+        {
+            for (var i = 0; i < timesToLoop; i++)
+                await function();
+        }
 
         #endregion
     }
