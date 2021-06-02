@@ -5,13 +5,14 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>GreemDev</Authors>
     <Company>GreemDev</Company>
+    <PackageLicenseUrl>LICENSE</PackageLicenseUrl>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.4</Version>
+    <Version>1.4.2</Version>
     <PackageReleaseNotes>
-      Many extensions ported from Volte.
+      Added Lambda.TryCatch support for catching strongly-typed exceptions.
     </PackageReleaseNotes>
   </PropertyGroup>
 

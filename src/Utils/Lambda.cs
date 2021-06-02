@@ -30,6 +30,30 @@ namespace Gommon
             }
             return result;
         }
+        
+        /// <summary>
+        ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block; returning its value.
+        ///     If an error occurs, <paramref name="onError"/> is called, returning its value.
+        /// </summary>
+        /// <param name="function">The function to run.</param>
+        /// <param name="onError">The function called on failure.</param>
+        /// <typeparam name="T">The type of the object being returned from either <paramref name="function"/> or <paramref name="onError"/>.</typeparam>
+        /// <typeparam name="TException">The specific type of exception to catch. All other exceptions except for one of this type *will* cause a throw.</typeparam>
+        /// <returns>The value from <paramref name="function"/>; or <paramref name="onError"/>'s value if <paramref name="function"/> throws an <see cref="Exception"/>.</returns>
+        public static T TryCatch<T, TException>(Func<T> function, Func<TException, T> onError)
+            where TException : Exception
+        {
+            T result;
+            try
+            {
+                result = function();
+            }
+            catch (TException e)
+            {
+                result = onError(e);
+            }
+            return result;
+        }
 
         /// <summary>
         ///     Executes <paramref name="action"/> the specified amount of <paramref name="times"/>.

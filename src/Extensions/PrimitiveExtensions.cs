@@ -122,12 +122,8 @@ namespace Gommon
         /// </example>
         /// <param name="str">Current string</param>
         /// <returns>The current string, but reversed.</returns>
-        public static string Reverse(this string str)
-        {
-            var arr = str.ToCharArray();
-            Array.Reverse(arr);
-            return new string(arr);
-        }
+        public static string Reverse(this string str) 
+            => new string(str.ToCharArray().Apply(Array.Reverse));
 
 
         #endregion
