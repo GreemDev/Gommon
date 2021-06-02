@@ -18,7 +18,7 @@ namespace Gommon
         /// <param name="times">The amount of times the string should be repeated.</param>
         /// <returns>The resulting string.</returns>
         public static string Repeat(this string str, int times) 
-            => new StringBuilder().Apply(sb => times.For(() => sb.Append(str))).ToString();
+            => new StringBuilder().Apply(sb => Lambda.Repeat(times, () => sb.Append(str))).ToString();
         
         /// <summary>
         ///     Prepends <paramref name="other"/> to the beginning of <paramref name="str"/> and returns it.
@@ -155,32 +155,6 @@ namespace Gommon
         /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
         public static T HardCast<T>(this object obj)
             => (T)obj;
-
-        #endregion
-
-        #region Int32
-
-        /// <summary>
-        ///     Creates a for loop that executes <paramref name="action"/> <paramref name="timesToLoop"/> times. Useful for one-liners and lambdas.
-        /// </summary>
-        /// <param name="timesToLoop">The amount of times to execute <paramref name="action"/>.</param>
-        /// <param name="action">The action to repeat.</param>
-        public static void For(this int timesToLoop, Action action)
-        {
-            for (var i = 0; i < timesToLoop; i++)
-                action();
-        }
-        
-        /// <summary>
-        ///     Creates a for loop that executes <paramref name="function"/> <paramref name="timesToLoop"/> times asynchronously. Useful for one-liners and lambdas.
-        /// </summary>
-        /// <param name="timesToLoop">The amount of times to execute <paramref name="function"/>.</param>
-        /// <param name="function">The async function to repeat.</param>
-        public static async Task ForAsync(this int timesToLoop, Func<Task> function)
-        {
-            for (var i = 0; i < timesToLoop; i++)
-                await function();
-        }
 
         #endregion
     }

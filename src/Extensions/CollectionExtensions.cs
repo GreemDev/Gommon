@@ -59,13 +59,24 @@ namespace Gommon
         ///     Get a random element in the current array.
         /// </summary>
         /// <param name="arr">Current array.</param>
-        /// <returns>Random element in the current array.</returns>
-        public static T Random<T>(this T[] arr)
+        /// <returns>A random element in the current array.</returns>
+        public static T GetRandomElement<T>(this T[] arr)
             => arr[new Random().Next(0, arr.Length)];
+        
+        /// <summary>
+        ///     Get a random element in the current <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="enumerable">Current <see cref="IEnumerable{T}"/>.</param>
+        /// <returns>A random element in the current <see cref="IEnumerable{T}"/>.</returns>
+        public static T GetRandomElement<T>(this IEnumerable<T> enumerable)
+        {
+            var arr = enumerable as T[] ?? enumerable.ToArray();
+            return arr.ElementAt(new Random().Next(0, arr.Length));
+        }
 
 
         /// <summary>
-        ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>.
+        ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>; passing the current element as a parameter to the action.
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="action">The action to perform.</param>
@@ -75,7 +86,7 @@ namespace Gommon
         }
         
         /// <summary>
-        ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously.
+        ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously; passing the current element as a parameter to the function.
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="function">The asynchronous function to perform.</param>
@@ -85,7 +96,7 @@ namespace Gommon
         }
 
         /// <summary>
-        ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>; passing the current index as a parameter to the action.
+        ///     Performs the specified <paramref name="action"/> on each element in the current <paramref name="enumerable"/>; passing the current element and index as a parameter to the action.
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="action">The action to perform.</param>
@@ -97,7 +108,7 @@ namespace Gommon
         }
         
         /// <summary>
-        ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously; passing the current index as a parameter to the function.
+        ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously; passing the current element and index as a parameter to the function.
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="function">The asynchronous function to perform.</param>
@@ -115,12 +126,9 @@ namespace Gommon
         /// <param name="coll">The current Enumerable.</param>
         /// <returns>A string representing the contents of the Collection.</returns>
 
-        public static string ToReadableString<T>(this IEnumerable<T> coll)
-        {
-            var stringColl = coll.Select(x => $"\"{x}\"");
-            return $"[{stringColl.Join(", ")}]";
-        }
-        
+        public static string ToReadableString<T>(this IEnumerable<T> coll) 
+            => $"[{coll.Select(x => $"\"{x}\"").Join(", ")}]";
+
         /// <summary>
         ///     Checks whether or not the current IEnumerable is empty.
         /// </summary>

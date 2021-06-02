@@ -24,6 +24,18 @@ namespace Gommon
             => await Task.Run(async () => await func().ConfigureAwait(false)).ConfigureAwait(false);
 
         /// <summary>
+        ///     Executes the <paramref name="func"/> in the background, via an unawaited Task.Run.
+        /// </summary>
+        /// <param name="func">Function, typically async.</param>
+        public static void ExecuteBackgroundAsync(Func<Task> func) => _ = Task.Run(func);
+
+        /// <summary>
+        ///     Executes the <paramref name="action"/> in the background, via an unawaited Task.Run.
+        /// </summary>
+        /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code>.</param>
+        public static void ExecuteBackground(Action action) => _ = Task.Run(action);
+
+        /// <summary>
         ///     Executes the <paramref name="action"/> synchronously in a separate thread after the specified <paramref name="delay"/> delay.
         /// </summary>
         /// <param name="delay">Delay, in TimeSpan.</param>
