@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Gommon
@@ -8,6 +9,42 @@ namespace Gommon
     /// </summary>
     public class Lambda
     {
+        public static TStruct? TryOrNull<TStruct>(Func<TStruct?> function) where TStruct : struct
+        {
+            try
+            {
+                return function();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
+        public static void Try(Action action) 
+        {
+            try
+            {
+                action();
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+        
+        public static TClass TryOrNull<TClass>(Func<TClass> function) where TClass : class
+        {
+            try
+            {
+                return function();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
 
         /// <summary>
         ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block; returning its value.
@@ -76,5 +113,8 @@ namespace Gommon
             for (var i = 0; i < times; i++)
                 await function();
         }
+
+        public static string String(Action<StringBuilder> initializer) =>
+            new StringBuilder().Apply(initializer).ToString();
     }
 }
