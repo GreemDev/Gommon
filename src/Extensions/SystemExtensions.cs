@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace Gommon
 {
@@ -47,59 +48,80 @@ namespace Gommon
             return curr;
         }
         
-        private const int MemoryTierSize = 1024;
-        
+        public static T ValueLock<T>(this object @lock, Func<T> action)
+        {
+            lock (@lock)
+                return action();
+        }
+
+        public static void Lock(this object @lock, Action action)
+        {
+            lock (@lock)
+                action();
+        }
+
+        public static void LockedRef<T>(this T obj, Action<T> action)
+        {
+            lock (obj)
+                action(obj);
+        }
+
+        private const int _memoryTierSize = 1024;
+
         /// <summary>
         ///     Formats a type to a pretty .NET-styled type name.
         /// </summary>
         /// <param name="type">The current Type.</param>
-        /// <returns>A pretty string that shows what this type is.</returns>
+        /// <returns>A pretty string that shows what this type is, removing the rather ugly style of the regular Type#ToString() result.</returns>
         public static string AsPrettyString(this Type type)
         {
-            string FormatTypeName(string typeName)
-            {
-                switch (typeName)
-                {
-                    case "Boolean": return "bool";
-                    case "Byte": return "byte";
-                    case "SByte": return "sbyte";
-                    case "Int16": return "short";
-                    case "UInt16": return "ushort";
-                    case "Int32": return "int";
-                    case "UInt32": return "uint";
-                    case "Int64": return "long";
-                    case "UInt64": return "ulong";
-                    case "Char": return "char";
-                    case "String": return "string";
-                    default: return typeName;
-                }
-            }
+            var regex = new Regex(@"Nullable<(?<T>.+)>", RegexOptions.Compiled);
             
-            string FormatType(Type t)
-            {
-                return FormatTypeName(t.Name);
-            }
+            string _formatTypeName(string typeName) 
+                => typeName switch
+                {
+                    "Boolean" => "bool",
+                    "Single" => "float",
+                    "Decimal" => "decimal",
+                    "Byte" => "byte",
+                    "SByte" => "sbyte",
+                    "Int16" => "short",
+                    "UInt16" => "ushort",
+                    "Int32" => "int",
+                    "UInt32" => "uint",
+                    "Int64" => "long",
+                    "UInt64" => "ulong",
+                    "Char" => "char",
+                    "String" => "string",
+                    _ => typeName
+                };
+            
 
             var types = type.GenericTypeArguments;
 
             //thanks .NET for putting an annoying ass backtick and number at the end of type names.
-            var vs = FormatType(type).Replace($"`{types.Length}", "");
+            var vs = _formatTypeName(type.Name).Replace($"`{types.Length}", "");
 
-            if (!types.IsEmpty()) vs += $"<{types.Select(x => x.AsPrettyString()).Select(FormatTypeName).Join(", ")}>";
+            if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString()).Select(_formatTypeName).Join(", ")}>";
+
+            if (regex.IsMatch(vs, out var match))
+            {
+                var typeName = match.Groups["T"].Value;
+                vs = $"{typeName}?";
+            }
 
             return vs;
         }
-        
+
         /// <summary>
         ///     Gets all flags in the current enum.
         /// </summary>
         /// <param name="input">The current enum.</param>
         /// <typeparam name="T">The enum's type.</typeparam>
         /// <returns>A collection of all the current Enum's members.</returns>
-        public static IEnumerable<T> GetFlags<T>(this T input) where T : Enum
-        {
-            return Enumerable.Cast<T>(Enum.GetValues(input.GetType())).Where(e => input.HasFlag(e));
-        }
+        public static IEnumerable<T> GetFlags<T>([NotNull] this T input) where T : Enum
+            => Enumerable.Cast<T>(Enum.GetValues(input.GetType())).Where(e => input.HasFlag(e));
+        
 
         /// <summary>
         ///     Appends all elements in the specified string array as a line to the current StringBuilder.
@@ -109,14 +131,10 @@ namespace Gommon
         /// <returns>The current StringBuilder for chaining convenience.</returns>
         public static StringBuilder AppendAllLines(this StringBuilder sb, params string[] lines)
         {
-            foreach (var line in lines)
-            {
-                sb.AppendLine(line);
-            }
-
+            lines.ForEach(l => sb.AppendLine(l));
             return sb;
         }
-        
+
         /// <summary>
         ///     Attempts to match a string against regex and the resulting match is the out variable.
         /// </summary>
@@ -129,7 +147,7 @@ namespace Gommon
             match = regex.Match(str);
             return match.Success;
         }
-        
+
         /// <summary>
         ///     Gets the current process's memory usage as a pretty string. Can be shown in Bytes or all the way up to Terabytes via the <paramref name="memType"/> parameter.
         /// </summary>
@@ -137,21 +155,22 @@ namespace Gommon
         /// <param name="memType">The MemoryType to format the string to.</param>
         /// <returns>The formatted string.</returns>
         public static string GetMemoryUsage(this Process process, MemoryType memType = MemoryType.Megabytes)
-        {
-            var res = process.PrivateMemorySize64;
-            switch (memType)
+            => memType switch
             {
-                case MemoryType.Terabytes:
-                    return $"{res / MemoryTierSize / MemoryTierSize / MemoryTierSize / MemoryTierSize} TB";
-                case MemoryType.Gigabytes: return $"{res / MemoryTierSize / MemoryTierSize / MemoryTierSize} GB";
-                case MemoryType.Megabytes: return $"{res / MemoryTierSize / MemoryTierSize} MB";
-                case MemoryType.Kilobytes: return $"{res / MemoryTierSize} KB";
-                case MemoryType.Bytes: return $"{res} B";
-                default: return "null";
-            }
-        }
+                MemoryType.Terabytes =>
+                    $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize / _memoryTierSize / _memoryTierSize} TB",
+                MemoryType.Gigabytes =>
+                    $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize / _memoryTierSize} GB",
+                MemoryType.Megabytes => 
+                    $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize} MB",
+                MemoryType.Kilobytes => 
+                    $"{process.PrivateMemorySize64 / _memoryTierSize} KB",
+                MemoryType.Bytes => 
+                    $"{process.PrivateMemorySize64} B",
+                _ => "null"
+            };
     }
-    
+
     public enum MemoryType
     {
         Terabytes,

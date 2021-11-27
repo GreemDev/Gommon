@@ -43,8 +43,15 @@ namespace Gommon
         public static void ExecuteAfterDelay(TimeSpan delay, Action action)
             => new Thread(() =>
             {
-                Thread.Sleep(delay);
-                action();
+                try
+                {
+                    Thread.Sleep(delay);
+                    action();
+                }
+                catch
+                {
+                    //ignored
+                }
             }).Start();
 
         /// <summary>
@@ -52,6 +59,16 @@ namespace Gommon
         /// </summary>
         /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code> which can crash your program.</param>
         public static void Execute(Action action)
-            => new Thread(action.Invoke).Start();
+            => new Thread(() =>
+            {
+                try
+                {
+                    action(); 
+                }
+                catch
+                {
+                    //ignored
+                }
+            }).Start();
     }
 }

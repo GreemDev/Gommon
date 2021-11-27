@@ -1,0 +1,1 @@
+dotnet test ".\test\GommonTests.csproj" -v minimal

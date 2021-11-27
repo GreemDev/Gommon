@@ -3,6 +3,9 @@
 src/bin/
 src/obj/
 src/Properties/
+test/bin/
+test/obj/
+test/Properties
 *.user
 *.vspscc
 *.vssscc

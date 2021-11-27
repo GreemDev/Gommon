@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>GreemDev</Authors>
     <Company>GreemDev</Company>
-    <PackageLicenseUrl>LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>../LICENSE</PackageLicenseUrl>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.4.3</Version>
+    <Version>2.1</Version>
     <PackageReleaseNotes>
-      i hate release notes
+      Replace hacky dual-use class/struct Optional with PossibleRef for structs and Possible for everything else.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -20,6 +20,11 @@
     <None Include="..\LICENSE">
       <Pack>True</Pack>
     </None>
+    <None Include="..\test.ps1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
   </ItemGroup>
 
 </Project>

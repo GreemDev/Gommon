@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Gommon;
 
 namespace Gommon
 {
@@ -13,6 +15,7 @@ namespace Gommon
         /// </summary>
         /// <param name="bytes">Byte enumerable to convert.</param>
         /// <returns>The resulting <see cref="MemoryStream"/>, seek-ed to position 0.</returns>
+        [JetBrains.Annotations.NotNull]
         public static MemoryStream ToStream(this IEnumerable<byte> bytes)
             => new MemoryStream(bytes.Cast<byte[]>() ?? bytes.ToArray(), false) { Position = 0 };
 
@@ -33,26 +36,26 @@ namespace Gommon
         /// <typeparam name="TKey">Type to check.</typeparam>
         /// <param name="coll">Current IEnumerable.</param>
         /// <param name="selector">Selector function.</param>
-        /// <returns>The filtered <code>IEnumerable&lt;<typeparam name="T"/>&gt;</code></returns>
+        /// <returns>The filtered <see cref="IEnumerable{T}"/>.</returns>
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> coll, Func<T, TKey> selector)
             => coll.GroupBy(selector).Select(x => x.FirstOrDefault()).Where(x => x != null);
 
         /// <summary>
-        ///     Join the current string Enumerable by the given string <paramref name="separator"/>.
+        ///     Join the current Enumerable by the given string <paramref name="separator"/>.
         /// </summary>
-        /// <param name="list">Current string Enumerable</param>
+        /// <param name="list">Current Enumerable</param>
         /// <param name="separator">String separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
-        public static string Join(this IEnumerable<string> list, string separator)
+        public static string Join<T>(this IEnumerable<T> list, string separator)
             => string.Join(separator, list);
 
         /// <summary>
-        ///     Join the current string Enumerable by the given char <paramref name="separator"/>.
+        ///     Join the current Enumerable by the given char <paramref name="separator"/>.
         /// </summary>
-        /// <param name="list">Current string Enumerable</param>
+        /// <param name="list">Current Enumerable</param>
         /// <param name="separator">Char separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
-        public static string Join(this IEnumerable<string> list, char separator)
+        public static string Join<T>(this IEnumerable<T> list, char separator)
             => string.Join($"{separator}", list);
 
         /// <summary>
@@ -61,18 +64,14 @@ namespace Gommon
         /// <param name="arr">Current array.</param>
         /// <returns>A random element in the current array.</returns>
         public static T GetRandomElement<T>(this T[] arr)
-            => arr[new Random().Next(0, arr.Length)];
-        
+            => arr.None() ? default : arr[new Random().Next(0, arr.Length)];
+
         /// <summary>
         ///     Get a random element in the current <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="enumerable">Current <see cref="IEnumerable{T}"/>.</param>
         /// <returns>A random element in the current <see cref="IEnumerable{T}"/>.</returns>
-        public static T GetRandomElement<T>(this IEnumerable<T> enumerable)
-        {
-            var arr = enumerable as T[] ?? enumerable.ToArray();
-            return arr.ElementAt(new Random().Next(0, arr.Length));
-        }
+        public static T GetRandomElement<T>(this IEnumerable<T> enumerable) => enumerable.ToArray().GetRandomElement();
 
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Gommon
         {
             foreach (var item in enumerable) action(item);
         }
-        
+
         /// <summary>
         ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously; passing the current element as a parameter to the function.
         /// </summary>
@@ -128,15 +127,6 @@ namespace Gommon
 
         public static string ToReadableString<T>(this IEnumerable<T> coll) 
             => $"[{coll.Select(x => $"\"{x}\"").Join(", ")}]";
-
-        /// <summary>
-        ///     Checks whether or not the current IEnumerable is empty.
-        /// </summary>
-        /// <param name="coll">The current Enumerable.</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>True if the current IEnumerable has any elements; false otherwise.</returns>
-
-        public static bool IsEmpty<T>(this IEnumerable<T> coll) => !coll.Any();
     }
 }
 
@@ -144,19 +134,24 @@ namespace System.Linq
 {
     public static class LinqExtensions
     {
-        public static bool AnyGet<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate,
+        public static bool AnyGet<TSource>([NotNull] this IEnumerable<TSource> source, 
+            [NotNull] Func<TSource, bool> predicate,
+            [NotNullWhen(true)]
             out TSource value)
         {
-            source = source.ToArray();
-            if (source.Any(predicate))
-            {
-                value = source.FirstOrDefault(predicate);
-                return true;
-            }
-            
-            value = default;
-            return false;
-            
+            value = source.FirstOrDefault(predicate);
+
+            return value != null;
         }
+        
+        /// <summary>
+        ///     Checks whether or not the current IEnumerable is empty, optionally filtering by the given predicate before determining.
+        /// </summary>
+        /// <param name="coll">The current Enumerable.</param>
+        /// <param name="predicate">The optional predicate.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>True if the current IEnumerable has any elements; false otherwise.</returns>
+        public static bool None<T>([NotNull] this IEnumerable<T> coll, Func<T, bool> predicate = null)
+            => !coll.Any(predicate.AsPossible().OrElseGet(() => _ => true));
     }
 }

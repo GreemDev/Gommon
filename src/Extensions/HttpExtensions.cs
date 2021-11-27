@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Gommon
         /// </summary>
         /// <param name="msg">Current <see cref="HttpResponseMessage"/></param>
         /// <returns><see cref="bool"/></returns>
-        public static bool IsImage(this HttpResponseMessage msg)
+        public static bool IsImage([NotNull] this HttpResponseMessage msg)
             => msg.Content.Headers.ContentType.MediaType.StartsWith("image/");
         
         /// <summary>
@@ -22,7 +23,7 @@ namespace Gommon
         /// <param name="url">The target URL</param>
         /// <param name="json">JSON content to send</param>
         /// <returns>The resulting <see cref="HttpResponseMessage"/>.</returns>
-        public static Task<HttpResponseMessage> PostJsonAsync(this HttpClient http, string url, string json) 
+        public static Task<HttpResponseMessage> PostJsonAsync([NotNull] this HttpClient http, [NotNull] string url, [NotNull] string json) 
             => http.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
-        }
+    }
 }

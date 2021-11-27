@@ -80,6 +80,19 @@ namespace Gommon
         /// <returns>A <see cref="ulong" /> representing the newly generated Snowflake ID</returns>
         public static ulong ToDiscordSnowflake(this DateTimeOffset offset)
             => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
+        
+        public static string AsMarkdownString(this DateTime dt)
+            => dt.FormatPrettyString().Split(" ").Apply(arr =>
+            {
+                string _embolden(string s) => $"**{s}**";
+
+                arr[1] = _embolden(arr[1]);
+                arr[2] = _embolden(arr[2].TrimEnd(',')).Append(',');
+                arr[4] = _embolden(arr[4]);
+            }).Join(" ");
+
+        public static string AsMarkdownString(this DateTimeOffset dt) 
+            => dt.DateTime.AsMarkdownString();
 
         /// <summary>
         ///     Transforms the current <see cref="UInt64"/> into a DateTimeOffset from a Discord snowflake.
@@ -88,7 +101,7 @@ namespace Gommon
         /// </summary>
         /// <param name="id">The current <see cref="UInt64"/></param>
         /// <returns>A <see cref="DateTimeOffset"/> of when this Discord entity was created.</returns>
-        public static DateTimeOffset FromDiscordSnowflake(this ulong id)
-            => DateTimeOffset.FromUnixTimeMilliseconds((long)((id >> 22) + 1420070400000UL));
+        public static DateTimeOffset AsDateTimeFromSnowflake(this ulong id)
+            => DateTimeOffset.FromUnixTimeMilliseconds(((id >> 22) + 1420070400000).HardCast<long>());
     }
 }
