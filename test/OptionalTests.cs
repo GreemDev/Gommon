@@ -1,49 +1,41 @@
 using System;
-using Xunit;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
-// while, yes, Optional("test") == Optional(test),
-// the test is for the Optional<T>#Equals override, and == / !=, as they use the Equals method.
-
-// ReSharper disable EqualExpressionComparison
-
-// this occurs because Optional is a struct, but can be nullchecked
-// because the nullcheck tests the Optional's internal value.
-
-// ReSharper disable ConditionIsAlwaysTrueOrFalse
-
-namespace Gommon.Tests
-{
-    public class OptionalTests
-    {
+namespace Gommon.Tests {
+    public class OptionalTests {
         [Fact]
-        public void TestOptional()
-        {
-            Assert.True(new PossibleRef<int>().IsEmpty);
+        public void TestOptional() {
+            Assert.False(Optional.None<char>().HasValue);
 
-            Assert.Equal("", new Possible<string>(() => ""));
-            
+            Assert.Equal("", new Optional<string>(() => ""));
+
             // oh boy here we go
-            Assert.True(new Possible<string>("")
+            Assert.True(new Optional<string>("")
                 .OnlyIf(s => s.Any())
                 .OrElseGet(() => "test string")
                 .Any());
+            
+            Assert.True(Optional.Of("").Check(string.IsNullOrEmpty));
+
+            Assert.Equal("hello", Optional.None<string>()
+                .Convert(async _ => "")
+                .OrElseGet(() => "hello").Result);
 
             Assert.Equal(69,
-                new PossibleRef<int>().OrElseGet(() => 69)
+                new Optional<int>().OrElseGet(() => 69)
             );
 
-            Assert.Throws<NullReferenceException>(() => new PossibleRef<int>().OrThrow());
+            Assert.Throws<NullReferenceException>(() => new Optional<int>().OrThrow<NullReferenceException>());
         }
 
         [Fact]
-        public void TestEqualsOverride()
-        {
-            Assert.False(new Possible<object>() == "test string");
-            Assert.False(new Possible<string>("test string") == null);
-            Assert.True(new Possible<object>() == null);
-            Assert.True(new Possible<string>("test string") == new Possible<string>("test string"));
+        public void TestEqualsOverride() {
+            Assert.False(new Optional<string>() == "test string");
+            Assert.False(new Optional<string>("test string") == null);
+            Assert.True(new Optional<object>() == null);
+            Assert.True(new Optional<string>("test string") == new Optional<string>("test string"));
         }
     }
 }

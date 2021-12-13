@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace Gommon
-{
-    public partial class Extensions
-    {
+namespace Gommon {
+    public partial class Extensions {
         /// <summary>
         ///     Gets a service of the type <typeparamref name="T"/>.
         ///     If the service isn't present, this will return <see langword="null"/>.
@@ -29,10 +29,53 @@ namespace Gommon
         /// <param name="service">The retrieved service of type <typeparamref name="T"/>.</param>
         /// <typeparam name="T">The type of service to retrieve.</typeparam>
         /// <returns></returns>
-        public static bool TryGet<T>(this IServiceProvider serviceProvider, out T service)
-        {
+        public static bool TryGet<T>(this IServiceProvider serviceProvider, out T service) {
             service = serviceProvider.Get<T>();
             return service != null;
+        }
+
+        /// <summary>
+        ///     Takes the current Semaphore's state and wraps it in a disposable, for use in using statements.
+        /// </summary>
+        /// <param name="semaphore">The semaphore</param>
+        /// <returns>A disposable Semaphore lock</returns>
+        public static ScopedSemaphoreLock Take(this Semaphore semaphore) {
+            semaphore.WaitOne();
+            return new ScopedSemaphoreLock(semaphore);
+        }
+
+        /// <summary>
+        ///     Takes the current Semaphore's state and wraps it in a disposable, for use in using statements.
+        /// </summary>
+        /// <param name="semaphore">The semaphore</param>
+        /// <returns>A disposable Semaphore lock</returns>
+        public static async Task<ScopedSemaphoreLock> TakeAsync(this SemaphoreSlim semaphore) {
+            await semaphore.WaitAsync();
+            return new ScopedSemaphoreLock(semaphore);
+        }
+
+        public class ScopedSemaphoreLock : IDisposable {
+            public ScopedSemaphoreLock(SemaphoreSlim semaphore) => _semaphoreSlim = semaphore;
+            public ScopedSemaphoreLock(Semaphore semaphore) => _semaphore = semaphore;
+            private readonly SemaphoreSlim _semaphoreSlim;
+            private readonly Semaphore _semaphore;
+
+            public void Dispose() {
+                _semaphore?.Release();
+                _semaphoreSlim?.Release();
+            }
+        }
+
+        /// <summary>
+        ///     Run the specified <see cref="Func{T, TResult}"/> with <paramref name="curr"/> passed in as its value.
+        /// </summary>
+        /// <param name="curr">The current object.</param>
+        /// <param name="applyAsync">The async action to perform.</param>
+        /// <typeparam name="T">The type of the current object.</typeparam>
+        /// <returns><paramref name="curr"/> after <paramref name="applyAsync"/> runs on it.</returns>
+        public static async Task<T> ApplyAsync<T>(this T curr, Func<T, Task> applyAsync) {
+            await applyAsync(curr);
+            return curr;
         }
 
         /// <summary>
@@ -42,26 +85,22 @@ namespace Gommon
         /// <param name="apply">The action to perform.</param>
         /// <typeparam name="T">The type of the current object.</typeparam>
         /// <returns><paramref name="curr"/> after <paramref name="apply"/> runs on it.</returns>
-        public static T Apply<T>(this T curr, Action<T> apply)
-        {
+        public static T Apply<T>(this T curr, Action<T> apply) {
             apply(curr);
             return curr;
         }
-        
-        public static T ValueLock<T>(this object @lock, Func<T> action)
-        {
+
+        public static T ValueLock<T>(this object @lock, Func<T> action) {
             lock (@lock)
                 return action();
         }
 
-        public static void Lock(this object @lock, Action action)
-        {
+        public static void Lock(this object @lock, Action action) {
             lock (@lock)
                 action();
         }
 
-        public static void LockedRef<T>(this T obj, Action<T> action)
-        {
+        public static void LockedRef<T>(this T obj, Action<T> action) {
             lock (obj)
                 action(obj);
         }
@@ -73,13 +112,11 @@ namespace Gommon
         /// </summary>
         /// <param name="type">The current Type.</param>
         /// <returns>A pretty string that shows what this type is, removing the rather ugly style of the regular Type#ToString() result.</returns>
-        public static string AsPrettyString(this Type type)
-        {
+        public static string AsPrettyString(this Type type) {
             var regex = new Regex(@"Nullable<(?<T>.+)>", RegexOptions.Compiled);
-            
-            string _formatTypeName(string typeName) 
-                => typeName switch
-                {
+
+            string _formatTypeName(string typeName)
+                => typeName switch {
                     "Boolean" => "bool",
                     "Single" => "float",
                     "Decimal" => "decimal",
@@ -95,7 +132,7 @@ namespace Gommon
                     "String" => "string",
                     _ => typeName
                 };
-            
+
 
             var types = type.GenericTypeArguments;
 
@@ -104,8 +141,7 @@ namespace Gommon
 
             if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString()).Select(_formatTypeName).Join(", ")}>";
 
-            if (regex.IsMatch(vs, out var match))
-            {
+            if (regex.IsMatch(vs, out var match)) {
                 var typeName = match.Groups["T"].Value;
                 vs = $"{typeName}?";
             }
@@ -121,7 +157,7 @@ namespace Gommon
         /// <returns>A collection of all the current Enum's members.</returns>
         public static IEnumerable<T> GetFlags<T>([NotNull] this T input) where T : Enum
             => Enumerable.Cast<T>(Enum.GetValues(input.GetType())).Where(e => input.HasFlag(e));
-        
+
 
         /// <summary>
         ///     Appends all elements in the specified string array as a line to the current StringBuilder.
@@ -129,8 +165,7 @@ namespace Gommon
         /// <param name="sb">The current StringBuilder.</param>
         /// <param name="lines">The lines to append.</param>
         /// <returns>The current StringBuilder for chaining convenience.</returns>
-        public static StringBuilder AppendAllLines(this StringBuilder sb, params string[] lines)
-        {
+        public static StringBuilder AppendAllLines(this StringBuilder sb, params string[] lines) {
             lines.ForEach(l => sb.AppendLine(l));
             return sb;
         }
@@ -142,8 +177,7 @@ namespace Gommon
         /// <param name="str">The string to attempt to match to.</param>
         /// <param name="match">The resulting match.</param>
         /// <returns>True if it was a match and <paramref name="match"/> has a value; false otherwise.</returns>
-        public static bool IsMatch(this Regex regex, string str, out Match match)
-        {
+        public static bool IsMatch(this Regex regex, string str, out Match match) {
             match = regex.Match(str);
             return match.Success;
         }
@@ -155,24 +189,22 @@ namespace Gommon
         /// <param name="memType">The MemoryType to format the string to.</param>
         /// <returns>The formatted string.</returns>
         public static string GetMemoryUsage(this Process process, MemoryType memType = MemoryType.Megabytes)
-            => memType switch
-            {
+            => memType switch {
                 MemoryType.Terabytes =>
                     $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize / _memoryTierSize / _memoryTierSize} TB",
                 MemoryType.Gigabytes =>
                     $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize / _memoryTierSize} GB",
-                MemoryType.Megabytes => 
+                MemoryType.Megabytes =>
                     $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize} MB",
-                MemoryType.Kilobytes => 
+                MemoryType.Kilobytes =>
                     $"{process.PrivateMemorySize64 / _memoryTierSize} KB",
-                MemoryType.Bytes => 
+                MemoryType.Bytes =>
                     $"{process.PrivateMemorySize64} B",
                 _ => "null"
             };
     }
 
-    public enum MemoryType
-    {
+    public enum MemoryType {
         Terabytes,
         Gigabytes,
         Megabytes,

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>GreemDev</Authors>
     <Company>GreemDev</Company>
@@ -10,9 +11,10 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.1</Version>
+    <Version>2.4</Version>
     <PackageReleaseNotes>
-      Replace hacky dual-use class/struct Optional with PossibleRef for structs and Possible for everything else.
+      Upgrade to .net5 and C#9
+      Mirror class for puntastic reflection 
     </PackageReleaseNotes>
   </PropertyGroup>
 

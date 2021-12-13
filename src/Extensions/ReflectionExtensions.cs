@@ -2,10 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Gommon
-{
-    public static partial class Extensions
-    {
+namespace Gommon {
+    public static partial class Extensions {
         /// <summary>
         ///     Checks whether or not the current <see cref="MemberInfo"/> has the given <typeparam name="T"/> attribute.
         /// </summary>
@@ -22,13 +20,13 @@ namespace Gommon
         /// <param name="memberInfo">Current <see cref="MemberInfo"/>.</param>
         /// <param name="attribute">The possibly-null attribute.</param>
         /// <returns><see cref="bool"/></returns>
-        public static bool TryGetAttribute<T>(this MemberInfo memberInfo, [NotNullWhen(true)] out T attribute) where T : Attribute
-        {
+        public static bool TryGetAttribute<T>(this MemberInfo memberInfo, [NotNullWhen(true)] out T attribute)
+            where T : Attribute {
             attribute = null;
 
             if (memberInfo.HasAttribute<T>())
                 attribute = memberInfo.GetCustomAttribute<T>();
-            
+
             return attribute != null;
         }
 

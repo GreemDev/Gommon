@@ -2,10 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gommon
-{
-    public static class Executor
-    {
+namespace Gommon {
+    public static class Executor {
         /// <summary>
         ///     Executes the <paramref name="func"/> asynchronously after the specified <paramref name="delay"/>.
         /// </summary>
@@ -13,7 +11,8 @@ namespace Gommon
         /// <param name="func">Function, typically async.</param>
         /// <returns><see cref="Task"/></returns>
         public static async Task ExecuteAfterDelayAsync(TimeSpan delay, Func<Task> func)
-            => await Task.Delay(delay).ContinueWith(async _ => await func().ConfigureAwait(false)).ConfigureAwait(false);
+            => await Task.Delay(delay).ContinueWith(async _ => await func().ConfigureAwait(false))
+                .ConfigureAwait(false);
 
         /// <summary>
         ///     Executes the <paramref name="func"/> asynchronously.
@@ -41,15 +40,12 @@ namespace Gommon
         /// <param name="delay">Delay, in TimeSpan.</param>
         /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code>.</param>
         public static void ExecuteAfterDelay(TimeSpan delay, Action action)
-            => new Thread(() =>
-            {
-                try
-                {
+            => new Thread(() => {
+                try {
                     Thread.Sleep(delay);
                     action();
                 }
-                catch
-                {
+                catch {
                     //ignored
                 }
             }).Start();
@@ -59,14 +55,11 @@ namespace Gommon
         /// </summary>
         /// <param name="action">Synchronous function to execute. Avoid using the <code>async</code> modifier, as that creates an <code>async void</code> which can crash your program.</param>
         public static void Execute(Action action)
-            => new Thread(() =>
-            {
-                try
-                {
-                    action(); 
+            => new Thread(() => {
+                try {
+                    action();
                 }
-                catch
-                {
+                catch {
                     //ignored
                 }
             }).Start();

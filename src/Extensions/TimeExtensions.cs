@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Gommon
-{
-    public static partial class Extensions
-    {
+namespace Gommon {
+    public static partial class Extensions {
         /// <summary>
         ///     Format the current <see cref="DateTimeOffset"/>'s time by the <code>"hh:mm:ss tt"</code> format.
         /// </summary>
@@ -70,7 +68,8 @@ namespace Gommon
         /// <param name="usePartialTime">Whether or not to show hours in the time.</param>
         /// <returns></returns>
         public static string FormatPrettyString(this DateTimeOffset offset, bool usePartialTime = false)
-            => $"at {(usePartialTime ? offset.FormatPartialTime() : offset.FormatFullTime())}, on {offset.FormatDate()}";
+            =>
+                $"at {(usePartialTime ? offset.FormatPartialTime() : offset.FormatFullTime())}, on {offset.FormatDate()}";
 
         /// <summary>
         ///     Transforms the current <see cref="DateTimeOffset"/> to a Discord pseudo-snowflake.
@@ -80,10 +79,9 @@ namespace Gommon
         /// <returns>A <see cref="ulong" /> representing the newly generated Snowflake ID</returns>
         public static ulong ToDiscordSnowflake(this DateTimeOffset offset)
             => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
-        
+
         public static string AsMarkdownString(this DateTime dt)
-            => dt.FormatPrettyString().Split(" ").Apply(arr =>
-            {
+            => dt.FormatPrettyString().Split(" ").Apply(arr => {
                 string _embolden(string s) => $"**{s}**";
 
                 arr[1] = _embolden(arr[1]);
@@ -91,7 +89,7 @@ namespace Gommon
                 arr[4] = _embolden(arr[4]);
             }).Join(" ");
 
-        public static string AsMarkdownString(this DateTimeOffset dt) 
+        public static string AsMarkdownString(this DateTimeOffset dt)
             => dt.DateTime.AsMarkdownString();
 
         /// <summary>
