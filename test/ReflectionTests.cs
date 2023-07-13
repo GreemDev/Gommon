@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Gommon.Tests {
-    public class ReflectionTests {
+    public class MirrorTests {
 
         private static Mirror<ReflectionTest> _mirror = Mirror.Reflect(new ReflectionTest());
 
@@ -24,7 +26,8 @@ namespace Gommon.Tests {
         [Fact]
         public static void Test_ThrowIfMemberNull() {
             Assert.Throws<ValueException>(() =>
-                Mirror.ReflectUnsafe(new ReflectionTest()).Call("uhjetiughjrtiuhrtu")
+                Mirror.ReflectUnsafe(new ReflectionTest())
+                    .Call("uhjetiughjrtiuhrtu")
             );
         }
 
@@ -33,6 +36,32 @@ namespace Gommon.Tests {
             private string oafmlStr => "oafml";
             private void ThrowEx() => throw new Exception();
 
+        }
+    }
+
+    public class ReflectionTests
+    {
+        [Fact]
+        public static void Test_TypeAsFullNamePrettyString()
+        {
+            Assert.Equal("System.Collections.Generic.List<String>", typeof(List<string>).AsFullNamePrettyString());
+        }
+
+        [Fact]
+        public static void Test_MethodSignatureMatches()
+        {
+            var methodInfo = typeof(ReflectionTests).GetMethod("DummyMethod", BindingFlags.Static | BindingFlags.NonPublic);
+            
+            Assert.True(methodInfo.CheckSignature(typeof(string), typeof(List<int>)).Matches);
+            Assert.False(methodInfo.CheckSignature(typeof(string)).Matches);
+            Assert.Equal(
+                "Parameter at index 0 is not of the required type! Required: System.Int32, Actual: System.String",
+                methodInfo.CheckSignature(typeof(int), typeof(List<int>)).Error);
+        }
+
+        private static void DummyMethod(string var1, List<int> var2)
+        {
+            
         }
         
     }

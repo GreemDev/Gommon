@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Gommon {
@@ -201,6 +198,22 @@ namespace Gommon {
         /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
         [NotNull]
         public static T HardCast<T>(this object obj) => (T)obj;
+
+        #endregion
+
+        #region Numbers
+
+        public static byte CoerceAtLeast(this byte value, byte minimum) => Math.Max(value, minimum);
+        public static byte CoerceAtMost(this byte value, byte maximum) => Math.Min(value, maximum);
+        
+        public static short CoerceAtLeast(this short value, short minimum) => Math.Max(value, minimum);
+        public static short CoerceAtMost(this short value, short maximum) => Math.Min(value, maximum);
+        
+        public static int CoerceAtLeast(this int value, int minimum) => Math.Max(value, minimum);
+        public static int CoerceAtMost(this int value, int maximum) => Math.Min(value, maximum);
+        
+        public static long CoerceAtLeast(this long value, long minimum) => Math.Max(value, minimum);
+        public static long CoerceAtMost(this long value, long maximum) => Math.Min(value, maximum);
 
         #endregion
     }

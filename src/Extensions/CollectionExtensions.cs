@@ -102,6 +102,17 @@ namespace Gommon {
         }
 
         /// <summary>
+        ///     Obtains an enumerable containing a tuple of the value in the current enumerable and its index.
+        /// </summary>
+        /// <param name="enumerable">The current enumerable.</param>
+        public static IEnumerable<(T Value, int Index)> WithIndex<T>(this IEnumerable<T> enumerable)
+        {
+            var index = 0;
+            foreach (var value in enumerable)
+                yield return (value, index++);
+        }
+
+        /// <summary>
         ///     Performs the specified <paramref name="function"/> on each element in the current <paramref name="enumerable"/> asynchronously; passing the current element and index as a parameter to the function.
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
@@ -140,8 +151,11 @@ namespace System.Linq {
         /// <param name="predicate">The optional predicate.</param>
         /// <typeparam name="T"></typeparam>
         /// <returns>True if the current IEnumerable has any elements; false otherwise.</returns>
-        public static bool None<T>([NotNull] this IEnumerable<T> coll, Func<T, bool> predicate = null)
-            => !coll.Any(predicate ?? (_ => true));
+        public static bool None<T>([NotNull] this IEnumerable<T> coll, Func<T, bool> predicate = null) => 
+            !(predicate is null
+                ? coll.Any()
+                : coll.Any(predicate));
+        
 
         /// <summary>
         ///     Wraps the result of LINQ First() in an <see cref="Optional{T}"/>.
@@ -206,12 +220,14 @@ namespace System.Linq {
         /// <param name="key">The key of the element.</param>
         /// <returns>An optional, possibly containing the value at the specified index.</returns>
         public static Optional<T> FindValue<TKey, T>(this IEnumerable<KeyValuePair<TKey, T>> coll,
-            TKey key) {
+            TKey key)
+        {
+            if (coll.None())
+                return Optional.None<T>();
+            
             var c = coll.ToDictionary(x => x.Key, x => x.Value);
-            return c.Any()
-                ? c.TryGetValue(key, out var result) 
-                    ? result 
-                    : Optional.None<T>()
+            return c.TryGetValue(key, out var result)
+                ? result
                 : Optional.None<T>();
         }
 

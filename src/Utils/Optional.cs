@@ -382,10 +382,8 @@ namespace Gommon {
         /// </summary>
         /// <returns>The value, if present.</returns>
         [return: NotNull]
-        public T OrThrow()
-            => HasValue
-                ? _value!
-                : throw new ValueException($"Value of type '{typeof(T).AsPrettyString()}' is absent.");
+        public T OrThrow() =>
+            OrThrow(() => new ValueException($"Value of type '{typeof(T).AsPrettyString()}' is absent."));
 
         /// <summary>
         /// If a value is present, returns the value, otherwise throw exception.

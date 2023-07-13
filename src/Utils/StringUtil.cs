@@ -11,13 +11,13 @@ namespace Gommon {
         public static char[] ValidAlphanumerics => _alphanumericChars.ToArray();
 
         public static string RandomizeSequence([NotNull] string str, [NonNegativeValue] int rerolls = 0) {
-            string _rearrange(string s) => string.Join("", s.OrderBy(_ => Guid.NewGuid()));
-
             var result = _rearrange(str);
             Lambda.Repeat(rerolls, () =>
                 result = _rearrange(result)
             );
             return result;
+            
+            string _rearrange(string s) => string.Join("", s.OrderBy(_ => Guid.NewGuid()));
         }
 
         /// <summary>

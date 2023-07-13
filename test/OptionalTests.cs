@@ -35,7 +35,7 @@ namespace Gommon.Tests {
             Assert.False(new Optional<string>() == "test string");
             Assert.False(new Optional<string>("test string") == null);
             Assert.True(new Optional<object>() == null);
-            Assert.True(new Optional<string>("test string") == new Optional<string>("test string"));
+            Assert.True(Optional.Of("test string") == new Optional<string>("test string"));
         }
     }
 }

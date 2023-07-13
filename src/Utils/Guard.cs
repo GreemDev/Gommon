@@ -10,8 +10,7 @@ namespace Gommon {
     /// <summary>
     ///     Provides common value check methods, such as nullability, collection length, and conditions.
     /// </summary>
-    public class Guard {
-        private Guard() { }
+    public static class Guard {
 
         [Contract("null => halt")]
         public static void Incomplete([CanBeNull] Task task) {
@@ -28,11 +27,11 @@ namespace Gommon {
         [Contract("null => halt")]
         public static void ValidSnowflake([CanBeNull] string snowflake) => ValidSnowflake(snowflake, $"{snowflake}");
 
-        public static void ValidSnowflake([CanBeNull] string snowflake, [NotNull] string message) {
-            Require(snowflake, message);
+        public static void ValidSnowflake([CanBeNull] string snowflake, [NotNull] string value) {
+            Require(snowflake, value);
             var nw = snowflake.Replace(" ", "");
             if (nw.Length > 20 || !nw.All(char.IsNumber))
-                ValueException.Throw($"{message} is not a valid snowflake string! Provided: \"{snowflake}\"");
+                ValueException.Throw($"{value} is not a valid snowflake string! Provided: \"{snowflake}\"");
         }
 
         [Contract("false => halt")]

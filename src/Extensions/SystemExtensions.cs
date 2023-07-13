@@ -108,48 +108,6 @@ namespace Gommon {
         private const int _memoryTierSize = 1024;
 
         /// <summary>
-        ///     Formats a type to a pretty .NET-styled type name.
-        /// </summary>
-        /// <param name="type">The current Type.</param>
-        /// <returns>A pretty string that shows what this type is, removing the rather ugly style of the regular Type#ToString() result.</returns>
-        public static string AsPrettyString(this Type type) {
-            var regex = new Regex(@"Nullable<(?<T>.+)>", RegexOptions.Compiled);
-
-            string _formatTypeName(string typeName)
-                => typeName switch {
-                    "Boolean" => "bool",
-                    "Single" => "float",
-                    "Decimal" => "decimal",
-                    "Byte" => "byte",
-                    "SByte" => "sbyte",
-                    "Int16" => "short",
-                    "UInt16" => "ushort",
-                    "Int32" => "int",
-                    "UInt32" => "uint",
-                    "Int64" => "long",
-                    "UInt64" => "ulong",
-                    "Char" => "char",
-                    "String" => "string",
-                    _ => typeName
-                };
-
-
-            var types = type.GenericTypeArguments;
-
-            //thanks .NET for putting an annoying ass backtick and number at the end of type names.
-            var vs = _formatTypeName(type.Name).Replace($"`{types.Length}", "");
-
-            if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString()).Select(_formatTypeName).Join(", ")}>";
-
-            if (regex.IsMatch(vs, out var match)) {
-                var typeName = match.Groups["T"].Value;
-                vs = $"{typeName}?";
-            }
-
-            return vs;
-        }
-
-        /// <summary>
         ///     Gets all flags in the current enum.
         /// </summary>
         /// <param name="input">The current enum.</param>
@@ -189,19 +147,51 @@ namespace Gommon {
         /// <param name="memType">The MemoryType to format the string to.</param>
         /// <returns>The formatted string.</returns>
         public static string GetMemoryUsage(this Process process, MemoryType memType = MemoryType.Megabytes)
-            => memType switch {
+        {
+            return memType switch
+            {
                 MemoryType.Terabytes =>
-                    $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize / _memoryTierSize / _memoryTierSize} TB",
+                    $"{_divideProcessMemoryTiers(4)} TB",
                 MemoryType.Gigabytes =>
-                    $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize / _memoryTierSize} GB",
+                    $"{_divideProcessMemoryTiers(3)} GB",
                 MemoryType.Megabytes =>
-                    $"{process.PrivateMemorySize64 / _memoryTierSize / _memoryTierSize} MB",
+                    $"{_divideProcessMemoryTiers(2)} MB",
                 MemoryType.Kilobytes =>
-                    $"{process.PrivateMemorySize64 / _memoryTierSize} KB",
+                    $"{_divideProcessMemoryTiers(1)} KB",
                 MemoryType.Bytes =>
                     $"{process.PrivateMemorySize64} B",
                 _ => "null"
             };
+            
+            long _divideProcessMemoryTiers(int divisions)
+            {
+                var mem = process.PrivateMemorySize64;
+                Lambda.Repeat(divisions.CoerceAtMost(4), () =>
+                    mem /= _memoryTierSize
+                );
+                return mem;
+            }
+        }
+        
+        public static Task Then(this Task task, Func<Task> continuation) 
+            => task.ContinueWith(async _ => await continuation());
+
+        public static async Task<T> ThenUse<T>(this Task<T> task, Func<T, Task> continuation)
+        {
+            var result = await task;
+            await continuation(result);
+            return result;
+        }
+        
+        public static async Task<T> ThenUse<T>(this ValueTask<T> task, Func<T, Task> continuation)
+        {
+            var result = await task;
+            await continuation(result);
+            return result;
+        }
+        
+        public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, Task<TR>> continuation) => await continuation(await task);
+        public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, Task<TR>> continuation) => await continuation(await task);
     }
 
     public enum MemoryType {

@@ -1,1 +1,1 @@
-dotnet test ".\test\GommonTests.csproj" -v minimal
+dotnet test ".\test\GommonTests.csproj"

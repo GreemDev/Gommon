@@ -11,10 +11,11 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.4</Version>
+    <Version>2.4.1</Version>
     <PackageReleaseNotes>
-      Upgrade to .net5 and C#9
-      Mirror class for puntastic reflection 
+      Task-to-Task chaining, JS Promise style
+      MethodInfo.CheckSignature
+      Kotlin stdlib inspired methods: CoerceAtLeast/Most, IEnumerable.WithIndex()
     </PackageReleaseNotes>
   </PropertyGroup>
 
