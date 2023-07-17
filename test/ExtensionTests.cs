@@ -11,10 +11,16 @@ namespace Gommon.Tests {
             }
 
             [Fact]
-            public static void TaskOfT_Then() {
+            public static void Task_Shit() {
                 Assert.Equal(0, Task.Run(() => "")
-                    .Then(res => Task.FromResult(res.Length))
+                    .Then(res => res.Length)
                     .Result);
+                
+                Assert.Equal("", Task.Run(() => 0)
+                    .Then(_ => "")
+                    .Result);
+                
+                Assert.True(((Task)null).OrCompleted().IsCompleted);
             }
         }
 

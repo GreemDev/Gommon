@@ -11,11 +11,9 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.4.1</Version>
+    <Version>2.4.3</Version>
     <PackageReleaseNotes>
-      Task-to-Task chaining, JS Promise style
-      MethodInfo.CheckSignature
-      Kotlin stdlib inspired methods: CoerceAtLeast/Most, IEnumerable.WithIndex()
+      return value-less Lambda.TryCatch, specific-exception typed error callbacks, and their respective async variants
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -27,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
   </ItemGroup>
 
 </Project>

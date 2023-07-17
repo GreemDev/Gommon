@@ -7,7 +7,7 @@ namespace Gommon {
     /// <summary>
     ///     Utilities that utilize C# lambdas.
     /// </summary>
-    public static partial class Lambda {
+    public static class Lambda {
 
         public static T Get<T>(Func<T> func) => func();
 
@@ -88,6 +88,37 @@ namespace Gommon {
 
             return result;
         }
+        
+        /// <summary>
+        ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block.
+        ///     If an error occurs, <paramref name="onError"/> is called.
+        /// </summary>
+        /// <param name="function">The function to run.</param>
+        /// <param name="onError">The function called on failure.</param>
+        public static void TryCatch(Action function, Action<Exception> onError) {
+            try {
+                function();
+            }
+            catch (Exception e) {
+                onError(e);
+            }
+        }
+        
+        /// <summary>
+        ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block.
+        ///     If an error of type <typeparamref name="TE"/> occurs, <paramref name="onError"/> is called.
+        /// </summary>
+        /// <param name="function">The function to run.</param>
+        /// <param name="onError">The function called on failure.</param>
+        /// <typeparam name="TE">The type of exception to catch.</typeparam>
+        public static void TryCatch<TE>(Action function, Action<TE> onError) where TE : Exception {
+            try {
+                function();
+            }
+            catch (TE e) {
+                onError(e);
+            }
+        }
 
         /// <summary>
         ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block; returning its value.
@@ -144,6 +175,37 @@ namespace Gommon {
             }
 
             return result;
+        }
+        
+        /// <summary>
+        ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block.
+        ///     If an error occurs, <paramref name="onError"/> is called.
+        /// </summary>
+        /// <param name="function">The function to run.</param>
+        /// <param name="onError">The function called on failure.</param>
+        public static async Task TryCatchAsync(Func<Task> function, Func<Exception, Task> onError) {
+            try {
+                await function();
+            }
+            catch (Exception e) {
+                await onError(e);
+            }
+        }
+        
+        /// <summary>
+        ///     Attempts to run <paramref name="function"/> in a <see langword="try"/> block.
+        ///     If an error of type <typeparamref name="TE"/> occurs, <paramref name="onError"/> is called.
+        /// </summary>
+        /// <param name="function">The function to run.</param>
+        /// <param name="onError">The function called on failure.</param>
+        /// <typeparam name="TE">The type of exception to catch.</typeparam>
+        public static async Task TryCatchAsync<TE>(Func<Task> function, Func<TE, Task> onError) where TE : Exception {
+            try {
+                await function();
+            }
+            catch (TE e) {
+                await onError(e);
+            }
         }
 
 

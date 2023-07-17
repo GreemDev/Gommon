@@ -173,25 +173,45 @@ namespace Gommon {
             }
         }
         
-        public static Task Then(this Task task, Func<Task> continuation) 
-            => task.ContinueWith(async _ => await continuation());
+#nullable enable
 
-        public static async Task<T> ThenUse<T>(this Task<T> task, Func<T, Task> continuation)
+        public static Task OrCompleted(this Task? task) => task ?? Task.CompletedTask;
+
+
+        #region JavaScript Promise-like .Then chaining
+
+        public static async Task Then(this Task task, Func<Task> continuation)
+            => await task.ContinueWith(_ => continuation()).ConfigureAwait(false);
+
+        public static async Task<T> ThenApply<T>(this Task<T> task, Func<T, Task> continuation)
         {
             var result = await task;
             await continuation(result);
             return result;
         }
         
-        public static async Task<T> ThenUse<T>(this ValueTask<T> task, Func<T, Task> continuation)
+        public static async Task<T> ThenApply<T>(this ValueTask<T> task, Func<T, Task> continuation)
         {
             var result = await task;
             await continuation(result);
             return result;
         }
+        
+        public static async Task ThenUse<T>(this Task<T> task, Func<T, Task> continuation) 
+            => await continuation(await task);
+        
+        
+        public static async Task ThenUse<T>(this ValueTask<T> task, Func<T, Task> continuation) 
+            => await continuation(await task);
+        
         
         public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, Task<TR>> continuation) => await continuation(await task);
         public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, Task<TR>> continuation) => await continuation(await task);
+        
+        public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, TR> continuation) => continuation(await task);
+        public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, TR> continuation) => continuation(await task);
+
+        #endregion
     }
 
     public enum MemoryType {
