@@ -25,6 +25,15 @@ namespace Gommon {
         /// <returns>An optional, containing the possibly-null value of <paramref name="obj"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Optional<T> AsOptional<T>(this T obj) => new(obj);
+        
+        /// <summary>
+        ///     Wraps the result of <paramref name="task"/> which can be <i>any</i> value, null or otherwise (with no <see cref="NullReferenceException"/>s), in an <see cref="Optional{T}"/>.
+        /// </summary>
+        /// <param name="task">The current task.</param>
+        /// <typeparam name="T">The type of the task's result.</typeparam>
+        /// <returns>An optional, containing the possibly-null result of <paramref name="task"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task<Optional<T>> AsOptional<T>(this Task<T> task) => new(await task);
 
         /// <summary>
         /// If a value is present, returns the value, otherwise <see langword="null"/>.
