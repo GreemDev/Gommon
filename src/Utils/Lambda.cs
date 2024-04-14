@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     /// <summary>
     ///     Utilities that utilize C# lambdas.

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
  * I am not claiming credit for this, I just don't want to use a massive, rich API for a single concept it offers.
 /*/
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     /// <summary>
     /// Various extension and factory methods for constructing optional value.
@@ -31,6 +32,7 @@ namespace Gommon {
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <param name="task">The task returning optional value.</param>
         /// <returns>Nullable value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T?> OrNull<T>(this Task<Optional<T>> task)
             where T : struct
             => (await task.ConfigureAwait(false)).OrNull();
@@ -42,6 +44,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="defaultValue">The value to be returned if there is no value present.</param>
         /// <returns>The value, if present, otherwise default.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrElse<T>(this Task<Optional<T>> task, T defaultValue)
             => (await task.ConfigureAwait(false)).OrElse(defaultValue);
 
@@ -52,6 +55,7 @@ namespace Gommon {
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <typeparam name="TException">Type of exception to throw.</typeparam>
         /// <returns>The value, if present.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrThrow<T, TException>(this Task<Optional<T>> task)
             where TException : Exception, new()
             => (await task.ConfigureAwait(false)).OrThrow<TException>();
@@ -61,6 +65,7 @@ namespace Gommon {
         /// </summary>
         /// <returns>The value, if present.</returns>
         [return: NotNull]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrThrow<T>(this Task<Optional<T>> task)
             => (await task.ConfigureAwait(false)).OrThrow();
 
@@ -72,6 +77,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="exceptionFactory">Exception factory.</param>
         /// <returns>The value, if present.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrThrow<T, TException>(this Task<Optional<T>> task,
             Func<TException> exceptionFactory)
             where TException : Exception
@@ -85,6 +91,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="exceptionFactory">Exception factory.</param>
         /// <returns>The value, if present.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrThrow<T, TException>(this Task<Optional<T>> task,
             Func<Task<TException>> exceptionFactory)
             where TException : Exception
@@ -97,6 +104,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="defaultFunc">A delegate to be invoked if value is not present.</param>
         /// <returns>The value, if present, otherwise returned from delegate.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrElseGet<T>(this Task<Optional<T>> task, Func<T> defaultFunc)
             => (await task.ConfigureAwait(false)).OrElseGet(defaultFunc);
 
@@ -107,6 +115,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="defaultFunc">A delegate to be invoked if value is not present.</param>
         /// <returns>The value, if present, otherwise returned from delegate.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrElseGet<T>(this Task<Optional<T>> task, Func<Task<T>> defaultFunc)
             => await (await task.ConfigureAwait(false)).OrElseGet(defaultFunc).ConfigureAwait(false);
 
@@ -117,6 +126,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="condition">The predicate to check.</param>
         /// <returns><see langword="true"/>, if this Optional has a value and matches <paramref name="condition"/>; <see langword="false"/> otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<bool> Check<T>(this Task<Optional<T>> task, Func<T, bool> condition)
             => (await task.ConfigureAwait(false)).Check(condition);
 
@@ -127,6 +137,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="condition">The predicate to check.</param>
         /// <returns><see langword="true"/>, if this Optional has a value and matches <paramref name="condition"/>; <see langword="false"/> otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<bool> Check<T>(this Task<Optional<T>> task, Func<T, Task<bool>> condition)
             => await (await task.ConfigureAwait(false)).Check(condition).ConfigureAwait(false);
 
@@ -136,6 +147,7 @@ namespace Gommon {
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <param name="task">The task returning optional value.</param>
         /// <returns>The value, if present, otherwise default.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> OrDefault<T>(this Task<Optional<T>> task)
             => (await task.ConfigureAwait(false)).OrDefault();
 
@@ -147,6 +159,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="condition">A predicate to apply to the value, if present.</param>
         /// <returns>An Optional describing the value of this Optional if a value is present and the value matches the given predicate, otherwise an empty Optional.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<Optional<T>> OnlyIf<T>(this Task<Optional<T>> task, Predicate<T> condition)
             => (await task.ConfigureAwait(false)).OnlyIf(condition);
 
@@ -158,6 +171,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="condition">A predicate to apply to the value, if present.</param>
         /// <returns>An Optional describing the value of this Optional if a value is present and the value matches the given predicate, otherwise an empty Optional.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<Optional<T>> OnlyIf<T>(this Task<Optional<T>> task, Func<T, Task<bool>> condition)
             => await (await task.ConfigureAwait(false)).OnlyIf(condition).ConfigureAwait(false);
 
@@ -168,6 +182,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="action">An action to invoke on the value, if present.</param>
         /// <returns>The current optional.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<Optional<T>> IfPresent<T>(this Task<Optional<T>> task, Action<T> action)
             => (await task.ConfigureAwait(false)).IfPresent(action);
 
@@ -178,6 +193,7 @@ namespace Gommon {
         /// <param name="task">The task returning optional value.</param>
         /// <param name="action">An action to invoke on the value, if present.</param>
         /// <returns>The current optional.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<Optional<T>> IfPresent<T>(this Task<Optional<T>> task, Func<T, Task> action)
             => await (await task.ConfigureAwait(false)).IfPresent(action).ConfigureAwait(false);
 

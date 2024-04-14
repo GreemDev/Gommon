@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gommon;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static partial class Extensions {
         /// <summary>
@@ -32,7 +33,7 @@ namespace Gommon {
         /// <param name="list">Current Enumerable</param>
         /// <param name="separator">String separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
-        public static string Join<T>(this IEnumerable<T> list, string separator)
+        public static string JoinToString<T>(this IEnumerable<T> list, string separator)
             => string.Join(separator, list);
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace Gommon {
         /// <param name="list">Current Enumerable</param>
         /// <param name="separator">Char separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
-        public static string Join<T>(this IEnumerable<T> list, char separator)
+        public static string JoinToString<T>(this IEnumerable<T> list, char separator)
             => string.Join($"{separator}", list);
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Gommon {
         /// <param name="coll">The current Enumerable.</param>
         /// <returns>A string representing the contents of the Collection.</returns>
         public static string ToReadableString<T>(this IEnumerable<T> coll)
-            => $"[{coll.Select(x => $"\"{x}\"").Join(", ")}]";
+            => $"[{coll.Select(x => $"\"{x}\"").JoinToString(", ")}]";
     }
 }
 
@@ -210,10 +211,10 @@ namespace System.Linq {
         public static Optional<T> FindValue<TKey, T>(this IEnumerable<KeyValuePair<TKey, T>> coll,
             TKey key)
         {
-            if (coll.None())
+            var c = coll.ToDictionary(x => x.Key, x => x.Value);
+            if (c.None())
                 return Optional.None<T>();
             
-            var c = coll.ToDictionary(x => x.Key, x => x.Value);
             return c.TryGetValue(key, out var result)
                 ? result
                 : Optional.None<T>();

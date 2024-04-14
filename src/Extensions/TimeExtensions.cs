@@ -1,7 +1,12 @@
 ﻿using System;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
-    public static partial class Extensions {
+    public static partial class Extensions
+    {
+
+        public static string DateFormat { get; set; } = "MM/dd/yyyy";
+
         /// <summary>
         ///     Format the current <see cref="DateTimeOffset"/>'s time by the <code>"hh:mm:ss tt"</code> format.
         /// </summary>
@@ -24,7 +29,7 @@ namespace Gommon {
         /// <param name="offset">Current <see cref="DateTimeOffset"/></param>
         /// <returns>Formatted <see cref="string"/></returns>
         public static string FormatDate(this DateTimeOffset offset)
-            => offset.ToString("MM/dd/yyyy");
+            => offset.ToString(DateFormat);
 
         /// <summary>
         ///     Format the current <see cref="DateTime"/>'s date by the <code>"MM/dd/yyyy"</code> format.
@@ -32,7 +37,7 @@ namespace Gommon {
         /// <param name="dt">Current <see cref="DateTime"/></param>
         /// <returns>Formatted <see cref="string"/></returns>
         public static string FormatDate(this DateTime dt)
-            => dt.ToString("MM/dd/yyyy");
+            => dt.ToString(DateFormat);
 
         /// <summary>
         ///     Format the current <see cref="DateTime"/>'s time by the <code>"hh:mm:ss tt"</code> format.
@@ -52,7 +57,7 @@ namespace Gommon {
 
         /// <summary>
         ///     Formats the current <see cref="DateTime"/> to a pretty string such as "at 12:14:02 PM, on 04/16/2002"
-        ///     Uses the American date format, "MM/dd/yyyy".
+        ///     Modify <see cref="Extensions"/>.<see cref="Extensions.DateFormat"/> to change the date format.
         /// </summary>
         /// <param name="dt">Current <see cref="DateTime"/></param>
         /// <param name="usePartialTime">Whether or not to show hours in the time.</param>
@@ -62,7 +67,7 @@ namespace Gommon {
 
         /// <summary>
         ///     Formats the current <see cref="DateTimeOffset"/> to a pretty string such as "at 12:14:02 PM, on 04/16/2002"
-        ///     Uses the American date format, "MM/dd/yyyy".
+        ///     Modify <see cref="Extensions"/>.<see cref="Extensions.DateFormat"/> to change the date format.
         /// </summary>
         /// <param name="offset">Current <see cref="DateTimeOffset"/></param>
         /// <param name="usePartialTime">Whether or not to show hours in the time.</param>
@@ -82,12 +87,13 @@ namespace Gommon {
 
         public static string AsMarkdownString(this DateTime dt)
             => dt.FormatPrettyString().Split(" ").Apply(arr => {
-                string _embolden(string s) => $"**{s}**";
-
-                arr[1] = _embolden(arr[1]);
-                arr[2] = _embolden(arr[2].TrimEnd(',')).Append(',');
-                arr[4] = _embolden(arr[4]);
-            }).Join(" ");
+                arr[1] = embolden(arr[1]);
+                arr[2] = embolden(arr[2].TrimEnd(',')).Append(',');
+                arr[4] = embolden(arr[4]);
+                return;
+                
+                string embolden(string s) => $"**{s}**";
+            }).JoinToString(" ");
 
         public static string AsMarkdownString(this DateTimeOffset dt)
             => dt.DateTime.AsMarkdownString();

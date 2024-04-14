@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static partial class Extensions {
         #region String
@@ -48,7 +49,7 @@ namespace Gommon {
         /// <param name="otherString">String to compare</param>
         /// <returns><see cref="bool"/></returns>
         public static bool EqualsIgnoreCase(this string str, string otherString)
-            => !(str is null) && str.Equals(otherString, StringComparison.OrdinalIgnoreCase);
+            => str is not null && str.Equals(otherString, StringComparison.OrdinalIgnoreCase);
 
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace Gommon {
         /// <param name="otherString">String to compare</param>
         /// <returns><see cref="bool"/></returns>
         public static bool StartsWithIgnoreCase(this string str, string otherString)
-            => !(str is null) && str.StartsWith(otherString, StringComparison.OrdinalIgnoreCase);
+            => str is not null && str.StartsWith(otherString, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         ///     Replaces all occurrences of <paramref name="value"/> with <paramref name="replacement"/>, ignoring case.
@@ -129,7 +130,7 @@ namespace Gommon {
         /// <param name="otherString">String to compare</param>
         /// <returns><see cref="bool"/></returns>
         public static bool EndsWithIgnoreCase(this string str, string otherString)
-            => !(str is null) && str.EndsWith(otherString, StringComparison.OrdinalIgnoreCase);
+            => str is not null && str.EndsWith(otherString, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         ///     Reverses the content of the current string.

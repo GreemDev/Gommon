@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static class StringUtil {
         private const string _alphanumericChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -11,13 +12,13 @@ namespace Gommon {
         public static char[] ValidAlphanumerics => _alphanumericChars.ToArray();
 
         public static string RandomizeSequence([NotNull] string str, [NonNegativeValue] int rerolls = 0) {
-            var result = _rearrange(str);
+            var result = rearrange(str);
             Lambda.Repeat(rerolls, () =>
-                result = _rearrange(result)
+                result = rearrange(result)
             );
             return result;
             
-            string _rearrange(string s) => string.Join("", s.OrderBy(_ => Guid.NewGuid()));
+            string rearrange(string s) => string.Join("", s.OrderBy(_ => Guid.NewGuid()));
         }
 
         /// <summary>
@@ -31,7 +32,12 @@ namespace Gommon {
         /// <param name="allowRepeats"></param>
         /// <returns></returns>
         public static string RandomAlphanumeric([NonNegativeValue] int length, bool allowRepeats = true) {
-            var result = new StringBuilder(length);
+            Guard.Ensure(length > 0, "length must be at least 1");
+            var result = new StringBuilder(
+                allowRepeats is false && length > 62 
+                    ? 62 
+                    : length
+                );
             var tempChars = Collections.NewList(_alphanumericChars.ToArray());
 
             for (var i = 0; i < length; i++) {

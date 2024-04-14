@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static class Executor {
         /// <summary>

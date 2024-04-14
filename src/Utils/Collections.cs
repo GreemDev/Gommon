@@ -3,9 +3,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static class Collections {
-        //this might look dumb but it's basically to avoid new[]{ values } or new {CollectionType}<T>() { values }
+        //this might look dumb, but it's basically to avoid new[]{ values } or new {CollectionType}<T>() { values }
         //you could also `using static` this class and call its methods without the class name, NewList(values)
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

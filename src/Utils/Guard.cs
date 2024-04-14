@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Contract = JetBrains.Annotations.ContractAnnotationAttribute;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
+    
     /// <summary>
     ///     Provides common value check methods, such as nullability, collection length, and conditions.
     /// </summary>
@@ -79,7 +81,7 @@ namespace Gommon {
 
         [Contract("value:null => halt")]
         public static void Require(object value, string name) {
-            value.AsOptional().OrThrow(() => new ValueException($"{name ?? "Value"} must not be null."));
+            Optional.Of(value).OrThrow(() => new ValueException($"{name ?? "Value"} must not be null."));
         }
     }
 

@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon
 {
     public static partial class Extensions
@@ -60,16 +60,16 @@ namespace Gommon
             var types = type.GenericTypeArguments;
 
             //thanks .NET for putting an annoying ass backtick and number at the end of type names.
-            var vs = _formatTypeName(type.Name).Replace($"`{types.Length}", "");
+            var vs = formatTypeName(type.Name).Replace($"`{types.Length}", "");
 
-            if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString(languageCorrectPrimitives)).Select(_formatTypeName).Join(", ")}>";
+            if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString(languageCorrectPrimitives)).Select(formatTypeName).JoinToString(", ")}>";
 
             if (nullableTypeRegex.IsMatch(vs, out var match))
                 vs = $"{match.Groups["T"].Value}?";
             
             return vs;
             
-            string _formatTypeName(string typeName) =>
+            string formatTypeName(string typeName) =>
                 !languageCorrectPrimitives
                     ? typeName
                     : typeName switch

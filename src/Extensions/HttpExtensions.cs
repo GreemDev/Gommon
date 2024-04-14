@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static partial class Extensions {
         /// <summary>

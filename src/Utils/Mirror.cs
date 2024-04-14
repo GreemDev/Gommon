@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+// ReSharper disable MemberCanBePrivate.Global
 namespace Gommon {
     public static class Mirror {
         /// <summary>
