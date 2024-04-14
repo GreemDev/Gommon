@@ -18,25 +18,13 @@ namespace Gommon {
             => new(bytes.ToArray(), false) { Position = 0 };
 
         /// <summary>
-        ///     Checks whether or not the current <see cref="IEnumerable{T}"/> contains the specified <paramref name="element"/>, ignoring case.
+        ///     Checks whether the current <see cref="IEnumerable{T}"/> contains the specified <paramref name="element"/>, ignoring case.
         /// </summary>
         /// <param name="strings">String enumerable to check.</param>
         /// <param name="element">Element to check for.</param>
         /// <returns><see cref="bool"/></returns>
         public static bool ContainsIgnoreCase(this IEnumerable<string> strings, string element)
             => strings.Contains(element, StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        ///     Effectively "filters" the current IEnumerable by removing duplicates by the return type of the <paramref name="selector"/>.
-        ///     Automatically removes null entries, which shouldn't happen.
-        /// </summary>
-        /// <typeparam name="T">In type.</typeparam>
-        /// <typeparam name="TKey">Type to check.</typeparam>
-        /// <param name="coll">Current IEnumerable.</param>
-        /// <param name="selector">Selector function.</param>
-        /// <returns>The filtered <see cref="IEnumerable{T}"/>.</returns>
-        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> coll, Func<T, TKey> selector)
-            => coll.GroupBy(selector).Select(x => x.FirstOrDefault()).Where(x => x != null);
 
         /// <summary>
         ///     Join the current Enumerable by the given string <paramref name="separator"/>.

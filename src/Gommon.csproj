@@ -11,9 +11,9 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.4.3</Version>
+    <Version>2.4.4</Version>
     <PackageReleaseNotes>
-      return value-less Lambda.TryCatch, specific-exception typed error callbacks, and their respective async variants
+      removed DistinctBy extension
     </PackageReleaseNotes>
   </PropertyGroup>
 

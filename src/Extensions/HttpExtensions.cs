@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Gommon {
     public static partial class Extensions {
         /// <summary>
-        ///     Checks whether or not the current <see cref="HttpResponseMessage"/> leads to an image, by checking its ContentType.
+        ///     Checks whether the current <see cref="HttpResponseMessage"/> leads to an image, by checking its ContentType.
         /// </summary>
         /// <param name="msg">Current <see cref="HttpResponseMessage"/></param>
         /// <returns><see cref="bool"/></returns>
