@@ -8,7 +8,7 @@ namespace Gommon {
     /// <summary>
     ///     Utilities that utilize C# lambdas.
     /// </summary>
-    public static class Lambda {
+    public static partial class Lambda {
 
         public static T Get<T>(Func<T> func) => func();
 
