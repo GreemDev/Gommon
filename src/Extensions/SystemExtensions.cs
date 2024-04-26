@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -75,7 +76,7 @@ namespace Gommon {
         /// <typeparam name="T">The type of the current object.</typeparam>
         /// <returns><paramref name="curr"/> after <paramref name="applyAsync"/> runs on it.</returns>
         public static async Task<T> ApplyAsync<T>(this T curr, Func<T, Task> applyAsync) {
-            await applyAsync(curr);
+            await applyAsync(curr).ConfigureAwait(false);
             return curr;
         }
 
@@ -136,10 +137,9 @@ namespace Gommon {
         /// <param name="str">The string to attempt to match to.</param>
         /// <param name="match">The resulting match.</param>
         /// <returns>True if it was a match and <paramref name="match"/> has a value; false otherwise.</returns>
-        public static bool IsMatch(this Regex regex, string str, out Match match) {
-            match = regex.Match(str);
-            return match.Success;
-        }
+        public static bool IsMatch(this Regex regex, string str, out Match match) => 
+            (match = regex.Match(str)).Success;
+        
 
         /// <summary>
         ///     Gets the current process's memory usage as a pretty string. Can be shown in Bytes or all the way up to Terabytes via the <paramref name="memType"/> parameter.
@@ -176,41 +176,55 @@ namespace Gommon {
         
 #nullable enable
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Task OrCompleted(this Task? task) => task ?? Task.CompletedTask;
 
 
         #region JavaScript Promise-like .Then chaining
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task Then(this Task task, Func<Task> continuation)
-            => await task.ContinueWith(_ => continuation()).ConfigureAwait(false);
+            => await task.ContinueWith(_ => continuation().ConfigureAwait(false)).ConfigureAwait(false);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> ThenApply<T>(this Task<T> task, Func<T, Task> continuation)
         {
-            var result = await task;
-            await continuation(result);
+            var result = await task.ConfigureAwait(false);
+            await continuation(result).ConfigureAwait(false);
             return result;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<T> ThenApply<T>(this ValueTask<T> task, Func<T, Task> continuation)
         {
-            var result = await task;
-            await continuation(result);
+            var result = await task.ConfigureAwait(false);
+            await continuation(result).ConfigureAwait(false);
             return result;
         }
         
-        public static async Task ThenUse<T>(this Task<T> task, Func<T, Task> continuation) 
-            => await continuation(await task);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task ThenUse<T>(this Task<T> task, Func<T, Task> continuation) => 
+            await continuation(await task.ConfigureAwait(false)).ConfigureAwait(false);
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task ThenUse<T>(this ValueTask<T> task, Func<T, Task> continuation) => 
+            await continuation(await task.ConfigureAwait(false)).ConfigureAwait(false);
         
-        public static async Task ThenUse<T>(this ValueTask<T> task, Func<T, Task> continuation) 
-            => await continuation(await task);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, Task<TR>> continuation) => 
+            await continuation(await task.ConfigureAwait(false)).ConfigureAwait(false);
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, Task<TR>> continuation) => 
+            await continuation(await task.ConfigureAwait(false)).ConfigureAwait(false);
         
-        public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, Task<TR>> continuation) => await continuation(await task);
-        public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, Task<TR>> continuation) => await continuation(await task);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, TR> continuation) => 
+            continuation(await task.ConfigureAwait(false));
         
-        public static async Task<TR> Then<T, TR>(this Task<T> task, Func<T, TR> continuation) => continuation(await task);
-        public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, TR> continuation) => continuation(await task);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, TR> continuation) => 
+            continuation(await task.ConfigureAwait(false));
 
         #endregion
     }
