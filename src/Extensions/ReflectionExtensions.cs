@@ -26,15 +26,9 @@ namespace Gommon
         /// <param name="attribute">The possibly-null attribute.</param>
         /// <returns><see cref="bool"/></returns>
         public static bool TryGetAttribute<T>(this MemberInfo memberInfo, [NotNullWhen(true)] out T attribute)
-            where T : Attribute
-        {
-            attribute = null;
-
-            if (memberInfo.HasAttribute<T>())
-                attribute = memberInfo.GetCustomAttribute<T>();
-
-            return attribute != null;
-        }
+            where T : Attribute 
+            => (attribute = memberInfo.GetCustomAttribute<T>()) != null;
+        
 
         /// <summary>
         ///     Checks whether or not the current <see cref="Type"/> inherits/implements the given <typeparamref name="T"/>, whether that be a class or an interface.
@@ -42,7 +36,7 @@ namespace Gommon
         /// </summary>
         /// <typeparam name="T">The type to compare with</typeparam>
         /// <param name="type">The type to check for inheritance</param>
-        /// <returns>Whether or not this type inherits (or can be implicitly converted to) the given type <typeparamref name="T"/>.</returns>
+        /// <returns>Whether this type inherits (or can be implicitly converted to) the given type <typeparamref name="T"/>.</returns>
         public static bool Inherits<T>(this Type type)
             => typeof(T).IsAssignableFrom(type);
 
@@ -123,5 +117,24 @@ namespace Gommon
 
             return (true, null);
         }
+        
+        
+        public static bool TryGetField(this Type type, string fieldName, out FieldInfo field) 
+            => (field = type.GetField(fieldName)) != null;
+        
+        public static bool TryGetField(this Type type, string fieldName, BindingFlags bindingAttr, out FieldInfo field) 
+            => (field = type.GetField(fieldName, bindingAttr)) != null;
+        
+        public static bool TryGetProperty(this Type type, string fieldName, out PropertyInfo prop) 
+            => (prop = type.GetProperty(fieldName)) != null;
+        
+        public static bool TryGetProperty(this Type type, string fieldName, BindingFlags bindingAttr, out PropertyInfo prop) 
+            => (prop = type.GetProperty(fieldName, bindingAttr)) != null;
+        
+        public static bool TryGetMethod(this Type type, string methodName, out MethodInfo method) 
+            => (method = type.GetMethod(methodName)) != null;
+        
+        public static bool TryGetMethod(this Type type, string methodName, BindingFlags bindingAttr, out MethodInfo method) 
+            => (method = type.GetMethod(methodName, bindingAttr)) != null;
     }
 }

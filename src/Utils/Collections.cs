@@ -43,14 +43,15 @@ namespace Gommon {
     }
 
     /// <summary>
-    ///     Mutable <see cref="Dictionary{TKey,TValue}"/> implementation that solely provides nullable indexing.
+    ///     Mutable alternative <see cref="Dictionary{TKey,TValue}"/> implementation solely for nullable indexing.
     /// </summary>
     /// <typeparam name="TKey">Entry key</typeparam>
     /// <typeparam name="TValue">Entry value</typeparam>
     public class SafeDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : class {
-        public SafeDictionary(Dictionary<TKey, TValue> initial = null)
-            => (initial ?? new Dictionary<TKey, TValue>())
-                    .ForEach(x => Add(x.Key, x.Value));
+        public SafeDictionary(Dictionary<TKey, TValue> initial) : base(initial.Count)
+            => initial.ForEach(x => Add(x.Key, x.Value));
+        
+        public SafeDictionary() {}
 
         [CanBeNull]
         public new TValue this[TKey key] {

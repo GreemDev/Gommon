@@ -35,7 +35,6 @@ namespace Gommon.Tests {
             private string lmfaoStr = "lmfao";
             private string oafmlStr => "oafml";
             private void ThrowEx() => throw new Exception();
-
         }
     }
 
@@ -45,6 +44,7 @@ namespace Gommon.Tests {
         public static void Test_TypeAsFullNamePrettyString()
         {
             Assert.Equal("System.Collections.Generic.List<String>", typeof(List<string>).AsFullNamePrettyString());
+            Assert.Equal("System.Collections.Generic.Dictionary<String, Int32>", typeof(Dictionary<string, int>).AsFullNamePrettyString());
         }
 
         [Fact]

@@ -109,16 +109,15 @@ namespace Gommon {
         /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
         /// <param name="args">The arguments to pass to the method.</param>
         public Optional<TResult> CallGenericSafe<TResult>(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null, params object[] args) {
-            var method = Optional.Of(typeof(T).GetMethod(name, flags ?? Bindings));
+            if (typeof(T).TryGetMethod(name, flags ?? Bindings, out var method))
+                return method.MakeGenericMethod(genericTypes.ToArray())
+                    .Invoke(BackingObject, args).Cast<TResult>();
+
             if (_throwIfNullMember)
-                method.OrThrow(() =>
-                    new ValueException(
-                        $"Method \"{name}\" does not exist on type {typeof(T).AsPrettyString()} with the given BindingFlags."));
-
-            if (!method.HasValue) return Optional.None<TResult>();
-
-            return method.Value.MakeGenericMethod(genericTypes.ToArray())
-                .Invoke(BackingObject, args).Cast<TResult>();
+                throw new InvalidOperationException(
+                    $"Method \"{name}\" does not exist on type {typeof(T).AsPrettyString()} with the given BindingFlags.");
+            
+            return Optional<TResult>.None;
         }
 
         /// <summary>
@@ -135,33 +134,18 @@ namespace Gommon {
         /// <param name="name">The name of the field or property.</param>
         /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
         public Optional<TResult> GetSafe<TResult>(string name, BindingFlags? flags = null) {
-            var field = Optional.Of(typeof(T).GetField(name, flags ?? Bindings));
-            var prop = Optional.Of(typeof(T).GetProperty(name, flags ?? Bindings));
+            
+            if (typeof(T).TryGetField(name, flags ?? Bindings, out var field))
+                return field.GetValue(BackingObject).Cast<TResult>();
+            
+            if (typeof(T).TryGetProperty(name, flags ?? Bindings, out var property))
+                return property.GetValue(BackingObject).Cast<TResult>();
+            
             if (_throwIfNullMember)
-                switch (field.HasValue) {
-                    case false when !prop.HasValue:
-                        throw new ValueException(
-                            $"Neither a field or property \"{name}\" exists on type {typeof(T).AsPrettyString()} with the given BindingFlags.");
-                    case true when prop.HasValue:
-                        throw new ValueException("??????????????????????????????? how"); //whatexception has returned
-                }
-
-            var spine = BackingObject; //lambda scopes
-
-            MemberInfo memberInfo = null;
-            if (field.HasValue)
-                memberInfo = field.Value;
-            else if (prop.HasValue)
-                memberInfo = prop.Value;
-
-            var opt = Optional.Of(memberInfo);
-            return opt.HasValue
-                ? opt.Value is FieldInfo fi
-                    ? fi.GetValue(spine).Cast<TResult>()
-                    : opt.Value is PropertyInfo pi
-                        ? pi.GetValue(spine).Cast<TResult>()
-                        : Optional.None<TResult>()
-                : Optional.None<TResult>();
+                throw new InvalidOperationException(
+                    $"Neither a field or property \"{name}\" exists on type {typeof(T).AsPrettyString()} with the given BindingFlags.");
+            
+            return Optional<TResult>.None;
         }
     }
 }
