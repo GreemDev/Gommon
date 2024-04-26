@@ -125,13 +125,11 @@ namespace Gommon {
 
 namespace System.Linq {
     public static class LinqExtensions {
-        public static bool AnyGet<TSource>([NotNull] this IEnumerable<TSource> source,
+        public static bool TryGetFirst<TSource>([NotNull] this IEnumerable<TSource> source,
             [NotNull] Func<TSource, bool> predicate,
-            [NotNullWhen(true)] out TSource value) {
-            value = source.FirstOrDefault(predicate);
-
-            return value != null;
-        }
+            [NotNullWhen(true)] out TSource value) => 
+            (value = source.FirstOrDefault(predicate)) != null;
+        
 
         /// <summary>
         ///     Checks whether or not the current IEnumerable is empty, optionally filtering by the given predicate before determining.

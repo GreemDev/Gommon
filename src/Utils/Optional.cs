@@ -655,7 +655,7 @@ namespace Gommon {
         /// <param name="value">The value to convert.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Optional<T>([AllowNull] T value) =>
-            value is null ? Optional.None<T>() : new(value);
+            value is null ? Optional.None<T>() : new Optional<T>(value);
 
         /// <summary>
         /// Extracts value stored in the Optional container.
@@ -701,19 +701,20 @@ namespace Gommon {
         /// <param name="first">The first container.</param>
         /// <param name="second">The second container.</param>
         /// <returns><see langword="true"/>, if both containers are empty or have values; otherwise, <see langword="false"/>.</returns>
-        public static Optional<T> operator ^(in Optional<T> first, in Optional<T> second) {
-            switch (first._valueKind - second._valueKind) {
-                default:
-                    return default;
-                case _undefinedValue - _nullValue:
-                case _nullValue - _notEmptyValue:
-                case _undefinedValue - _notEmptyValue:
-                    return second;
-                case _notEmptyValue - _undefinedValue:
-                case _notEmptyValue - _nullValue:
-                case _nullValue - _undefinedValue:
-                    return first;
-            }
+        public static Optional<T> operator ^(in Optional<T> first, in Optional<T> second)
+        {
+            return (first._valueKind - second._valueKind) switch
+            {
+                _undefinedValue - _nullValue or 
+                    _nullValue - _notEmptyValue or 
+                    _undefinedValue - _notEmptyValue 
+                    => second,
+                _notEmptyValue - _undefinedValue or 
+                    _notEmptyValue - _nullValue or 
+                    _nullValue - _undefinedValue 
+                    => first,
+                _ => default
+            };
         }
 
         /// <summary>
@@ -722,7 +723,7 @@ namespace Gommon {
         /// <param name="optional">The container to check.</param>
         /// <returns><see langword="true"/> if this container has value; otherwise, <see langword="false"/>.</returns>
         /// <see cref="HasValue"/>
-        public static bool operator true(in Optional<T> optional) => optional.HasValue;
+        public static bool operator true(Optional<T> optional) => optional.HasValue;
 
         /// <summary>
         /// Checks whether the container has no value.
@@ -730,7 +731,7 @@ namespace Gommon {
         /// <param name="optional">The container to check.</param>
         /// <returns><see langword="true"/> if this container has no value; otherwise, <see langword="false"/>.</returns>
         /// <see cref="HasValue"/>
-        public static bool operator false(in Optional<T> optional) => optional._valueKind < _notEmptyValue;
+        public static bool operator false(Optional<T> optional) => optional._valueKind < _notEmptyValue;
 
         /// <inheritdoc/>
         public void Dispose() => _value.Cast<IDisposable>()?.Dispose();

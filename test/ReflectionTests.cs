@@ -25,7 +25,7 @@ namespace Gommon.Tests {
         
         [Fact]
         public static void Test_ThrowIfMemberNull() {
-            Assert.Throws<ValueException>(() =>
+            Assert.Throws<InvalidOperationException>(() =>
                 Mirror.ReflectUnsafe(new ReflectionTest())
                     .Call("uhjetiughjrtiuhrtu")
             );
