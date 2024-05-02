@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -236,4 +237,21 @@ public static partial class Lambda {
 
     public static async Task<string> StringAsync(Func<StringBuilder, Task> initializer) =>
         (await new StringBuilder().ApplyAsync(initializer)).ToString();
+
+
+    public static Stopwatch Timed(Action action)
+    {
+        var sw = Stopwatch.StartNew();
+        action();
+        sw.Stop();
+        return sw;
+    }
+    
+    public static async Task<Stopwatch> TimedAsync(Func<Task> action)
+    {
+        var sw = Stopwatch.StartNew();
+        await action();
+        sw.Stop();
+        return sw;
+    }
 }
