@@ -254,4 +254,20 @@ public static partial class Lambda {
         sw.Stop();
         return sw;
     }
+    
+    public static (Stopwatch Stopwatch, T Result) Timed<T>(Func<T> action)
+    {
+        var sw = Stopwatch.StartNew();
+        var result = action();
+        sw.Stop();
+        return (sw, result);
+    }
+    
+    public static async Task<(Stopwatch Stopwatch, T Result)> TimedAsync<T>(Func<Task<T>> action)
+    {
+        var sw = Stopwatch.StartNew();
+        var result = await action();
+        sw.Stop();
+        return (sw, result);
+    }
 }
