@@ -9,15 +9,6 @@ namespace Gommon {
         #region String
 
         /// <summary>
-        ///     Repeats <paramref name="str"/> <paramref name="times"/> times.
-        /// </summary>
-        /// <param name="str">Current string</param>
-        /// <param name="times">The amount of times the string should be repeated.</param>
-        /// <returns>The resulting string.</returns>
-        public static string Repeat(this string str, int times)
-            => Lambda.String(sb => Lambda.Repeat(times, () => sb.Append(str)));
-
-        /// <summary>
         ///     Prepends <paramref name="other"/> to the beginning of <paramref name="str"/> and returns it.
         /// </summary>
         /// <param name="str">Current string</param>
