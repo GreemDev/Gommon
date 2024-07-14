@@ -132,7 +132,7 @@ namespace System.Linq {
         
 
         /// <summary>
-        ///     Checks whether or not the current IEnumerable is empty, optionally filtering by the given predicate before determining.
+        ///     Checks whether the current IEnumerable is empty, optionally filtering by the given predicate before determining.
         /// </summary>
         /// <param name="coll">The current Enumerable.</param>
         /// <param name="predicate">The optional predicate.</param>
@@ -150,7 +150,7 @@ namespace System.Linq {
         /// <param name="coll">The current collection.</param>
         /// <param name="predicate">The predicate function used to find the first matching element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <returns>An optional, possibly containing the value that matches the predicate.</returns>
+        /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
         public static Optional<T> FindFirst<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
             var c = coll.ToArray();
             return c.None()
@@ -164,7 +164,7 @@ namespace System.Linq {
         /// <param name="coll">The current collection.</param>
         /// <param name="predicate">The predicate function used to find the last matching element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <returns>An optional, possibly containing the value that matches the predicate.</returns>
+        /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
         public static Optional<T> FindLast<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
             var c = coll.ToArray();
             return c.None()
@@ -178,7 +178,7 @@ namespace System.Linq {
         /// <param name="coll">The current collection.</param>
         /// <param name="predicate">The predicate function used to find the element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <returns>An optional, possibly containing the value that matches the predicate.</returns>
+        /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
         public static Optional<T> FindSingle<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
             var c = coll.ToArray();
             return c.None()
@@ -192,7 +192,7 @@ namespace System.Linq {
         /// <param name="coll">The current collection.</param>
         /// <param name="index">The index of the element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <returns>An optional, possibly containing the value at the specified index.</returns>
+        /// <returns>An <see cref="Optional{T}"/>, possibly containing the value at the specified index.</returns>
         public static Optional<T> FindElement<T>(this IEnumerable<T> coll, int index) {
             var c = coll.ToArray();
             return c.None()
@@ -205,7 +205,7 @@ namespace System.Linq {
         /// </summary>
         /// <param name="coll">The current collection.</param>
         /// <param name="key">The key of the element.</param>
-        /// <returns>An optional, possibly containing the value at the specified index.</returns>
+        /// <returns>An <see cref="Optional{T}"/>, possibly containing the value at the specified index.</returns>
         public static Optional<T> FindValue<TKey, T>(this IEnumerable<KeyValuePair<TKey, T>> coll,
             TKey key)
         {
@@ -219,11 +219,12 @@ namespace System.Linq {
         }
 
         /// <summary>
-        ///     Wraps the result of a GetRandomElement() in an <see cref="Optional{T}"/>.
+        ///     Wraps the result of GetRandomElement() in an <see cref="Optional{T}"/>.
+        ///     The value can only be absent if the input collection is empty.
         /// </summary>
         /// <param name="coll">The current collection.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <returns>An optional, possibly containing the value that matches the predicate.</returns>
+        /// <returns>A randomly retrieved element wrapped in an <see cref="Optional{T}"/>, or an empty <see cref="Optional{T}"/> if the source collection <paramref name="coll"/> is empty.</returns>
         public static Optional<T> FindRandomElement<T>(this IEnumerable<T> coll) {
             var c = coll.ToArray();
             return c.None()

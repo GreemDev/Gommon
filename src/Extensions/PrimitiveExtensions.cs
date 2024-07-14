@@ -25,7 +25,7 @@ namespace Gommon {
         public static string Append(this string str, object other) => str.Insert(str.Length, other.ToString());
 
         /// <summary>
-        ///     Checks whether or not the current string equals any of <paramref name="potentialMatches"/>, ignoring case.
+        ///     Checks whether the current string equals any of <paramref name="potentialMatches"/>, ignoring case.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <param name="potentialMatches">Strings to try and match</param>
@@ -34,7 +34,7 @@ namespace Gommon {
             => potentialMatches.Any(str.EqualsIgnoreCase);
 
         /// <summary>
-        ///     Checks whether or not <paramref name="otherString"/> is equal to the current string, ignoring case.
+        ///     Checks whether <paramref name="otherString"/> is equal to the current string, ignoring case.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <param name="otherString">String to compare</param>
@@ -44,7 +44,7 @@ namespace Gommon {
 
 
         /// <summary>
-        ///     Checks whether or not the current string contains any of <paramref name="potentialMatches"/>, ignoring case.
+        ///     Checks whether the current string contains any of <paramref name="potentialMatches"/>, ignoring case.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <param name="potentialMatches">Strings to try and match</param>
@@ -53,7 +53,7 @@ namespace Gommon {
             => potentialMatches.Any(str.ContainsIgnoreCase);
 
         /// <summary>
-        ///     Checks whether or not <paramref name="value"/> is included in the current string, ignoring case.
+        ///     Checks whether <paramref name="value"/> is included in the current string, ignoring case.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <param name="value">String to compare</param>
@@ -62,7 +62,7 @@ namespace Gommon {
             => !(str is null) && str.ToLower().Contains(value.ToLower());
 
         /// <summary>
-        ///     Checks whether or not the current string is null or entirely whitespace.
+        ///     Checks whether the current string is null or entirely whitespace.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <returns><see cref="bool"/></returns>
@@ -70,7 +70,7 @@ namespace Gommon {
             => string.IsNullOrWhiteSpace(str);
 
         /// <summary>
-        ///     Checks whether or not the current string is null or completely empty.
+        ///     Checks whether the current string is null or completely empty.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <returns><see cref="bool"/></returns>
@@ -78,7 +78,7 @@ namespace Gommon {
             => string.IsNullOrEmpty(str);
 
         /// <summary>
-        ///     Gets the current string's unicode points. Typically for unicode emojis.
+        ///     Gets the current string's unicode points. Usually for unicode emojis.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <returns>Enumerable of Unicode code points</returns>
@@ -96,7 +96,7 @@ namespace Gommon {
         }
 
         /// <summary>
-        ///     Returns whether or not the current string starts with another string, ignoring case.
+        ///     Returns whether the current string starts with another string, ignoring case.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <param name="otherString">String to compare</param>
@@ -115,7 +115,7 @@ namespace Gommon {
             => str.Replace(value, replacement.ToString(), StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
-        ///     Returns whether or not the current string ends with another string, ignoring case.
+        ///     Returns whether the current string ends with another string, ignoring case.
         /// </summary>
         /// <param name="str">Current string</param>
         /// <param name="otherString">String to compare</param>
@@ -195,6 +195,8 @@ namespace Gommon {
 
         #region Numbers
 
+        #region Extension-based Math.Max/Math.Min
+
         public static byte CoerceAtLeast(this byte value, byte minimum) => Math.Max(value, minimum);
         public static byte CoerceAtMost(this byte value, byte maximum) => Math.Min(value, maximum);
         
@@ -206,6 +208,15 @@ namespace Gommon {
         
         public static long CoerceAtLeast(this long value, long minimum) => Math.Max(value, minimum);
         public static long CoerceAtMost(this long value, long maximum) => Math.Min(value, maximum);
+        
+        public static double CoerceAtLeast(this double value, double minimum) => Math.Max(value, minimum);
+        public static double CoerceAtMost(this double value, double maximum) => Math.Min(value, maximum);
+        
+        public static float CoerceAtLeast(this float value, float minimum) => Math.Max(value, minimum);
+        public static float CoerceAtMost(this float value, float maximum) => Math.Min(value, maximum);
+
+        #endregion
+
 
         #endregion
     }

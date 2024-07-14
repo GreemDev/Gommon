@@ -152,19 +152,19 @@ public partial class Extensions {
         return memType switch
         {
             MemoryType.Terabytes =>
-                $"{_divideProcessMemoryTiers(4)} TB",
+                $"{divideMemoryTiers(4)} TB",
             MemoryType.Gigabytes =>
-                $"{_divideProcessMemoryTiers(3)} GB",
+                $"{divideMemoryTiers(3)} GB",
             MemoryType.Megabytes =>
-                $"{_divideProcessMemoryTiers(2)} MB",
+                $"{divideMemoryTiers(2)} MB",
             MemoryType.Kilobytes =>
-                $"{_divideProcessMemoryTiers(1)} KB",
+                $"{divideMemoryTiers(1)} KB",
             MemoryType.Bytes =>
                 $"{process.PrivateMemorySize64} B",
             _ => "null"
         };
             
-        long _divideProcessMemoryTiers(int divisions)
+        long divideMemoryTiers(int divisions)
         {
             var mem = process.PrivateMemorySize64;
             Lambda.Repeat(divisions.CoerceAtMost(4), () =>
