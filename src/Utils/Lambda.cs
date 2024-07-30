@@ -296,14 +296,14 @@ public static partial class Lambda {
         private Func<bool> _condition;
         private Action _finalizer;
 
-        public void Here()
+        public Task Async() => Task.Run(HereAsync);
+        
+        public async Task HereAsync()
         {
             while (_condition is null || _condition())
-                _action();
+                await _action();
             
             _finalizer?.Invoke();
         }
-        
-        public Task Async() => Task.Run(Here);
     } 
 }
