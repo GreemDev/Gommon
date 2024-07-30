@@ -270,4 +270,40 @@ public static partial class Lambda {
         sw.Stop();
         return (sw, result);
     }
+    
+    public static Loop Repeat(Func<Task> action) => new(action);
+
+    public struct Loop
+    {
+        internal Loop(Func<Task> action)
+        {
+            _action = action;
+        }
+
+        public Loop While(Func<bool> condition)
+        {
+            _condition = condition!;
+            return this;
+        }
+
+        public Loop Finally(Action finalizer)
+        {
+            _finalizer = finalizer!;
+            return this;
+        }
+        
+        private readonly Func<Task> _action;
+        private Func<bool> _condition;
+        private Action _finalizer;
+
+        public void Here()
+        {
+            while (_condition is null || _condition())
+                _action();
+            
+            _finalizer?.Invoke();
+        }
+        
+        public Task Async() => Task.Run(Here);
+    } 
 }
