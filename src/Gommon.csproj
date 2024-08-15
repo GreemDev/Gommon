@@ -11,9 +11,11 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.6.4</Version>
+    <Version>2.6.5</Version>
     <PackageReleaseNotes>
-      minor changes to loop utility
+      Functional Programming extensions inspired by Kotlin: Run &amp; Into (joining Apply)
+        Run -> Takes the object and runs the action on it; returns nothing.
+        Into -> Takes the object and transforms it into something else, then returns that.
     </PackageReleaseNotes>
   </PropertyGroup>
 

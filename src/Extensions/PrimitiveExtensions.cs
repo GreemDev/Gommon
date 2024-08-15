@@ -59,7 +59,7 @@ namespace Gommon {
         /// <param name="value">String to compare</param>
         /// <returns><see cref="bool"/></returns>
         public static bool ContainsIgnoreCase(this string str, string value)
-            => !(str is null) && str.ToLower().Contains(value.ToLower());
+            => str is not null && str.ToLower().Contains(value.ToLower());
 
         /// <summary>
         ///     Checks whether the current string is null or entirely whitespace.

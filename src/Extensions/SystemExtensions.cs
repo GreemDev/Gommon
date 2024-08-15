@@ -68,30 +68,6 @@ public partial class Extensions {
         }
     }
 
-    /// <summary>
-    ///     Run the specified <see cref="Func{T, TResult}"/> with <paramref name="curr"/> passed in as its value.
-    /// </summary>
-    /// <param name="curr">The current object.</param>
-    /// <param name="applyAsync">The async action to perform.</param>
-    /// <typeparam name="T">The type of the current object.</typeparam>
-    /// <returns><paramref name="curr"/> after <paramref name="applyAsync"/> runs on it.</returns>
-    public static async Task<T> ApplyAsync<T>(this T curr, Func<T, Task> applyAsync) {
-        await applyAsync(curr).ConfigureAwait(false);
-        return curr;
-    }
-
-    /// <summary>
-    ///     Run the specified <see cref="Action{T}"/> with <paramref name="curr"/> passed in as its value.
-    /// </summary>
-    /// <param name="curr">The current object.</param>
-    /// <param name="apply">The action to perform.</param>
-    /// <typeparam name="T">The type of the current object.</typeparam>
-    /// <returns><paramref name="curr"/> after <paramref name="apply"/> runs on it.</returns>
-    public static T Apply<T>(this T curr, Action<T> apply) {
-        apply(curr);
-        return curr;
-    }
-
     public static T ValueLock<T>(this object @lock, Func<T> action) {
         lock (@lock)
             return action();
