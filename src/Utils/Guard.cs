@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,29 +10,28 @@ using Contract = JetBrains.Annotations.ContractAnnotationAttribute;
 // ReSharper disable MemberCanBePrivate.Global
 namespace Gommon;
 
+#nullable enable
+
 /// <summary>
 ///     Provides common value check methods, such as nullability, collection length, and conditions.
 /// </summary>
 public static class Guard {
 
     [Contract("null => halt")]
-    public static void Incomplete([CanBeNull] Task task) {
-        Require(task, "Task");
-        Ensure(!task.IsCompleted, "Task is already completed, successfully or unsuccessfully.");
+    public static void Incomplete(Task? task) {
+        Ensure(!Require(task, "Task").IsCompleted, "Task is already completed, successfully or unsuccessfully.");
     }
 
     [Contract("null => halt")]
-    public static void Completed([CanBeNull] Task task) {
-        Require(task, "Task");
-        Ensure(task.IsCompleted, "Task is not completed, successfully or unsuccessfully.");
+    public static void Completed(Task? task) {
+        Ensure(Require(task, "Task").IsCompleted, "Task is not completed, successfully or unsuccessfully.");
     }
 
     [Contract("null => halt")]
-    public static void ValidSnowflake([CanBeNull] string snowflake) => ValidSnowflake(snowflake, $"{snowflake}");
+    public static void ValidSnowflake(string? snowflake) => ValidSnowflake(snowflake, $"{snowflake}");
 
-    public static void ValidSnowflake([CanBeNull] string snowflake, [NotNull] string value) {
-        Require(snowflake, value);
-        var nw = snowflake.Replace(" ", "");
+    public static void ValidSnowflake(string? snowflake, string value) {
+        var nw = Require(snowflake, value).Replace(" ", "");
         if (!nw.All(char.IsNumber))
             ValueException.Throw($"{value} is not a valid snowflake string! Provided: \"{snowflake}\"");
     }
@@ -43,19 +43,19 @@ public static class Guard {
     }
 
     [Contract("expression:false => halt")]
-    public static void Ensure(bool expression, [NotNull] string message) {
+    public static void Ensure(bool expression, string message) {
         if (!expression)
             ValueException.Throw(message);
     }
 
     [Contract("expression:false => halt")]
-    public static void Ensure(bool expression, [NotNull] string message, [ItemCanBeNull] params object[] args)
+    public static void Ensure(bool expression, string message, params object?[] args)
         => Ensure(expression, message.Format(args));
 
     [Contract("input:null => halt; regex:null => halt")]
-    public static void Matches([NotNull] string input, [NotNull] string regex, [CanBeNull] string name = null) {
-        Require(input, name);
-        Require(regex, name ?? "Regular expression");
+    public static void Matches(string input, string regex, string? name = null) {
+        RequireObject(input, name);
+        RequireObject(regex, name ?? "Regular expression");
         Ensure(new Regex(regex).IsMatch(input),
             $"{name ?? "Input"} must match regex ^{regex}$. Provided: \"{input}\"");
     }
@@ -77,19 +77,27 @@ public static class Guard {
     }
 
     [Contract("null => halt")]
-    public static void Require(object value) => Require(value, null);
+    public static void RequireObject(object? value) => RequireObject(value, null);
 
     [Contract("value:null => halt")]
-    public static void Require(object value, string name) {
-        Optional.Of(value).OrThrow(() => new ValueException($"{name ?? "Value"} must not be null."));
-    }
+    public static void RequireObject(object? value, string? name) 
+        => Optional.Of(value).OrThrow(() => new ValueException($"{name ?? "Value"} must not be null."));
+
+    [Contract("null => halt")]
+    [return: System.Diagnostics.CodeAnalysis.NotNull]
+    public static T Require<T>(T value) => Require(value, null);
+
+    [Contract("value:null => halt")]
+    [return: System.Diagnostics.CodeAnalysis.NotNull]
+    public static T Require<T>(T value, string? name) 
+        => Optional.Of(value).OrThrow(() => new ValueException($"{name ?? "Value"} must not be null."));
 }
 
 public class ValueException : Exception {
     [Contract("=> halt")]
-    public static void Throw(string message = null, Exception innerException = null)
+    public static void Throw(string? message = null, Exception? innerException = null)
         => throw new ValueException(message, innerException);
 
-    public ValueException(string message = null, Exception innerException = null) :
+    public ValueException(string? message = null, Exception? innerException = null) :
         base(message, innerException) { }
 }

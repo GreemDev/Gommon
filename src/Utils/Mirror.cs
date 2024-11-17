@@ -43,7 +43,7 @@ public readonly struct Mirror<T>
             return BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
         
         if (@in.Value.HasFlag(BindingFlags.Static))
-            throw new InvalidOperationException($"Cannot create a {typeof(Mirror<T>).AsPrettyString()} for static members.");
+            throw new InvalidOperationException($"Cannot use a {typeof(Mirror<T>).AsPrettyString()} for static members.");
 
         return @in.Value.HasFlag(BindingFlags.Instance)
             ? @in.Value
@@ -118,12 +118,17 @@ public readonly struct Mirror<T>
     /// <param name="args">The arguments to pass to the method.</param>
     public Optional<TResult> CallGenericSafe<TResult>(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null, params object[] args) {
         if (typeof(T).TryGetMethod(name, Fix(flags), out var method))
-            return method.MakeGenericMethod(genericTypes.ToArray())
-                .Invoke(BackingObject, args).Cast<TResult>();
+        {
+            if (method.IsGenericMethodDefinition)
+            {
+                return method.MakeGenericMethod(genericTypes.ToArray())
+                    .Invoke(BackingObject, args).Cast<TResult>();
+            }
+        }
 
         if (_throwIfNullMember)
             throw new InvalidOperationException(
-                $"Method \"{name}\" with generic types <{
+                $"Method \"{name}\"<{
                     genericTypes.Select(x => x.AsFullNamePrettyString())
                         .JoinToString(", ")
                 }> does not exist on type {typeof(T).AsPrettyString()} with the given BindingFlags.");

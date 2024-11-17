@@ -83,7 +83,7 @@ public partial class Extensions {
             action(obj);
     }
 
-    private const int _memoryTierSize = 1024;
+    private const int MemoryTierSize = 1024;
 
     /// <summary>
     ///     Gets all flags in the current enum.
@@ -144,7 +144,7 @@ public partial class Extensions {
         {
             var mem = process.PrivateMemorySize64;
             Lambda.Repeat(divisions.CoerceAtMost(4), () =>
-                mem /= _memoryTierSize
+                mem /= MemoryTierSize
             );
             return mem;
         }

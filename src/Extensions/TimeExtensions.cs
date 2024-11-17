@@ -3,8 +3,8 @@
 // ReSharper disable MemberCanBePrivate.Global
 namespace Gommon;
 
-public static partial class Extensions {
-
+public static partial class Extensions
+{
     public static string DateFormat { get; set; } = "MM/dd/yyyy";
 
     /// <summary>
@@ -73,8 +73,7 @@ public static partial class Extensions {
     /// <param name="usePartialTime">Whether or not to show hours in the time.</param>
     /// <returns></returns>
     public static string FormatPrettyString(this DateTimeOffset offset, bool usePartialTime = false)
-        =>
-            $"at {(usePartialTime ? offset.FormatPartialTime() : offset.FormatFullTime())}, on {offset.FormatDate()}";
+        => $"at {(usePartialTime ? offset.FormatPartialTime() : offset.FormatFullTime())}, on {offset.FormatDate()}";
 
     /// <summary>
     ///     Transforms the current <see cref="DateTimeOffset"/> to a Discord pseudo-snowflake.
@@ -86,12 +85,13 @@ public static partial class Extensions {
         => (offset.ToUnixTimeMilliseconds().Cast<ulong>() - 1420070400000UL) << 22;
 
     public static string AsMarkdownString(this DateTime dt)
-        => dt.FormatPrettyString().Split(" ").Apply(arr => {
+        => dt.FormatPrettyString().Split(" ").Apply(arr =>
+        {
             arr[1] = embolden(arr[1]);
             arr[2] = embolden(arr[2].TrimEnd(',')).Append(',');
             arr[4] = embolden(arr[4]);
             return;
-                
+
             string embolden(string s) => $"**{s}**";
         }).JoinToString(" ");
 

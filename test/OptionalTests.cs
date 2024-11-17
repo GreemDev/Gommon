@@ -13,9 +13,9 @@ public class OptionalTests {
 
         // oh boy here we go
         Assert.True(new Optional<string>("")
-            .OnlyIf(s => s.Any())
+            .OnlyIf(s => s.Length != 0)
             .OrElseGet(() => "test string")
-            .Any());
+            .Length > 0);
             
         Assert.True(Optional.Of("").Check(string.IsNullOrEmpty));
 

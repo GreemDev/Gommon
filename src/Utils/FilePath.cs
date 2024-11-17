@@ -29,9 +29,7 @@ public record FilePath
     
     public FilePath Resolve(string subPath, bool? isDirectory = null)
         => new(
-            !Path.EndsWith('/') && !subPath.StartsWith('/')
-                ? $"{Path}/{subPath}"
-                : Path + subPath,
+            DotNetPath.Combine(Path, subPath),
             isDirectory
         );
 

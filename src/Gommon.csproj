@@ -11,11 +11,19 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.6.5</Version>
+    <Version>2.6.6</Version>
     <PackageReleaseNotes>
-      Functional Programming extensions inspired by Kotlin: Run &amp; Into (joining Apply)
-        Run -> Takes the object and runs the action on it; returns nothing.
-        Into -> Takes the object and transforms it into something else, then returns that.
+      Top-level namespaces
+      Constant renaming
+      Change FilePath.Resolve to use Path.Combine
+      Added simple string message overload to OrThrow in Optional
+      Renamed Require to RequireObject (void returning)
+      Added Require{T} which returns the definitely not-null object, similar to Objects.requireNonnull from Java.
+      Added the missing Double language alias in Type#AsPrettyString.
+      Executor.ExecuteAfterDelay &amp; Execute now wrap the Action in Lambda.Try.
+      Added MethodImplOptions.AggressiveInlining to all Lambda methods.
+      Removed cool yet, frankly, ultimately useless Loop utility class.
+      Mirror CallGenericSafe now checks if the target method is a generic method definitoon before attempting to reflectively make it a generic method.
     </PackageReleaseNotes>
   </PropertyGroup>
 

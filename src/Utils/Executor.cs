@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 // ReSharper disable MemberCanBePrivate.Global
 namespace Gommon;
 
-public static class Executor {
+public static class Executor
+{
     /// <summary>
     ///     Executes the <paramref name="func"/> asynchronously after the specified <paramref name="delay"/>.
     /// </summary>
@@ -33,27 +34,17 @@ public static class Executor {
     /// <param name="delay">Delay, in TimeSpan.</param>
     /// <param name="action">Synchronous function to execute. Avoid using the async modifier, as that creates an async void. Use <see cref="ExecuteAfterDelayAsync"/> for those cases.</param>
     public static void ExecuteAfterDelay(TimeSpan delay, Action action)
-        => new Thread(() => {
-            try {
+        => new Thread(() =>
+            Lambda.Try(() =>
+            {
                 Thread.Sleep(delay);
                 action();
-            }
-            catch {
-                //ignored
-            }
-        }).Start();
+            })
+        ).Start();
 
     /// <summary>
     ///     Executes the <paramref name="action"/> synchronously in a separate thread.
     /// </summary>
     /// <param name="action">Synchronous function to execute. Avoid using the async modifier, as that creates an async void. Use <see cref="ExecuteBackgroundAsync"/> for those cases.</param>
-    public static void Execute(Action action)
-        => new Thread(() => {
-            try {
-                action();
-            }
-            catch {
-                //ignored
-            }
-        }).Start();
+    public static void Execute(Action action) => new Thread(() => Lambda.Try(action)).Start();
 }

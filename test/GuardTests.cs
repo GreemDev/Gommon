@@ -10,8 +10,8 @@ public class GuardTests {
     }
 
     public static void Test_Require() {
-        Assert.Throws<NullReferenceException>(() => Guard.Require(null));
-        Assert.Throws<ValueException>(() => Guard.Require(null, ""));
+        Assert.Throws<NullReferenceException>(() => Guard.RequireObject(null));
+        Assert.Throws<ValueException>(() => Guard.RequireObject(null, ""));
     }
 
     public static void Test_Snowflake() {

@@ -70,6 +70,7 @@ namespace Gommon
                     {
                         "Boolean" => "bool",
                         "Single" => "float",
+                        "Double" => "double",
                         "Decimal" => "decimal",
                         "Byte" => "byte",
                         "SByte" => "sbyte",
@@ -125,11 +126,11 @@ namespace Gommon
         public static bool TryGetField(this Type type, string fieldName, BindingFlags bindingAttr, out FieldInfo field) 
             => (field = type.GetField(fieldName, bindingAttr)) != null;
         
-        public static bool TryGetProperty(this Type type, string fieldName, out PropertyInfo prop) 
-            => (prop = type.GetProperty(fieldName)) != null;
+        public static bool TryGetProperty(this Type type, string propName, out PropertyInfo prop) 
+            => (prop = type.GetProperty(propName)) != null;
         
-        public static bool TryGetProperty(this Type type, string fieldName, BindingFlags bindingAttr, out PropertyInfo prop) 
-            => (prop = type.GetProperty(fieldName, bindingAttr)) != null;
+        public static bool TryGetProperty(this Type type, string propName, BindingFlags bindingAttr, out PropertyInfo prop) 
+            => (prop = type.GetProperty(propName, bindingAttr)) != null;
         
         public static bool TryGetMethod(this Type type, string methodName, out MethodInfo method) 
             => (method = type.GetMethod(methodName)) != null;

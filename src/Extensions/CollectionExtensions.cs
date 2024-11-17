@@ -51,7 +51,7 @@ namespace Gommon {
         /// <param name="arr">Current array.</param>
         /// <returns>A random element in the current array.</returns>
         public static T GetRandomElement<T>(this T[] arr)
-            => arr.None() ? default : arr[new Random().Next(0, arr.Length)];
+            => arr.Length == 0 ? default : arr[new Random().Next(0, arr.Length)];
 
         /// <summary>
         ///     Get a random element in the current <see cref="IEnumerable{T}"/>.
@@ -153,7 +153,7 @@ namespace System.Linq {
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
         public static Optional<T> FindFirst<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
             var c = coll.ToArray();
-            return c.None()
+            return c.Length == 0
                 ? Optional.None<T>()
                 : c.FirstOrDefault(v => predicate is null || predicate(v));
         }
@@ -167,7 +167,7 @@ namespace System.Linq {
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
         public static Optional<T> FindLast<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
             var c = coll.ToArray();
-            return c.None()
+            return c.Length == 0
                 ? Optional.None<T>()
                 : c.LastOrDefault(v => predicate is null || predicate(v));
         }
@@ -181,7 +181,7 @@ namespace System.Linq {
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
         public static Optional<T> FindSingle<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
             var c = coll.ToArray();
-            return c.None()
+            return c.Length == 0
                 ? Optional.None<T>()
                 : c.SingleOrDefault(v => predicate is null || predicate(v));
         }
@@ -193,9 +193,9 @@ namespace System.Linq {
         /// <param name="index">The index of the element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value at the specified index.</returns>
-        public static Optional<T> FindElement<T>(this IEnumerable<T> coll, int index) {
+        public static Optional<T> FindElementAt<T>(this IEnumerable<T> coll, int index) {
             var c = coll.ToArray();
-            return c.None()
+            return c.Length == 0
                 ? Optional.None<T>()
                 : c.ElementAtOrDefault(index);
         }

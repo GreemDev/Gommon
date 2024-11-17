@@ -8,9 +8,7 @@ using JetBrains.Annotations;
 namespace Gommon;
 
 public static class StringUtil {
-    private const string _alphanumericChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    public static char[] ValidAlphanumerics => _alphanumericChars.ToArray();
+    private const string AlphanumericChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public static string RandomizeSequence([NotNull] string str, [NonNegativeValue] int rerolls = 0) {
         var result = rearrange(str);
@@ -19,7 +17,9 @@ public static class StringUtil {
         );
         return result;
             
-        string rearrange(string s) => string.Join("", s.OrderBy(_ => Guid.NewGuid()));
+        string rearrange(string s) 
+            => s.OrderBy(_ => Guid.NewGuid())
+                .JoinToString("");
     }
 
     /// <summary>
@@ -35,14 +35,14 @@ public static class StringUtil {
     public static string RandomAlphanumeric([NonNegativeValue] int length, bool allowRepeats = true) {
         Guard.Ensure(length > 0, "length must be at least 1");
         var result = new StringBuilder(
-            allowRepeats is false && length > 62 
-                ? 62 
+            !allowRepeats && length > AlphanumericChars.Length 
+                ? AlphanumericChars.Length
                 : length
         );
-        var tempChars = Collections.NewList(_alphanumericChars.ToArray());
+        var tempChars = Collections.NewList(AlphanumericChars.ToArray());
 
         for (var i = 0; i < length; i++) {
-            if (tempChars.None() && length > _alphanumericChars.Length)
+            if (tempChars.None() && length > AlphanumericChars.Length)
                 return result.ToString();
 
             var ch = tempChars.GetRandomElement();

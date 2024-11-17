@@ -7,7 +7,7 @@ using Xunit;
 namespace Gommon.Tests {
     public class MirrorTests {
 
-        private static Mirror<ReflectionTest> _mirror = Mirror.Reflect(new ReflectionTest());
+        private static readonly Mirror<ReflectionTest> _mirror = Mirror.Reflect(new ReflectionTest());
 
         //this works, it throws an exception, but the Assert.Throws doesn't catch it.
         /*

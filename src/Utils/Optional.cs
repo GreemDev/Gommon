@@ -93,6 +93,17 @@ namespace Gommon {
             => (await task.ConfigureAwait(false)).OrThrow(exceptionFactory);
 
         /// <summary>
+        /// If a value is present, returns the value, otherwise throw exception with specified <paramref name="message"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the value.</typeparam>
+        /// <param name="task">The task returning optional value.</param>
+        /// <param name="message">The message of the exception.</param>
+        /// <returns>The value, if present.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task<T> OrThrow<T>(this Task<Optional<T>> task, string message)
+            => (await task.ConfigureAwait(false)).OrThrow(() => new ValueException(message));
+
+        /// <summary>
         /// If a value is present, returns the value, otherwise throw exception.
         /// </summary>
         /// <typeparam name="T">Type of the value.</typeparam>
@@ -258,17 +269,15 @@ namespace Gommon {
         /// <typeparam name="T">The type of empty result.</typeparam>
         /// <returns>The empty value.</returns>
         public static Optional<T> None<T>() => Optional<T>.None;
-
+#nullable enable
         /// <summary>
         /// Wraps the value to <see cref="Optional{T}"/> container.
         /// </summary>
         /// <param name="value">The value to be wrapped.</param>
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <returns>The optional container.</returns>
-        public static Optional<T> Of<T>(T value) => new(value);
-
-#nullable enable
-
+        public static Optional<T> Of<T>(T? value) => new(value);
+        
         /// <summary>
         /// Wraps <see langword="null"/> value to <see cref="Optional{T}"/> container.
         /// </summary>
@@ -330,10 +339,9 @@ namespace Gommon {
             if (optionalValue.Equals(null))
                 return _nullValue;
 
-            if (optionalValue.Equals(Missing.Value))
-                return _undefinedValue;
-
-            return _notEmptyValue;
+            return optionalValue.Equals(Missing.Value) 
+                ? _undefinedValue 
+                : _notEmptyValue;
         }
 
         /// <summary>
@@ -403,12 +411,20 @@ namespace Gommon {
             => HasValue ? _value! : throw new TException();
 
         /// <summary>
-        /// If a value is present, returns the value, otherwise throw exception.
+        /// If a value is present, returns the value, otherwise throw exception with default message.
         /// </summary>
         /// <returns>The value, if present.</returns>
         [return: NotNull]
-        public T OrThrow() =>
-            OrThrow(() => new ValueException($"Value of type '{typeof(T).AsPrettyString()}' is absent."));
+        public T OrThrow() => OrThrow($"Value of type '{typeof(T).AsPrettyString()}' is absent.");
+        
+        /// <summary>
+        /// If a value is present, returns the value, otherwise throw exception with the specified <paramref name="message"/>.
+        /// </summary>
+        /// <param name="message">The message of the exception to throw.</param>
+        /// <returns>The value, if present.</returns>
+        [return: NotNull]
+        public T OrThrow(string message) =>
+            OrThrow(() => new ValueException(message));
 
         /// <summary>
         /// If a value is present, returns the value, otherwise throw exception.
@@ -447,14 +463,14 @@ namespace Gommon {
         public async Task<T> OrElseGet(Func<Task<T>> defaultFunc) => HasValue ? _value : await defaultFunc();
 
         /// <summary>
-        ///     Checks whether or not the value described in this Optional is present and matches the given <paramref name="condition"/> delegate.
+        ///     Checks whether the value described in this Optional is present and matches the given <paramref name="condition"/> delegate.
         /// </summary>
         /// <param name="condition">The predicate to check.</param>
         /// <returns><see langword="true"/>, if this Optional has a value and matches <paramref name="condition"/>; <see langword="false"/> otherwise.</returns>
         public bool Check(in Func<T, bool> condition) => HasValue && condition(_value);
 
         /// <summary>
-        ///     Checks whether or not the value described in this Optional is present and matches the given <paramref name="condition"/> delegate.
+        ///     Checks whether the value described in this Optional is present and matches the given <paramref name="condition"/> delegate.
         /// </summary>
         /// <param name="condition">The predicate to check.</param>
         /// <returns><see langword="true"/>, if this Optional has a value and matches <paramref name="condition"/>; <see langword="false"/> otherwise.</returns>
@@ -491,7 +507,7 @@ namespace Gommon {
 
         /// <summary>
         /// If a value is present, apply the provided mapping function to it, and if the result is
-        /// non-null, return an Optional describing the result. Otherwise returns <see cref="None"/>.
+        /// non-null, return an Optional describing the result.
         /// </summary>
         /// <typeparam name="TResult">The type of the result of the mapping function.</typeparam>
         /// <param name="mapper">A mapping function to be applied to the value, if present.</param>
@@ -501,7 +517,7 @@ namespace Gommon {
 
         /// <summary>
         /// If a value is present, apply the provided mapping function to it, and if the result is
-        /// non-null, return an Optional describing the result. Otherwise returns <see cref="None"/>.
+        /// non-null, return an Optional describing the result.
         /// </summary>
         /// <typeparam name="TResult">The type of the result of the mapping function.</typeparam>
         /// <param name="mapper">A mapping function to be applied to the value, if present.</param>
@@ -511,7 +527,7 @@ namespace Gommon {
 
         /// <summary>
         /// If a value is present, apply the provided mapping function to it, and if the result is
-        /// non-null, return an Optional describing the result. Otherwise returns <see cref="None"/>.
+        /// non-null, return an Optional describing the result.
         /// </summary>
         /// <typeparam name="TResult">The type of the result of the mapping function.</typeparam>
         /// <param name="mapper">A mapping function to be applied to the value, if present.</param>
@@ -521,7 +537,7 @@ namespace Gommon {
 
         /// <summary>
         /// If a value is present, apply the provided mapping function to it, and if the result is
-        /// non-null, return an Optional describing the result. Otherwise returns <see cref="None"/>.
+        /// non-null, return an Optional describing the result.
         /// </summary>
         /// <typeparam name="TResult">The type of the result of the mapping function.</typeparam>
         /// <param name="mapper">A mapping function to be applied to the value, if present.</param>
@@ -605,17 +621,13 @@ namespace Gommon {
         /// <returns><see langword="true"/> if <see cref="Value"/> is equal to <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
         public bool Equals(T other) => HasValue && EqualityComparer<T>.Default.Equals(_value, other);
 
-        private bool Equals(in Optional<T> other) {
-            switch (_valueKind + other._valueKind) {
-                default:
-                    return true;
-                case _notEmptyValue:
-                case _notEmptyValue + _nullValue:
-                    return false;
-                case _notEmptyValue + _notEmptyValue:
-                    return EqualityComparer<T>.Default.Equals(_value, other._value);
-            }
-        }
+        private bool Equals(in Optional<T> other) 
+            => (_valueKind + other._valueKind) switch
+            {
+                _notEmptyValue or _notEmptyValue + _nullValue => false,
+                _notEmptyValue + _notEmptyValue => EqualityComparer<T>.Default.Equals(_value, other._value),
+                _ => true
+            };
 
         /// <summary>
         /// Determines whether this container stores
@@ -626,8 +638,7 @@ namespace Gommon {
         public bool Equals(Optional<T> other) => Equals(in other);
 
         /// <summary>
-        /// Determines whether this container stores
-        /// the same value as other.
+        /// Determines whether this container stores the same value as <paramref name="other"/>.
         /// </summary>
         /// <param name="other">Other container to compare.</param>
         /// <returns><see langword="true"/> if this container stores the same value as <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
