@@ -23,7 +23,7 @@
       Executor.ExecuteAfterDelay &amp; Execute now wrap the Action in Lambda.Try.
       Added MethodImplOptions.AggressiveInlining to all Lambda methods.
       Removed cool yet, frankly, ultimately useless Loop utility class.
-      Mirror CallGenericSafe now checks if the target method is a generic method definitoon before attempting to reflectively make it a generic method.
+      Mirror#CallGenericSafe now checks if the target method is a generic method definition before attempting to reflectively make it a generic method.
     </PackageReleaseNotes>
   </PropertyGroup>
 
