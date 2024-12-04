@@ -207,6 +207,10 @@ public partial class Extensions {
         => await task.ContinueWith(
             t => continuation(t).ConfigureAwait(false), 
             TaskContinuationOptions.OnlyOnFaulted).ConfigureAwait(false);
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static async Task Catch(this Task task, Action<Task> continuation)
+        => await task.ContinueWith(continuation, TaskContinuationOptions.OnlyOnFaulted).ConfigureAwait(false);
 
     #endregion
 }
