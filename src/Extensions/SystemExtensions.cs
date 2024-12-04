@@ -201,6 +201,12 @@ public partial class Extensions {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static async Task<TR> Then<T, TR>(this ValueTask<T> task, Func<T, TR> continuation) => 
         continuation(await task.ConfigureAwait(false));
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static async Task Catch(this Task task, Func<Task, Task> continuation)
+        => await task.ContinueWith(
+            t => continuation(t).ConfigureAwait(false), 
+            TaskContinuationOptions.OnlyOnFaulted).ConfigureAwait(false);
 
     #endregion
 }
