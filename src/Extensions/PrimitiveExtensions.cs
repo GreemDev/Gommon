@@ -10,6 +10,14 @@ public static partial class Extensions {
     #region String
 
     /// <summary>
+    ///     Calls <see cref="Convert.ToUInt64(string, int)"/> on the current <see cref="string"/>.
+    /// </summary>
+    /// <param name="stringValue">The current string value representing a number.</param>
+    /// <param name="radix">Number base system. 2, 8, 10, 16. Default 16 (Hexadecimal).</param>
+    /// <returns>The resulting <see cref="ulong"/>.</returns>
+    public static ulong ToULong(this string stringValue, int radix = 16) => Convert.ToUInt64(stringValue, radix);
+
+    /// <summary>
     ///     Prepends <paramref name="other"/> to the beginning of <paramref name="str"/> and returns it.
     /// </summary>
     /// <param name="str">Current string</param>
@@ -200,21 +208,35 @@ public static partial class Extensions {
 
     public static byte CoerceAtLeast(this byte value, byte minimum) => Math.Max(value, minimum);
     public static byte CoerceAtMost(this byte value, byte maximum) => Math.Min(value, maximum);
+    public static byte CoerceWithin(this byte value, byte minimum, byte maximum) 
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
         
     public static short CoerceAtLeast(this short value, short minimum) => Math.Max(value, minimum);
     public static short CoerceAtMost(this short value, short maximum) => Math.Min(value, maximum);
-        
+    public static short CoerceWithin(this short value, short minimum, short maximum) 
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
+
     public static int CoerceAtLeast(this int value, int minimum) => Math.Max(value, minimum);
     public static int CoerceAtMost(this int value, int maximum) => Math.Min(value, maximum);
+    public static int CoerceWithin(this int value, int minimum, int maximum) 
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
+    public static int CoerceWithin(this int value, Range range) 
+        => value.CoerceAtLeast(range.Start.Value).CoerceAtMost(range.End.Value);
         
     public static long CoerceAtLeast(this long value, long minimum) => Math.Max(value, minimum);
     public static long CoerceAtMost(this long value, long maximum) => Math.Min(value, maximum);
+    public static long CoerceWithin(this long value, long minimum, long maximum) 
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
         
     public static double CoerceAtLeast(this double value, double minimum) => Math.Max(value, minimum);
     public static double CoerceAtMost(this double value, double maximum) => Math.Min(value, maximum);
+    public static double CoerceWithin(this double value, double minimum, double maximum) 
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
         
     public static float CoerceAtLeast(this float value, float minimum) => Math.Max(value, minimum);
     public static float CoerceAtMost(this float value, float maximum) => Math.Min(value, maximum);
+    public static float CoerceWithin(this float value, float minimum, float maximum) 
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
 
     #endregion
     

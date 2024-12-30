@@ -11,9 +11,10 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.6.8</Version>
+    <Version>2.7.0</Version>
     <PackageReleaseNotes>
-      Synchronous lambda Catch overload
+      CoerceWithin overloads (combined CoerceAtLeast/CoerceAtMost)
+      and a specialized CoerceWithin overload for ints accepting a Range (since those are stored as ints)
     </PackageReleaseNotes>
   </PropertyGroup>
 
