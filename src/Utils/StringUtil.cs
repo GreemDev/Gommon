@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace Gommon;
 public static class StringUtil {
     private const string AlphanumericChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    public static string RandomizeSequence([NotNull] string str, [NonNegativeValue] int rerolls = 0) {
+    public static string RandomizeSequence([NotNull] string str, [NonNegativeValue] int rerolls = 0) 
+    {
         var result = rearrange(str);
         Lambda.Repeat(rerolls, () =>
             result = rearrange(result)
@@ -32,7 +34,8 @@ public static class StringUtil {
     /// <param name="length"></param>
     /// <param name="allowRepeats"></param>
     /// <returns></returns>
-    public static string RandomAlphanumeric([NonNegativeValue] int length, bool allowRepeats = true) {
+    public static string RandomAlphanumeric([NonNegativeValue] int length, bool allowRepeats = true) 
+    {
         Guard.Ensure(length > 0, "length must be at least 1");
         var result = new StringBuilder(
             !allowRepeats && length > AlphanumericChars.Length 
@@ -52,5 +55,31 @@ public static class StringUtil {
         }
 
         return result.ToString();
+    }
+    
+    /// <summary>
+    ///     Formats an arbitrary collection into a <see cref="string"/>.
+    /// </summary>
+    /// <param name="enumerable">The collection to format.</param>
+    /// <param name="toString">The function applied to every element that stringifies them.</param>
+    /// <param name="separator">The separator in-between elements in the resulting <see cref="string"/>.</param>
+    /// <param name="prefix">The prefix of the resulting <see cref="string"/>.</param>
+    /// <param name="suffix">The suffix of the resulting <see cref="string"/>.</param>
+    /// <param name="emptyCollectionFallback">The value returned if the <see cref="IEnumerable{T}"/> is empty.</param>
+    /// <typeparam name="T">The type of elements in the <see cref="IEnumerable{T}"/>.</typeparam>
+    /// <returns>A sanely-formatted collection string.</returns>
+    public static string FormatCollection<T>(
+        this IEnumerable<T> enumerable,
+        Func<T, string> toString,
+        string separator = ",",
+        string prefix = "",
+        string suffix = "",
+        string emptyCollectionFallback = "None"
+    )
+    {
+        var coll = enumerable.ToArray();
+        return coll.Length == 0 
+            ? emptyCollectionFallback 
+            : $"{prefix}{coll.Select(toString).JoinToString(separator)}{suffix}";
     }
 }
