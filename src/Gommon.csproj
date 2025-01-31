@@ -11,9 +11,9 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.7.1</Version>
+    <Version>2.7.1.1</Version>
     <PackageReleaseNotes>
-      AsyncEvent &amp; Event class, with Queue variants for events you need eventual consistency for, for managing event handlers
+      Implicit conversions for FilePath for DirectoryInfo and FileInfo, and some file/dir path/name helpers.
     </PackageReleaseNotes>
   </PropertyGroup>
 

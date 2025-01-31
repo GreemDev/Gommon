@@ -19,6 +19,9 @@ public record FilePath
     #endregion
 
     public string Path { get; }
+
+    public string FullPath => DotNetPath.GetFullPath(Path);
+    
     public bool IsDirectory { get; }
 
     public FilePath(string path, bool? isDirectory = null)
@@ -68,6 +71,16 @@ public record FilePath
             return ext;
         }
     }
+    
+    public string Name =>
+        IsDirectory 
+            ? DotNetPath.GetDirectoryName(Path) 
+            : DotNetPath.GetFileName(Path);
+
+    public string NameWithoutExtension =>
+        IsDirectory 
+            ? DotNetPath.GetDirectoryName(Path) 
+            : DotNetPath.GetFileNameWithoutExtension(Path);
 
     public bool ExistsAsFile => File.Exists(Path);
     public bool ExistsAsDirectory => Directory.Exists(Path);
@@ -108,4 +121,8 @@ public record FilePath
         => !ExistsAsFile ? File.Create(Path) : null;
 
     public override string ToString() => Path;
+
+    public static implicit operator string(FilePath fp) => fp.ToString();
+    public static implicit operator FilePath(DirectoryInfo di) => new(di.FullName, true);
+    public static implicit operator FilePath(FileInfo fi) => new(fi.FullName, false);
 }
