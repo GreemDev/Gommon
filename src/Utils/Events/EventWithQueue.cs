@@ -10,6 +10,12 @@ public class EventWithQueue<T>
     private readonly List<Action<T>> _subscriptions = [];
 
     private readonly Queue<T> _handlerlessEvents = [];
+    private readonly bool _fireEnqueuedEventsWhenFirstHandlerIsAdded;
+    
+    public EventWithQueue(bool fireEnqueuedEventsWhenFirstHandlerIsAdded = false)
+    {
+        _fireEnqueuedEventsWhenFirstHandlerIsAdded = fireEnqueuedEventsWhenFirstHandlerIsAdded;
+    }
     
     public bool HasSubscribers
     {
@@ -33,7 +39,16 @@ public class EventWithQueue<T>
     {
         Guard.Require(subscriber, nameof(subscriber));
         lock (_subLock)
+        {
+            var fireQueued = _subscriptions.Count == 0 && _fireEnqueuedEventsWhenFirstHandlerIsAdded;
             _subscriptions.Add(subscriber);
+            if (fireQueued)
+            {
+                if (_handlerlessEvents.Count > 0)
+                    while (_handlerlessEvents.TryDequeue(out var queuedArg))
+                        _subscriptions.ForEach(func => func(queuedArg));
+            }
+        }
     }
 
     public void Remove(Action<T> subscriber)
@@ -51,7 +66,12 @@ public class EventWithQueue<T>
 
     public void Call(T arg)
     {
-        var subscribers = Subscriptions;
+        IReadOnlyList<Action<T>> subscribers;
+
+        lock (_subLock)
+        {
+            subscribers = Subscriptions;
+        }
         
         if (subscribers.Count == 0)
         {

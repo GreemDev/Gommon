@@ -51,7 +51,12 @@ public class AsyncEventWithQueue<T>
 
     public async Task CallAsync(T arg)
     {
-        var subscribers = Subscriptions;
+        IReadOnlyList<Func<T, Task>> subscribers;
+
+        lock (_subLock)
+        {
+            subscribers = Subscriptions;
+        }
         
         if (subscribers.Count == 0)
         {
