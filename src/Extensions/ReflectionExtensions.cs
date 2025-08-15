@@ -49,11 +49,11 @@ namespace Gommon
         /// <returns>A pretty string that shows what this type is, removing the rather ugly style of the regular Type#ToString() result.</returns>
         public static string AsPrettyString(this Type type, bool languageCorrectPrimitives = true)
         {
-            var nullableTypeRegex = new Regex(@"Nullable<(?<T>.+)>", RegexOptions.Compiled);
+            var nullableTypeRegex = new Regex("Nullable<(?<T>.+)>", RegexOptions.Compiled);
 
             var types = type.GenericTypeArguments;
 
-            //thanks .NET for putting an annoying ass backtick and number at the end of type names.
+            //thanks .NET for putting an annoying ass backtick and number at the end of generic type names.
             var vs = formatTypeName(type.Name).Replace($"`{types.Length}", "");
 
             if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString(languageCorrectPrimitives)).Select(formatTypeName).JoinToString(", ")}>";
@@ -82,6 +82,7 @@ namespace Gommon
                         "UInt64" => "ulong",
                         "Char" => "char",
                         "String" => "string",
+                        "Void" => "void",
                         _ => typeName
                     };
         }
