@@ -11,9 +11,11 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.7.2</Version>
+    <Version>2.7.2.1</Version>
     <PackageReleaseNotes>
-      Rust-inspired Result return value system
+      Enhancements to the Result system, such as making them structs instead of classes.
+      Renamed ArbitraryError to GenericError
+      Added aggressive method inlining attribute to Cast and HardCast
     </PackageReleaseNotes>
   </PropertyGroup>
 

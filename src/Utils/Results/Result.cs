@@ -6,17 +6,18 @@ namespace Gommon;
 /// <summary>
 ///     Represents the result of a method that can produce errors but does not return a value.
 /// </summary>
-public class Result
+public readonly struct Result : IResult
 {
     private readonly IResultState _state;
 
-    protected Result(IResultState state)
+    private Result(IResultState state)
     {
         _state = state;
     }
-    
 
-    public static Result Success { get; } = new(Gommon.Success.Shared);
+    public Result() : this(Gommon.Success.Shared) { }
+
+    public static Result Success { get; } = new();
     
     public static Result Failure(IErrorState state) => new(state);
     
@@ -25,6 +26,16 @@ public class Result
     public bool IsError => _state is IErrorState;
 
     public bool IsSuccess => _state is Success;
+    
+    public bool IsOf<TResultState>() where TResultState : IResultState => _state is TResultState;
+
+    public bool IsOf<TResultState>([MaybeNullWhen(false)] out TResultState resultState) 
+        where TResultState : IResultState
+    {
+        resultState = _state.Cast<TResultState>();
+
+        return _state is TResultState;
+    }
 
     public void Unwrap()
     {
@@ -45,7 +56,7 @@ public class Result
             {
                 unwrapped = new Exception(_state.ToString());
             }
-
+            
             return true;
         }
 

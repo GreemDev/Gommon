@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -186,7 +187,7 @@ public static partial class Extensions {
     /// <typeparam name="T">Type to cast to</typeparam>
     /// <param name="obj">Current object</param>
     /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/></returns>
-    [CanBeNull]
+    [CanBeNull, MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T Cast<T>(this object obj) => obj is T o ? o : default;
 
     /// <summary>
@@ -197,7 +198,7 @@ public static partial class Extensions {
     /// <param name="obj">Current object</param>
     /// <exception cref="InvalidCastException"></exception>
     /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
-    [NotNull]
+    [NotNull, MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T HardCast<T>(this object obj) => (T)obj;
 
     #endregion

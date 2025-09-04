@@ -2,7 +2,7 @@ namespace Gommon;
 
 public interface IResultState;
 
-public class Success : IResultState
+public struct Success : IResultState
 {
     public static readonly Success Shared = new();
 }
@@ -20,11 +20,11 @@ public readonly struct MessageError : IErrorState
 
 public readonly struct NullError : IErrorState;
 
-public readonly struct ArbitraryError<T> : IErrorState
+public readonly struct GenericError<T> : IErrorState
 {
     public T Value { get; }
 
-    public ArbitraryError(T value)
+    public GenericError(T value)
     {
         Value = value;
     }
