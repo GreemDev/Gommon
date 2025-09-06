@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -15,6 +16,7 @@ namespace Gommon
         /// <typeparam name="T">Type of the attribute in question</typeparam>
         /// <param name="memberInfo">Current <see cref="MemberInfo"/>.</param>
         /// <returns><see cref="bool"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasAttribute<T>(this MemberInfo memberInfo) where T : Attribute
             => memberInfo.GetCustomAttribute<T>() != null;
 
@@ -25,10 +27,11 @@ namespace Gommon
         /// <param name="memberInfo">Current <see cref="MemberInfo"/>.</param>
         /// <param name="attribute">The possibly-null attribute.</param>
         /// <returns><see cref="bool"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryGetAttribute<T>(this MemberInfo memberInfo, [NotNullWhen(true)] out T attribute)
-            where T : Attribute 
+            where T : Attribute
             => (attribute = memberInfo.GetCustomAttribute<T>()) != null;
-        
+
 
         /// <summary>
         ///     Checks whether or not the current <see cref="Type"/> inherits/implements the given <typeparamref name="T"/>, whether that be a class or an interface.
@@ -37,6 +40,7 @@ namespace Gommon
         /// <typeparam name="T">The type to compare with</typeparam>
         /// <param name="type">The type to check for inheritance</param>
         /// <returns>Whether this type inherits (or can be implicitly converted to) the given type <typeparamref name="T"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Inherits<T>(this Type type)
             => typeof(T).IsAssignableFrom(type);
 
@@ -56,13 +60,15 @@ namespace Gommon
             //thanks .NET for putting an annoying ass backtick and number at the end of generic type names.
             var vs = formatTypeName(type.Name).Replace($"`{types.Length}", "");
 
-            if (!types.None()) vs += $"<{types.Select(x => x.AsPrettyString(languageCorrectPrimitives)).Select(formatTypeName).JoinToString(", ")}>";
+            if (!types.None())
+                vs +=
+                    $"<{types.Select(x => x.AsPrettyString(languageCorrectPrimitives)).Select(formatTypeName).JoinToString(", ")}>";
 
             if (nullableTypeRegex.IsMatch(vs, out var match))
                 vs = $"{match.Groups["T"].Value}?";
-            
+
             return vs;
-            
+
             string formatTypeName(string typeName) =>
                 !languageCorrectPrimitives
                     ? typeName
@@ -108,7 +114,7 @@ namespace Gommon
             if (parameters.Length != paramTypes.Length)
                 return (false, $"Method needs {paramTypes.Length} parameters, has {parameters.Length} parameters!");
 
-            foreach (var (param, i) in parameters.WithIndex())
+            foreach (var (i, param) in parameters.Index())
             {
                 var actualFullName = param.ParameterType.AsFullNamePrettyString();
                 var requiredFullName = paramTypes[i].AsFullNamePrettyString();
@@ -119,24 +125,32 @@ namespace Gommon
 
             return (true, null);
         }
-        
-        
-        public static bool TryGetField(this Type type, string fieldName, out FieldInfo field) 
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetField(this Type type, string fieldName, out FieldInfo field)
             => (field = type.GetField(fieldName)) != null;
-        
-        public static bool TryGetField(this Type type, string fieldName, BindingFlags bindingAttr, out FieldInfo field) 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetField(this Type type, string fieldName, BindingFlags bindingAttr, out FieldInfo field)
             => (field = type.GetField(fieldName, bindingAttr)) != null;
-        
-        public static bool TryGetProperty(this Type type, string propName, out PropertyInfo prop) 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetProperty(this Type type, string propName, out PropertyInfo prop)
             => (prop = type.GetProperty(propName)) != null;
-        
-        public static bool TryGetProperty(this Type type, string propName, BindingFlags bindingAttr, out PropertyInfo prop) 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetProperty(this Type type, string propName, BindingFlags bindingAttr,
+            out PropertyInfo prop)
             => (prop = type.GetProperty(propName, bindingAttr)) != null;
-        
-        public static bool TryGetMethod(this Type type, string methodName, out MethodInfo method) 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetMethod(this Type type, string methodName, out MethodInfo method)
             => (method = type.GetMethod(methodName)) != null;
-        
-        public static bool TryGetMethod(this Type type, string methodName, BindingFlags bindingAttr, out MethodInfo method) 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetMethod(this Type type, string methodName, BindingFlags bindingAttr,
+            out MethodInfo method)
             => (method = type.GetMethod(methodName, bindingAttr)) != null;
     }
 }

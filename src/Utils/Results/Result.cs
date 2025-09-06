@@ -15,21 +15,24 @@ public readonly struct Result : IResult
         _state = state;
     }
 
-    public Result() : this(Gommon.Success.Shared) { }
+    public Result() : this(Gommon.Success.Shared)
+    {
+    }
 
     public static Result Success { get; } = new();
-    
-    public static Result Failure(IErrorState state) => new(state);
-    
+
+    /// <remarks>If <paramref name="state"/> is null, the shared <see cref="Error"/> is used.</remarks>
+    public static Result Failure(IErrorState state = null) => new(state ?? Error.Shared);
+
     public static Result Unspecified(IResultState state) => new(state);
 
     public bool IsError => _state is IErrorState;
 
     public bool IsSuccess => _state is Success;
-    
+
     public bool IsOf<TResultState>() where TResultState : IResultState => _state is TResultState;
 
-    public bool IsOf<TResultState>([MaybeNullWhen(false)] out TResultState resultState) 
+    public bool IsOf<TResultState>([MaybeNullWhen(false)] out TResultState resultState)
         where TResultState : IResultState
     {
         resultState = _state.Cast<TResultState>();
@@ -42,7 +45,7 @@ public readonly struct Result : IResult
         if (TryUnwrapError(out var exception))
             throw exception;
     }
-    
+
     public bool TryUnwrapError([MaybeNullWhen(false)] out Exception unwrapped)
     {
         if (IsError)
@@ -56,7 +59,7 @@ public readonly struct Result : IResult
             {
                 unwrapped = new Exception(_state.ToString());
             }
-            
+
             return true;
         }
 

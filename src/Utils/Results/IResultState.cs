@@ -9,6 +9,11 @@ public struct Success : IResultState
 
 public interface IErrorState : IResultState;
 
+public readonly struct Error : IErrorState
+{
+    public static readonly Error Shared = new();
+}
+
 public readonly struct MessageError : IErrorState
 {
     public MessageError(string message) => Content = message;

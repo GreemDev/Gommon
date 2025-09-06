@@ -14,7 +14,7 @@ public static class Executor
     /// <param name="func">Function, typically async.</param>
     public static async Task ExecuteAfterDelayAsync(TimeSpan delay, Func<Task> func)
         => await Task.Delay(delay).Then(func).ConfigureAwait(false);
-    
+
     /// <summary>
     ///     Executes the <paramref name="func"/> asynchronously after the specified <paramref name="delay"/>.
     /// </summary>
@@ -22,7 +22,8 @@ public static class Executor
     /// <param name="cts">Cancellation token for cancelling the delay.</param>
     /// <param name="func">Function, typically async.</param>
     public static async Task ExecuteAfterDelayAsync(TimeSpan delay, CancellationToken ct, Func<Task> func)
-        => await Task.Delay(delay, ct).ContinueWith(_ => func(), TaskContinuationOptions.NotOnCanceled).ConfigureAwait(false);
+        => await Task.Delay(delay, ct).ContinueWith(_ => func(), TaskContinuationOptions.NotOnCanceled)
+            .ConfigureAwait(false);
 
     /// <summary>
     ///     Executes the <paramref name="func"/> in the background, via an unawaited Task.Run.

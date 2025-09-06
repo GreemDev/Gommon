@@ -7,7 +7,7 @@ public class Event<T>
 {
     private readonly object _subLock = new();
     private readonly List<Action<T>> _subscriptions = [];
-    
+
     public bool HasSubscribers
     {
         get
@@ -46,6 +46,6 @@ public class Event<T>
             _subscriptions.Clear();
     }
 
-    public void Call(T arg) 
+    public void Call(T arg)
         => Subscriptions.ForEach(action => action(arg));
 }

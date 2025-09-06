@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 // ReSharper disable MemberCanBePrivate.Global
 namespace Gommon;
 
-public static partial class Extensions {
+public static partial class Extensions
+{
     #region String
 
     /// <summary>
@@ -92,9 +93,11 @@ public static partial class Extensions {
     /// </summary>
     /// <param name="str">Current string</param>
     /// <returns>Enumerable of Unicode code points</returns>
-    public static IEnumerable<int> GetUnicodePoints(this string str) {
+    public static IEnumerable<int> GetUnicodePoints(this string str)
+    {
         var pts = new List<int>(str.Length);
-        for (var i = 0; i < str.Length; i++) {
+        for (var i = 0; i < str.Length; i++)
+        {
             var pt = char.ConvertToUtf32(str, i);
             if (pt != 0xFE0F)
                 pts.Add(pt);
@@ -150,27 +153,35 @@ public static partial class Extensions {
 
     #region String#Format
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, IFormatProvider provider, object arg)
-        => format.Format(provider, Collections.NewArray(arg));
+        => format.Format(provider, [arg]);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, IFormatProvider provider, object arg0, object arg1)
-        => format.Format(provider, Collections.NewArray(arg0, arg1));
+        => format.Format(provider, [arg0, arg1]);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, IFormatProvider provider, object arg0, object arg1, object arg2)
-        => format.Format(provider, Collections.NewArray(arg0, arg1, arg2));
+        => format.Format(provider, [arg0, arg1, arg2]);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, IFormatProvider provider, params object[] args) =>
         string.Format(provider, format, args);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, object arg)
-        => format.Format(Collections.NewArray(arg));
+        => format.Format([arg]);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, object arg0, object arg1)
-        => format.Format(Collections.NewArray(arg0, arg1));
+        => format.Format([arg0, arg1]);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, object arg0, object arg1, object arg2)
-        => format.Format(Collections.NewArray(arg0, arg1, arg2));
+        => format.Format([arg0, arg1, arg2]);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string format, params object[] args)
         => string.Format(format, args);
 
@@ -187,7 +198,8 @@ public static partial class Extensions {
     /// <typeparam name="T">Type to cast to</typeparam>
     /// <param name="obj">Current object</param>
     /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/></returns>
-    [CanBeNull, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [return: MaybeNull]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T Cast<T>(this object obj) => obj is T o ? o : default;
 
     /// <summary>
@@ -198,7 +210,8 @@ public static partial class Extensions {
     /// <param name="obj">Current object</param>
     /// <exception cref="InvalidCastException"></exception>
     /// <returns><paramref name="obj"/>, cast to the type of <typeparamref name="T"/>, or an exception is thrown.</returns>
-    [NotNull, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [return: NotNull]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T HardCast<T>(this object obj) => (T)obj;
 
     #endregion
@@ -207,39 +220,71 @@ public static partial class Extensions {
 
     #region Extension-based Math.Max/Math.Min
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte CoerceAtLeast(this byte value, byte minimum) => Math.Max(value, minimum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte CoerceAtMost(this byte value, byte maximum) => Math.Min(value, maximum);
-    public static byte CoerceWithin(this byte value, byte minimum, byte maximum) 
-        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
-        
-    public static short CoerceAtLeast(this short value, short minimum) => Math.Max(value, minimum);
-    public static short CoerceAtMost(this short value, short maximum) => Math.Min(value, maximum);
-    public static short CoerceWithin(this short value, short minimum, short maximum) 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte CoerceWithin(this byte value, byte minimum, byte maximum)
         => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static short CoerceAtLeast(this short value, short minimum) => Math.Max(value, minimum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static short CoerceAtMost(this short value, short maximum) => Math.Min(value, maximum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static short CoerceWithin(this short value, short minimum, short maximum)
+        => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int CoerceAtLeast(this int value, int minimum) => Math.Max(value, minimum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int CoerceAtMost(this int value, int maximum) => Math.Min(value, maximum);
-    public static int CoerceWithin(this int value, int minimum, int maximum) 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int CoerceWithin(this int value, int minimum, int maximum)
         => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
-    public static int CoerceWithin(this int value, Range range) 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int CoerceWithin(this int value, Range range)
         => value.CoerceAtLeast(range.Start.Value).CoerceAtMost(range.End.Value);
-        
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long CoerceAtLeast(this long value, long minimum) => Math.Max(value, minimum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long CoerceAtMost(this long value, long maximum) => Math.Min(value, maximum);
-    public static long CoerceWithin(this long value, long minimum, long maximum) 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long CoerceWithin(this long value, long minimum, long maximum)
         => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
-        
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double CoerceAtLeast(this double value, double minimum) => Math.Max(value, minimum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double CoerceAtMost(this double value, double maximum) => Math.Min(value, maximum);
-    public static double CoerceWithin(this double value, double minimum, double maximum) 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static double CoerceWithin(this double value, double minimum, double maximum)
         => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
-        
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float CoerceAtLeast(this float value, float minimum) => Math.Max(value, minimum);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float CoerceAtMost(this float value, float maximum) => Math.Min(value, maximum);
-    public static float CoerceWithin(this float value, float minimum, float maximum) 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float CoerceWithin(this float value, float minimum, float maximum)
         => value.CoerceAtLeast(minimum).CoerceAtMost(maximum);
 
     #endregion
-    
+
     #endregion
 }

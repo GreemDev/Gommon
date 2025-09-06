@@ -1,25 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using JetBrains.Annotations;
 
 // ReSharper disable MemberCanBePrivate.Global
 namespace Gommon;
 
-public static class StringUtil {
+public static class StringUtil
+{
     private const string AlphanumericChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    public static string RandomizeSequence([NotNull] string str, [NonNegativeValue] int rerolls = 0) 
+    public static string RandomizeSequence([NotNull] string str, int rerolls = 0)
     {
         var result = rearrange(str);
         Lambda.Repeat(rerolls, () =>
             result = rearrange(result)
         );
         return result;
-            
-        string rearrange(string s) 
+
+        string rearrange(string s)
             => s.OrderBy(_ => Guid.NewGuid())
                 .JoinToString("");
     }
@@ -34,17 +34,18 @@ public static class StringUtil {
     /// <param name="length"></param>
     /// <param name="allowRepeats"></param>
     /// <returns></returns>
-    public static string RandomAlphanumeric([NonNegativeValue] int length, bool allowRepeats = true) 
+    public static string RandomAlphanumeric(int length, bool allowRepeats = true)
     {
         Guard.Ensure(length > 0, "length must be at least 1");
         var result = new StringBuilder(
-            !allowRepeats && length > AlphanumericChars.Length 
+            !allowRepeats && length > AlphanumericChars.Length
                 ? AlphanumericChars.Length
                 : length
         );
         var tempChars = Collections.NewList(AlphanumericChars.ToArray());
 
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < length; i++)
+        {
             if (tempChars.None() && length > AlphanumericChars.Length)
                 return result.ToString();
 
@@ -56,7 +57,7 @@ public static class StringUtil {
 
         return result.ToString();
     }
-    
+
     /// <summary>
     ///     Formats an arbitrary collection into a <see cref="string"/>.
     /// </summary>
@@ -78,8 +79,8 @@ public static class StringUtil {
     )
     {
         var coll = enumerable.ToArray();
-        return coll.Length == 0 
-            ? emptyCollectionFallback 
+        return coll.Length == 0
+            ? emptyCollectionFallback
             : $"{prefix}{coll.Select(toString).JoinToString(separator)}{suffix}";
     }
 }

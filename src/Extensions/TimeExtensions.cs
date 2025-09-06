@@ -107,7 +107,7 @@ public static partial class Extensions
     /// <returns>A <see cref="DateTimeOffset"/> of when this Discord entity was created.</returns>
     public static DateTimeOffset AsDateTimeFromSnowflake(this ulong id)
         => DateTimeOffset.FromUnixTimeMilliseconds(((id >> 22) + 1420070400000).HardCast<long>());
-    
+
     /// <summary>
     ///     Returns the current <see cref="DateTimeOffset"/> with time information removed. Offset is retained.
     /// </summary>
@@ -117,9 +117,9 @@ public static partial class Extensions
     /// <summary>
     ///     Returns a tuple with the current <see cref="DateTimeOffset"/> with time information removed, and the removed time.
     /// </summary>
-    public static (DateTimeOffset Date, TimeSpan Time) Extract(this DateTimeOffset dto) 
+    public static (DateTimeOffset Date, TimeSpan Time) Extract(this DateTimeOffset dto)
         => (dto.WithoutTime(), dto.TimeOfDay);
-    
+
     /// <summary>
     ///     Returns the current <see cref="DateTime"/> with time information removed.
     /// </summary>

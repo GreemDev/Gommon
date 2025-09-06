@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Gommon;
 
 // ReSharper disable MemberCanBePrivate.Global
-namespace Gommon {
-    public static partial class Extensions {
+namespace Gommon
+{
+    public static partial class Extensions
+    {
         /// <summary>
-        ///     Converts the specified <code>IEnumerable&lt;byte&gt;</code> to a readonly <see cref="MemoryStream"/>.
+        ///     Copies the specified <code>IEnumerable&lt;byte&gt;</code> to a readonly <see cref="MemoryStream"/>.
         /// </summary>
         /// <param name="bytes">Byte enumerable to convert.</param>
         /// <returns>The resulting <see cref="MemoryStream"/>, seek-ed to position 0.</returns>
-        [JetBrains.Annotations.NotNull]
+        [return: NotNull]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MemoryStream ToStream(this IEnumerable<byte> bytes)
             => new(bytes.ToArray(), false) { Position = 0 };
 
@@ -24,6 +28,7 @@ namespace Gommon {
         /// <param name="strings">String enumerable to check.</param>
         /// <param name="element">Element to check for.</param>
         /// <returns><see cref="bool"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsIgnoreCase(this IEnumerable<string> strings, string element)
             => strings.Contains(element, StringComparer.OrdinalIgnoreCase);
 
@@ -33,6 +38,7 @@ namespace Gommon {
         /// <param name="list">Current Enumerable</param>
         /// <param name="separator">String separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string JoinToString<T>(this IEnumerable<T> list, string separator)
             => string.Join(separator, list);
 
@@ -42,23 +48,27 @@ namespace Gommon {
         /// <param name="list">Current Enumerable</param>
         /// <param name="separator">Char separator</param>
         /// <returns><see cref="string"/> contents of the Enumerable, joined.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string JoinToString<T>(this IEnumerable<T> list, char separator)
             => string.Join($"{separator}", list);
 
         /// <summary>
-        ///     Get a random element in the current array.
+        ///     Get a random element in the current collection.
         /// </summary>
-        /// <param name="arr">Current array.</param>
-        /// <returns>A random element in the current array.</returns>
-        public static T GetRandomElement<T>(this T[] arr)
-            => arr.Length == 0 ? default : arr[new Random().Next(0, arr.Length)];
+        /// <param name="arr">Current collection.</param>
+        /// <returns>A random element in the current collection.</returns>
+        [OverloadResolutionPriority(1), MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandomElement<T>(this ICollection<T> arr)
+            => arr.Count == 0 ? default : arr.ElementAtOrDefault(new Random().Next(0, arr.Count));
 
         /// <summary>
         ///     Get a random element in the current <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="enumerable">Current <see cref="IEnumerable{T}"/>.</param>
         /// <returns>A random element in the current <see cref="IEnumerable{T}"/>.</returns>
-        public static T GetRandomElement<T>(this IEnumerable<T> enumerable) => enumerable.ToArray().GetRandomElement();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandomElement<T>(this IEnumerable<T> enumerable)
+            => (enumerable as ICollection<T> ?? enumerable.ToArray()).GetRandomElement();
 
 
         /// <summary>
@@ -66,7 +76,9 @@ namespace Gommon {
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="action">The action to perform.</param>
-        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
             foreach (var item in enumerable) action(item);
         }
 
@@ -75,7 +87,9 @@ namespace Gommon {
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="function">The asynchronous function to perform.</param>
-        public static async Task ForEachAsync<T>(this IEnumerable<T> enumerable, Func<T, Task> function) {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task ForEachAsync<T>(this IEnumerable<T> enumerable, Func<T, Task> function)
+        {
             foreach (var item in enumerable) await function(item);
         }
 
@@ -84,21 +98,14 @@ namespace Gommon {
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="action">The action to perform.</param>
-        public static void ForEachIndexed<T>(this IEnumerable<T> enumerable, Action<T, int> action) {
-            var coll = enumerable.ToArray();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ForEachIndexed<T>(this IEnumerable<T> enumerable, Action<T, int> action)
+        {
+            if (enumerable is not T[] coll)
+                coll = enumerable.ToArray();
+
             for (var i = 0; i < coll.Length; i++)
                 action(coll[i], i);
-        }
-
-        /// <summary>
-        ///     Obtains an enumerable containing a tuple of the value in the current enumerable and its index.
-        /// </summary>
-        /// <param name="enumerable">The current enumerable.</param>
-        public static IEnumerable<(T Value, int Index)> WithIndex<T>(this IEnumerable<T> enumerable)
-        {
-            var index = 0;
-            foreach (var value in enumerable)
-                yield return (value, index++);
         }
 
         /// <summary>
@@ -106,8 +113,12 @@ namespace Gommon {
         /// </summary>
         /// <param name="enumerable">The current enumerable.</param>
         /// <param name="function">The asynchronous function to perform.</param>
-        public static async Task ForEachIndexedAsync<T>(this IEnumerable<T> enumerable, Func<T, int, Task> function) {
-            var coll = enumerable.ToArray();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static async Task ForEachIndexedAsync<T>(this IEnumerable<T> enumerable, Func<T, int, Task> function)
+        {
+            if (enumerable is not T[] coll)
+                coll = enumerable.ToArray();
+
             for (var i = 0; i < coll.Length; i++)
                 await function(coll[i], i);
         }
@@ -123,13 +134,15 @@ namespace Gommon {
     }
 }
 
-namespace System.Linq {
-    public static class LinqExtensions {
+namespace System.Linq
+{
+    public static class LinqExtensions
+    {
         public static bool TryGetFirst<TSource>([NotNull] this IEnumerable<TSource> source,
             [NotNull] Func<TSource, bool> predicate,
-            [NotNullWhen(true)] out TSource value) => 
+            [NotNullWhen(true)] out TSource value) =>
             (value = source.FirstOrDefault(predicate)) != null;
-        
+
 
         /// <summary>
         ///     Checks whether the current IEnumerable is empty, optionally filtering by the given predicate before determining.
@@ -138,11 +151,11 @@ namespace System.Linq {
         /// <param name="predicate">The optional predicate.</param>
         /// <typeparam name="T"></typeparam>
         /// <returns>True if the current IEnumerable has any elements; false otherwise.</returns>
-        public static bool None<T>([NotNull] this IEnumerable<T> coll, Func<T, bool> predicate = null) => 
+        public static bool None<T>([NotNull] this IEnumerable<T> coll, Func<T, bool> predicate = null) =>
             !(predicate is null
                 ? coll.Any()
                 : coll.Any(predicate));
-        
+
 
         /// <summary>
         ///     Wraps the result of LINQ First() in an <see cref="Optional{T}"/>.
@@ -151,7 +164,15 @@ namespace System.Linq {
         /// <param name="predicate">The predicate function used to find the first matching element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
-        public static Optional<T> FindFirst<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
+        public static Optional<T> FindFirst<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null)
+        {
+            if (coll is ICollection<T> collt)
+            {
+                return collt.Count == 0
+                    ? Optional.None<T>()
+                    : collt.FirstOrDefault(v => predicate is null || predicate(v));
+            }
+
             var c = coll.ToArray();
             return c.Length == 0
                 ? Optional.None<T>()
@@ -165,7 +186,15 @@ namespace System.Linq {
         /// <param name="predicate">The predicate function used to find the last matching element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
-        public static Optional<T> FindLast<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
+        public static Optional<T> FindLast<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null)
+        {
+            if (coll is ICollection<T> collt)
+            {
+                return collt.Count == 0
+                    ? Optional.None<T>()
+                    : collt.LastOrDefault(v => predicate is null || predicate(v));
+            }
+
             var c = coll.ToArray();
             return c.Length == 0
                 ? Optional.None<T>()
@@ -179,7 +208,15 @@ namespace System.Linq {
         /// <param name="predicate">The predicate function used to find the element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value that matches the predicate.</returns>
-        public static Optional<T> FindSingle<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null) {
+        public static Optional<T> FindSingle<T>(this IEnumerable<T> coll, Func<T, bool> predicate = null)
+        {
+            if (coll is ICollection<T> collt)
+            {
+                return collt.Count == 0
+                    ? Optional.None<T>()
+                    : collt.SingleOrDefault(v => predicate is null || predicate(v));
+            }
+
             var c = coll.ToArray();
             return c.Length == 0
                 ? Optional.None<T>()
@@ -193,7 +230,15 @@ namespace System.Linq {
         /// <param name="index">The index of the element.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <returns>An <see cref="Optional{T}"/>, possibly containing the value at the specified index.</returns>
-        public static Optional<T> FindElementAt<T>(this IEnumerable<T> coll, int index) {
+        public static Optional<T> FindElementAt<T>(this IEnumerable<T> coll, int index)
+        {
+            if (coll is ICollection<T> collt)
+            {
+                return collt.Count == 0
+                    ? Optional.None<T>()
+                    : collt.ElementAtOrDefault(index);
+            }
+
             var c = coll.ToArray();
             return c.Length == 0
                 ? Optional.None<T>()
@@ -209,10 +254,11 @@ namespace System.Linq {
         public static Optional<T> FindValue<TKey, T>(this IEnumerable<KeyValuePair<TKey, T>> coll,
             TKey key)
         {
-            var c = coll.ToDictionary(x => x.Key, x => x.Value);
+            var c = coll as Dictionary<TKey, T>
+                    ?? coll.ToDictionary(x => x.Key, x => x.Value);
             if (c.None())
                 return Optional.None<T>();
-            
+
             return c.TryGetValue(key, out var result)
                 ? result
                 : Optional.None<T>();
@@ -225,7 +271,15 @@ namespace System.Linq {
         /// <param name="coll">The current collection.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <returns>A randomly retrieved element wrapped in an <see cref="Optional{T}"/>, or an empty <see cref="Optional{T}"/> if the source collection <paramref name="coll"/> is empty.</returns>
-        public static Optional<T> FindRandomElement<T>(this IEnumerable<T> coll) {
+        public static Optional<T> FindRandomElement<T>(this IEnumerable<T> coll)
+        {
+            if (coll is ICollection<T> collt)
+            {
+                return collt.Count == 0
+                    ? Optional.None<T>()
+                    : collt.GetRandomElement();
+            }
+
             var c = coll.ToArray();
             return c.None()
                 ? Optional.None<T>()

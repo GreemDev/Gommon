@@ -10,7 +10,7 @@ public class AsyncEventWithQueue<T>
     private readonly List<Func<T, Task>> _subscriptions = [];
 
     private readonly Queue<T> _handlerlessEvents = [];
-    
+
     public bool HasSubscribers
     {
         get
@@ -57,17 +57,17 @@ public class AsyncEventWithQueue<T>
         {
             subscribers = Subscriptions;
         }
-        
+
         if (subscribers.Count == 0)
         {
             _handlerlessEvents.Enqueue(arg);
             return;
         }
-            
+
         if (_handlerlessEvents.Count > 0)
             while (_handlerlessEvents.TryDequeue(out var queuedArg))
                 await subscribers.ForEachAsync(func => func(queuedArg));
-        
+
         await subscribers.ForEachAsync(action => action(arg));
     }
 }

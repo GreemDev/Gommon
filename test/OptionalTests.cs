@@ -4,9 +4,11 @@ using Xunit;
 
 namespace Gommon.Tests;
 
-public class OptionalTests {
+public class OptionalTests
+{
     [Fact]
-    public void TestOptional() {
+    public void TestOptional()
+    {
         Assert.False(Optional<char>.None.HasValue);
 
         Assert.Equal("", new Optional<string>(() => ""));
@@ -16,7 +18,7 @@ public class OptionalTests {
             .OnlyIf(s => s.Length != 0)
             .OrElseGet(() => "test string")
             .Length > 0);
-            
+
         Assert.True(Optional.Of("").Check(string.IsNullOrEmpty));
 
         Assert.Equal("hello", Optional.None<string>()
@@ -31,7 +33,8 @@ public class OptionalTests {
     }
 
     [Fact]
-    public void TestEqualsOverride() {
+    public void TestEqualsOverride()
+    {
         Assert.False(new Optional<string>() == "test string");
         Assert.False(new Optional<string>("test string") == null);
         Assert.True(new Optional<object>() == null);

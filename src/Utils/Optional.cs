@@ -12,11 +12,13 @@ using System.Threading.Tasks;
 /*/
 
 // ReSharper disable MemberCanBePrivate.Global
-namespace Gommon {
+namespace Gommon
+{
     /// <summary>
     /// Various extension and factory methods for constructing optional value.
     /// </summary>
-    public static class Optional {
+    public static class Optional
+    {
         /// <summary>
         ///     Wraps <i>any</i> value, null or otherwise (with no <see cref="NullReferenceException"/>s), in an <see cref="Optional{T}"/>.
         /// </summary>
@@ -25,7 +27,7 @@ namespace Gommon {
         /// <returns>An optional, containing the possibly-null value of <paramref name="obj"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Optional<T> AsOptional<T>(this T obj) => new(obj);
-        
+
         /// <summary>
         ///     Wraps the result of <paramref name="task"/> which can be <i>any</i> value, null or otherwise (with no <see cref="NullReferenceException"/>s), in an <see cref="Optional{T}"/>.
         /// </summary>
@@ -277,7 +279,7 @@ namespace Gommon {
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <returns>The optional container.</returns>
         public static Optional<T> Of<T>(T? value) => new(value);
-        
+
         /// <summary>
         /// Wraps <see langword="null"/> value to <see cref="Optional{T}"/> container.
         /// </summary>
@@ -293,7 +295,8 @@ namespace Gommon {
     /// </summary>
     /// <typeparam name="T">Type of value.</typeparam>
     [StructLayout(LayoutKind.Auto)]
-    public readonly struct Optional<T> : IEquatable<Optional<T>>, IEquatable<T>, IDisposable {
+    public readonly struct Optional<T> : IEquatable<Optional<T>>, IEquatable<T>, IDisposable
+    {
         private const byte _undefinedValue = 0;
         private const byte _nullValue = 1;
         private const byte _notEmptyValue = 3;
@@ -301,7 +304,8 @@ namespace Gommon {
         // ReSharper disable once StaticMemberInGenericType
         private static readonly bool IsOptional;
 
-        static Optional() {
+        static Optional()
+        {
             var type = typeof(T);
             IsOptional = type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Optional<>);
         }
@@ -332,15 +336,18 @@ namespace Gommon {
         }
 
 #pragma warning disable CS8618
-        public Optional(Func<T> getValue) : this(getValue()) { }
+        public Optional(Func<T> getValue) : this(getValue())
+        {
+        }
 #pragma warning restore CS8618
 
-        private static byte GetKindUnsafe([DisallowNull] ref T optionalValue) {
+        private static byte GetKindUnsafe([DisallowNull] ref T optionalValue)
+        {
             if (optionalValue.Equals(null))
                 return _nullValue;
 
-            return optionalValue.Equals(Missing.Value) 
-                ? _undefinedValue 
+            return optionalValue.Equals(Missing.Value)
+                ? _undefinedValue
                 : _notEmptyValue;
         }
 
@@ -387,7 +394,8 @@ namespace Gommon {
         /// </summary>
         /// <param name="value">Extracted value.</param>
         /// <returns><see langword="true"/> if value is present; otherwise, <see langword="false"/>.</returns>
-        public bool TryGet([NotNullWhen(true)] out T value) {
+        public bool TryGet([NotNullWhen(true)] out T value)
+        {
             value = _value;
             return HasValue;
         }
@@ -416,7 +424,7 @@ namespace Gommon {
         /// <returns>The value, if present.</returns>
         [return: NotNull]
         public T OrThrow() => OrThrow($"Value of type '{typeof(T).AsPrettyString()}' is absent.");
-        
+
         /// <summary>
         /// If a value is present, returns the value, otherwise throw exception with the specified <paramref name="message"/>.
         /// </summary>
@@ -487,10 +495,13 @@ namespace Gommon {
         /// </summary>
         /// <exception cref="InvalidOperationException">No value is present.</exception>
         [DisallowNull]
-        public T Value {
-            get {
+        public T Value
+        {
+            get
+            {
                 string msg;
-                switch (_valueKind) {
+                switch (_valueKind)
+                {
                     default:
                         return _value;
                     case _undefinedValue:
@@ -576,7 +587,8 @@ namespace Gommon {
         /// </summary>
         /// <param name="action">An action to invoke on the value, if present.</param>
         /// <returns>The current optional.</returns>
-        public Optional<T> IfPresent(in Action<T> action) {
+        public Optional<T> IfPresent(in Action<T> action)
+        {
             if (HasValue)
                 action(_value);
             return this;
@@ -587,7 +599,8 @@ namespace Gommon {
         /// </summary>
         /// <param name="action">An action to invoke on the value, if present.</param>
         /// <returns>The current optional.</returns>
-        public async Task<Optional<T>> IfPresent(Func<T, Task> action) {
+        public async Task<Optional<T>> IfPresent(Func<T, Task> action)
+        {
             if (HasValue)
                 await action(_value);
             return this;
@@ -597,7 +610,8 @@ namespace Gommon {
         /// Returns textual representation of this object.
         /// </summary>
         /// <returns>The textual representation of this object.</returns>
-        public override string ToString() => _valueKind switch {
+        public override string ToString() => _valueKind switch
+        {
             _undefinedValue => "<Undefined>",
             _nullValue => "<Null>",
             _ => _value!.ToString()
@@ -621,7 +635,7 @@ namespace Gommon {
         /// <returns><see langword="true"/> if <see cref="Value"/> is equal to <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
         public bool Equals(T other) => HasValue && EqualityComparer<T>.Default.Equals(_value, other);
 
-        private bool Equals(in Optional<T> other) 
+        private bool Equals(in Optional<T> other)
             => (_valueKind + other._valueKind) switch
             {
                 _notEmptyValue or _notEmptyValue + _nullValue => false,
@@ -643,9 +657,11 @@ namespace Gommon {
         /// <param name="other">Other container to compare.</param>
         /// <returns><see langword="true"/> if this container stores the same value as <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
 #nullable enable
-        public override bool Equals(object? other) {
+        public override bool Equals(object? other)
+        {
 #nullable disable
-            switch (other) {
+            switch (other)
+            {
                 case null:
                     return _valueKind == _nullValue;
                 case Optional<T> optional:
@@ -674,9 +690,9 @@ namespace Gommon {
         /// <param name="optional">The container.</param>
         /// <exception cref="InvalidOperationException">No value is present.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        #nullable enable
+#nullable enable
         public static implicit operator T?(Optional<T> optional) => optional.OrDefault();
-        #nullable disable
+#nullable disable
 
         /// <summary>
         /// Determines whether two containers store the same value.
@@ -716,13 +732,13 @@ namespace Gommon {
         {
             return (first._valueKind - second._valueKind) switch
             {
-                _undefinedValue - _nullValue or 
-                    _nullValue - _notEmptyValue or 
-                    _undefinedValue - _notEmptyValue 
+                _undefinedValue - _nullValue or
+                    _nullValue - _notEmptyValue or
+                    _undefinedValue - _notEmptyValue
                     => second,
-                _notEmptyValue - _undefinedValue or 
-                    _notEmptyValue - _nullValue or 
-                    _nullValue - _undefinedValue 
+                _notEmptyValue - _undefinedValue or
+                    _notEmptyValue - _nullValue or
+                    _nullValue - _undefinedValue
                     => first,
                 _ => default
             };

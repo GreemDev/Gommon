@@ -6,7 +6,8 @@ using System.Reflection;
 // ReSharper disable MemberCanBePrivate.Global
 namespace Gommon;
 
-public static class Mirror {
+public static class Mirror
+{
     /// <summary>
     ///     Creates a new <see cref="Mirror{T}"/> that will silently fail if no matching type member is found.
     /// </summary>
@@ -31,7 +32,8 @@ public readonly struct Mirror<T>
     public T BackingObject { get; }
     private readonly bool _throwIfNullMember;
 
-    internal Mirror(T backingObject, bool throwWhenUnknownMember = false) {
+    internal Mirror(T backingObject, bool throwWhenUnknownMember = false)
+    {
         BackingObject = Optional.Of(backingObject)
             .OrThrow(() => new ValueException($"Cannot create a \"spineless\" ${typeof(Mirror).AsPrettyString()}."));
         _throwIfNullMember = throwWhenUnknownMember;
@@ -41,9 +43,10 @@ public readonly struct Mirror<T>
     {
         if (@in is null)
             return BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
-        
+
         if (@in.Value.HasFlag(BindingFlags.Static))
-            throw new InvalidOperationException($"Cannot use a {typeof(Mirror<T>).AsPrettyString()} for static members.");
+            throw new InvalidOperationException(
+                $"Cannot use a {typeof(Mirror<T>).AsPrettyString()} for static members.");
 
         return @in.Value.HasFlag(BindingFlags.Instance)
             ? @in.Value
@@ -76,17 +79,18 @@ public readonly struct Mirror<T>
     /// <param name="name">The name of the method.</param>
     /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
     /// <param name="args">The arguments to pass to the method.</param>
-    public Optional<TResult> CallSafe<TResult>(string name, BindingFlags? flags = null, params object[] args) {
+    public Optional<TResult> CallSafe<TResult>(string name, BindingFlags? flags = null, params object[] args)
+    {
         if (typeof(T).TryGetMethod(name, Fix(flags), out var method))
             return method.Invoke(BackingObject, args).Cast<TResult>();
 
         if (_throwIfNullMember)
             throw new InvalidOperationException(
                 $"Method \"{name}\" does not exist on type {typeof(T).AsPrettyString()} with the given BindingFlags.");
-            
+
         return Optional<TResult>.None;
     }
-        
+
     /// <summary>
     ///     Call a generic method with the given name and <see cref="BindingFlags"/>, with the provided args; ignoring its return value.
     /// </summary>
@@ -94,7 +98,8 @@ public readonly struct Mirror<T>
     /// <param name="genericTypes">The types, in the correct order, of the generic method.</param>
     /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
     /// <param name="args">The arguments to pass to the method.</param>
-    public void CallGeneric(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null, params object[] args)
+    public void CallGeneric(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null,
+        params object[] args)
         => CallGenericSafe<object>(name, genericTypes, flags, args);
 
     /// <summary>
@@ -105,9 +110,10 @@ public readonly struct Mirror<T>
     /// <param name="genericTypes">The types, in the correct order, of the generic method.</param>
     /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
     /// <param name="args">The arguments to pass to the method.</param>
-    public TResult CallGeneric<TResult>(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null, params object[] args)
+    public TResult CallGeneric<TResult>(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null,
+        params object[] args)
         => CallGenericSafe<TResult>(name, genericTypes, flags, args).OrThrow();
-        
+
     /// <summary>
     ///     Call a generic method safely with the given name and <see cref="BindingFlags"/>, with the provided args;
     ///     returning its value as a value of <see cref="Optional{TResult}"/>.
@@ -116,7 +122,9 @@ public readonly struct Mirror<T>
     /// <param name="genericTypes">The types, in the correct order, of the generic method.</param>
     /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
     /// <param name="args">The arguments to pass to the method.</param>
-    public Optional<TResult> CallGenericSafe<TResult>(string name, IEnumerable<Type> genericTypes, BindingFlags? flags = null, params object[] args) {
+    public Optional<TResult> CallGenericSafe<TResult>(string name, IEnumerable<Type> genericTypes,
+        BindingFlags? flags = null, params object[] args)
+    {
         if (typeof(T).TryGetMethod(name, Fix(flags), out var method))
         {
             if (method.IsGenericMethodDefinition)
@@ -132,7 +140,7 @@ public readonly struct Mirror<T>
                     genericTypes.Select(x => x.AsFullNamePrettyString())
                         .JoinToString(", ")
                 }> does not exist on type {typeof(T).AsPrettyString()} with the given BindingFlags.");
-            
+
         return Optional<TResult>.None;
     }
 
@@ -149,17 +157,18 @@ public readonly struct Mirror<T>
     /// </summary>
     /// <param name="name">The name of the field or property.</param>
     /// <param name="flags">The <see cref="BindingFlags"/> to use.</param>
-    public Optional<TResult> GetSafe<TResult>(string name, BindingFlags? flags = null) {
+    public Optional<TResult> GetSafe<TResult>(string name, BindingFlags? flags = null)
+    {
         if (typeof(T).TryGetField(name, Fix(flags), out var field))
             return field.GetValue(BackingObject).Cast<TResult>();
-            
+
         if (typeof(T).TryGetProperty(name, Fix(flags), out var property))
             return property.GetValue(BackingObject).Cast<TResult>();
-            
+
         if (_throwIfNullMember)
             throw new InvalidOperationException(
                 $"Neither a field or property \"{name}\" exists on type {typeof(T).AsPrettyString()} with the given BindingFlags.");
-            
+
         return Optional<TResult>.None;
     }
 }

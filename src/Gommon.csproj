@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>12</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>13</LangVersion>
+    <OutputType>Library</OutputType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>GreemDev</Authors>
     <Company>GreemDev</Company>
@@ -11,11 +12,17 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.7.2.1</Version>
+    <Version>2.8</Version>
     <PackageReleaseNotes>
-      Enhancements to the Result system, such as making them structs instead of classes.
-      Renamed ArbitraryError to GenericError
-      Added aggressive method inlining attribute to Cast and HardCast
+      GeneralError IResultState for representing no specific error type.
+      IStreamSerializable interface.
+      Updated to .NET 9 instead of .NET Standard. 
+      Null-check path string in FilePath constructor.
+      Made FilePath a readonly struct
+      Check if the input to FindX extension methods on IEnumerables are being called on a Collection with a known length (ICollection) to avoid unnecessary copies 
+      Added inlining to many extensions
+      Remove WithIndex, it's in the stdlib now
+      Remove JetBrains.Annotations
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -25,9 +32,4 @@
     </None>
     <None Include="..\test.ps1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
-  </ItemGroup>
-
 </Project>

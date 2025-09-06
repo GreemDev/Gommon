@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Gommon;
 // ReSharper disable UnusedType.Global
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
-public record FilePath
+public readonly record struct FilePath
 {
     #region Global common paths
 
@@ -21,22 +22,23 @@ public record FilePath
     public string Path { get; }
 
     public string FullPath => DotNetPath.GetFullPath(Path);
-    
+
     public bool IsDirectory { get; }
 
     public FilePath(string path, bool? isDirectory = null)
     {
-        Path = path;
+        Path = path ??
+               throw new NullReferenceException($"The path of a constructed {nameof(FilePath)} should not be null.");
         IsDirectory = isDirectory ?? (Directory.Exists(path) && !File.Exists(path));
     }
-    
+
     public FilePath Resolve(string subPath, bool? isDirectory = null)
         => new(
             DotNetPath.Combine(Path, subPath),
             isDirectory
         );
 
-    
+
     public static FilePath operator /(FilePath left, string right) => left.Resolve(right);
 
     public static FilePath operator --(FilePath curr) =>
@@ -50,7 +52,7 @@ public record FilePath
         var parentDir = Directory.GetParent(Path);
         if (parentDir == null)
         {
-            filePath = null;
+            filePath = default;
             return false;
         }
 
@@ -65,21 +67,21 @@ public record FilePath
             if (IsDirectory) return null;
 
             var ext = DotNetPath.GetExtension(Path);
-            if (ext.StartsWith('.'))
+            if (ext!.StartsWith('.'))
                 ext = ext.TrimStart('.');
 
             return ext;
         }
     }
-    
+
     public string Name =>
-        IsDirectory 
-            ? DotNetPath.GetDirectoryName(Path) 
+        IsDirectory
+            ? DotNetPath.GetDirectoryName(Path)
             : DotNetPath.GetFileName(Path);
 
     public string NameWithoutExtension =>
-        IsDirectory 
-            ? DotNetPath.GetDirectoryName(Path) 
+        IsDirectory
+            ? DotNetPath.GetDirectoryName(Path)
             : DotNetPath.GetFileNameWithoutExtension(Path);
 
     public bool ExistsAsFile => File.Exists(Path);

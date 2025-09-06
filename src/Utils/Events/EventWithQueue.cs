@@ -11,12 +11,12 @@ public class EventWithQueue<T>
 
     private readonly Queue<T> _handlerlessEvents = [];
     private readonly bool _fireEnqueuedEventsWhenFirstHandlerIsAdded;
-    
+
     public EventWithQueue(bool fireEnqueuedEventsWhenFirstHandlerIsAdded = false)
     {
         _fireEnqueuedEventsWhenFirstHandlerIsAdded = fireEnqueuedEventsWhenFirstHandlerIsAdded;
     }
-    
+
     public bool HasSubscribers
     {
         get
@@ -72,17 +72,17 @@ public class EventWithQueue<T>
         {
             subscribers = Subscriptions;
         }
-        
+
         if (subscribers.Count == 0)
         {
             _handlerlessEvents.Enqueue(arg);
             return;
         }
-            
+
         if (_handlerlessEvents.Count > 0)
             while (_handlerlessEvents.TryDequeue(out var queuedArg))
                 subscribers.ForEach(func => func(queuedArg));
-        
+
         subscribers.ForEach(action => action(arg));
     }
 }

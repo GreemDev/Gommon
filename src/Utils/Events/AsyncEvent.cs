@@ -8,7 +8,7 @@ public class AsyncEvent<T>
 {
     private readonly object _subLock = new();
     private readonly List<Func<T, Task>> _subscriptions = [];
-    
+
     public bool HasSubscribers
     {
         get
@@ -47,6 +47,6 @@ public class AsyncEvent<T>
             _subscriptions.Clear();
     }
 
-    public Task CallAsync(T arg) 
+    public Task CallAsync(T arg)
         => Subscriptions.ForEachAsync(action => action(arg));
 }

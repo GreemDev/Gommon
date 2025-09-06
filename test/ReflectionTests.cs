@@ -4,34 +4,38 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace Gommon.Tests {
-    public class MirrorTests {
-
+namespace Gommon.Tests
+{
+    public class MirrorTests
+    {
         private static readonly Mirror<ReflectionTest> _mirror = Mirror.Reflect(new ReflectionTest());
 
         //this works, it throws an exception, but the Assert.Throws doesn't catch it.
         /*
         [Fact]
-        public static void Test_Ex() {  
+        public static void Test_Ex() {
             Assert.Throws<Exception>(() => _mirror.Call("ThrowEx"));
         }
         */
 
         [Fact]
-        public static void Test_FieldOrProperty() {
+        public static void Test_FieldOrProperty()
+        {
             Assert.Equal("lmfao", _mirror.Get<string>("lmfaoStr"));
             Assert.Equal("oafml", _mirror.Get<string>("oafmlStr"));
         }
-        
+
         [Fact]
-        public static void Test_ThrowIfMemberNull() {
+        public static void Test_ThrowIfMemberNull()
+        {
             Assert.Throws<InvalidOperationException>(() =>
                 Mirror.ReflectUnsafe(new ReflectionTest())
                     .Call("uhjetiughjrtiuhrtu")
             );
         }
 
-        private class ReflectionTest {
+        private class ReflectionTest
+        {
             private string lmfaoStr = "lmfao";
             private string oafmlStr => "oafml";
             private void ThrowEx() => throw new Exception();
@@ -44,14 +48,16 @@ namespace Gommon.Tests {
         public static void Test_TypeAsFullNamePrettyString()
         {
             Assert.Equal("System.Collections.Generic.List<String>", typeof(List<string>).AsFullNamePrettyString());
-            Assert.Equal("System.Collections.Generic.Dictionary<String, Int32>", typeof(Dictionary<string, int>).AsFullNamePrettyString());
+            Assert.Equal("System.Collections.Generic.Dictionary<String, Int32>",
+                typeof(Dictionary<string, int>).AsFullNamePrettyString());
         }
 
         [Fact]
         public static void Test_MethodSignatureMatches()
         {
-            var methodInfo = typeof(ReflectionTests).GetMethod("DummyMethod", BindingFlags.Static | BindingFlags.NonPublic);
-            
+            var methodInfo =
+                typeof(ReflectionTests).GetMethod("DummyMethod", BindingFlags.Static | BindingFlags.NonPublic);
+
             Assert.True(methodInfo.CheckSignature(typeof(string), typeof(List<int>)).Matches);
             Assert.False(methodInfo.CheckSignature(typeof(string)).Matches);
             Assert.Equal(
@@ -61,8 +67,6 @@ namespace Gommon.Tests {
 
         private static void DummyMethod(string var1, List<int> var2)
         {
-            
         }
-        
     }
 }
