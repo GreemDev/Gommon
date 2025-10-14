@@ -53,18 +53,16 @@ namespace Gommon
         /// <returns>A pretty string that shows what this type is, removing the rather ugly style of the regular Type#ToString() result.</returns>
         public static string AsPrettyString(this Type type, bool languageCorrectPrimitives = true)
         {
-            var nullableTypeRegex = new Regex("Nullable<(?<T>.+)>", RegexOptions.Compiled);
-
             var types = type.GenericTypeArguments;
 
             //thanks .NET for putting an annoying ass backtick and number at the end of generic type names.
             var vs = formatTypeName(type.Name).Replace($"`{types.Length}", "");
 
-            if (!types.None())
+            if (types.Length > 0)
                 vs +=
                     $"<{types.Select(x => x.AsPrettyString(languageCorrectPrimitives)).Select(formatTypeName).JoinToString(", ")}>";
 
-            if (nullableTypeRegex.IsMatch(vs, out var match))
+            if (NullableTypeRegex.IsMatch(vs, out var match))
                 vs = $"{match.Groups["T"].Value}?";
 
             return vs;
@@ -152,5 +150,10 @@ namespace Gommon
         public static bool TryGetMethod(this Type type, string methodName, BindingFlags bindingAttr,
             out MethodInfo method)
             => (method = type.GetMethod(methodName, bindingAttr)) != null;
+
+        private static readonly Regex NullableTypeRegex = NullableTypePattern();
+
+        [GeneratedRegex("Nullable<(?<T>.+)>", RegexOptions.Compiled)]
+        private static partial Regex NullableTypePattern();
     }
 }
