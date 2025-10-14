@@ -12,17 +12,9 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.8</Version>
+    <Version>2.8.0.1</Version>
     <PackageReleaseNotes>
-      GeneralError IResultState for representing no specific error type.
-      IStreamSerializable interface.
-      Updated to .NET 9 instead of .NET Standard. 
-      Null-check path string in FilePath constructor.
-      Made FilePath a readonly struct
-      Check if the input to FindX extension methods on IEnumerables are being called on a Collection with a known length (ICollection) to avoid unnecessary copies 
-      Added inlining to many extensions
-      Remove WithIndex, it's in the stdlib now
-      Remove JetBrains.Annotations
+      Minor performance improvement for Type#AsPrettyString
     </PackageReleaseNotes>
   </PropertyGroup>
 
