@@ -21,14 +21,21 @@ public readonly struct Result : IResult
 
     public static Result Success { get; } = new();
 
+    public static Result Fail { get; } = new(Error.Shared);
+
     /// <remarks>If <paramref name="state"/> is null, the shared <see cref="Error"/> is used.</remarks>
-    public static Result Failure(IErrorState state = null) => new(state ?? Error.Shared);
+    public static Result Failure(IErrorState state = null) 
+        => state is not null 
+            ? new Result(state)
+            : Fail;
 
     public static Result Unspecified(IResultState state) => new(state);
 
     public bool IsError => _state is IErrorState;
 
     public bool IsSuccess => _state is Success;
+
+    public static implicit operator bool(Result res) => res.IsSuccess;
 
     public bool IsOf<TResultState>() where TResultState : IResultState => _state is TResultState;
 

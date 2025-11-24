@@ -33,7 +33,9 @@ public readonly struct Return<T> : IResult
 
     public bool IsError => _state is IErrorState;
     public bool IsSuccess => _state is Success;
-    
+
+    public static implicit operator bool(Return<T> ret) => ret.IsSuccess;
+
     public bool IsOf<TResultState>() where TResultState : IResultState => _state is TResultState;
 
     public bool IsOf<TResultState>([MaybeNullWhen(false)] out TResultState resultState) 
