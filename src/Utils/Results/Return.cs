@@ -49,8 +49,11 @@ public readonly struct Return<T> : IResult
     public T Unwrap()
     {
         ((IResult)this).Unwrap();
-        return Value.OrThrow<NullReferenceException>();
+        return Value.OrThrow("Return<T> has no value.");
     }
+
+    public bool TryUnwrap(out T? value, out Exception? error) 
+        => UnwrapOptional(out error).TryGet(out value);
 
     public Optional<T> UnwrapOptional(out Exception unwrapped)
     {

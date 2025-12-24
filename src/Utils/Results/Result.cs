@@ -28,6 +28,8 @@ public readonly struct Result : IResult
         => state is not null 
             ? new Result(state)
             : Fail;
+    
+    public static Result MessageFailure(string message) => Failure(new MessageError(Guard.Require(message)));
 
     public static Result Unspecified(IResultState state) => new(state);
 
