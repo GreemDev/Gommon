@@ -8,11 +8,11 @@ namespace Gommon;
 /// </summary>
 public readonly struct Result : IResult
 {
-    private readonly IResultState _state;
+    internal readonly IResultState State;
 
     private Result(IResultState state)
     {
-        _state = state;
+        State = state;
     }
 
     public Result() : this(Gommon.Success.Shared)
@@ -33,20 +33,20 @@ public readonly struct Result : IResult
 
     public static Result Unspecified(IResultState state) => new(state);
 
-    public bool IsError => _state is IErrorState;
+    public bool IsError => State is IErrorState;
 
-    public bool IsSuccess => _state is Success;
+    public bool IsSuccess => State is Success;
 
     public static implicit operator bool(Result res) => res.IsSuccess;
 
-    public bool IsOf<TResultState>() where TResultState : IResultState => _state is TResultState;
+    public bool IsOf<TResultState>() where TResultState : IResultState => State is TResultState;
 
     public bool IsOf<TResultState>([MaybeNullWhen(false)] out TResultState resultState)
         where TResultState : IResultState
     {
-        resultState = _state.Cast<TResultState>();
+        resultState = State.Cast<TResultState>();
 
-        return _state is TResultState;
+        return State is TResultState;
     }
 
     public void Unwrap()
@@ -60,13 +60,13 @@ public readonly struct Result : IResult
         if (IsError)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
-            if (_state is Exception e)
+            if (State is Exception e)
             {
                 unwrapped = e;
             }
             else
             {
-                unwrapped = new Exception(_state.ToString());
+                unwrapped = new Exception(State.ToString());
             }
 
             return true;
