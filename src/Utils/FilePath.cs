@@ -76,8 +76,10 @@ public readonly record struct FilePath
 
     public string Name =>
         IsDirectory
-            ? DotNetPath.GetDirectoryName(Path)
+            ? DirectoryName
             : DotNetPath.GetFileName(Path);
+
+    public string DirectoryName => DotNetPath.GetDirectoryName(Path);
 
     public string NameWithoutExtension =>
         IsDirectory
@@ -94,6 +96,42 @@ public readonly record struct FilePath
         else if (!ExistsAsFile)
             File.Create(Path).Dispose();
     }
+
+    public IEnumerable<FilePath> EnumerateFiles(string searchPattern)
+        => Directory.EnumerateFiles(Path, searchPattern)
+            .Select(x => new FilePath(x, isDirectory: false));
+
+    public IEnumerable<FilePath> EnumerateFiles(string searchPattern, SearchOption searchOption)
+        => Directory.EnumerateFiles(Path, searchPattern, searchOption)
+            .Select(x => new FilePath(x, isDirectory: false));
+
+    public IEnumerable<FilePath> EnumerateFiles(string searchPattern, EnumerationOptions enumerationOptions)
+        => Directory.EnumerateFiles(Path, searchPattern, enumerationOptions)
+            .Select(x => new FilePath(x, isDirectory: false));
+
+    public IEnumerable<FilePath> EnumerateDirectories(string searchPattern)
+        => Directory.EnumerateDirectories(Path, searchPattern)
+            .Select(x => new FilePath(x, isDirectory: true));
+
+    public IEnumerable<FilePath> EnumerateDirectories(string searchPattern, SearchOption searchOption)
+        => Directory.EnumerateDirectories(Path, searchPattern, searchOption)
+            .Select(x => new FilePath(x, isDirectory: true));
+
+    public IEnumerable<FilePath> EnumerateDirectories(string searchPattern, EnumerationOptions enumerationOptions)
+        => Directory.EnumerateDirectories(Path, searchPattern, enumerationOptions)
+            .Select(x => new FilePath(x, isDirectory: true));
+
+    public IEnumerable<FilePath> EnumerateFileSystemEntries(string searchPattern)
+        => Directory.EnumerateFileSystemEntries(Path, searchPattern)
+            .Select(x => new FilePath(x));
+
+    public IEnumerable<FilePath> EnumerateFileSystemEntries(string searchPattern, SearchOption searchOption)
+        => Directory.EnumerateFileSystemEntries(Path, searchPattern, searchOption)
+            .Select(x => new FilePath(x));
+
+    public IEnumerable<FilePath> EnumerateFileSystemEntries(string searchPattern, EnumerationOptions enumerationOptions)
+        => Directory.EnumerateFileSystemEntries(Path, searchPattern, enumerationOptions)
+            .Select(x => new FilePath(x));
 
     public List<FilePath> GetFiles() =>
         IsDirectory
@@ -124,6 +162,7 @@ public readonly record struct FilePath
 
     public override string ToString() => Path;
 
+    public static implicit operator FilePath(string path) => new(path);
     public static implicit operator string(FilePath fp) => fp.ToString();
     public static implicit operator FilePath(DirectoryInfo di) => new(di.FullName, true);
     public static implicit operator FilePath(FileInfo fi) => new(fi.FullName, false);
