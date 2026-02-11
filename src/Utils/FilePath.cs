@@ -56,7 +56,7 @@ public readonly record struct FilePath
             return false;
         }
 
-        filePath = new FilePath(parentDir.FullName);
+        filePath = new FilePath(parentDir.FullName, isDirectory: true);
         return true;
     }
 
