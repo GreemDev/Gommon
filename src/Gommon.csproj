@@ -12,9 +12,9 @@
     <RepositoryUrl>https://github.com/GreemDev/Gommon</RepositoryUrl>
     <Description>Common classes/utilities used in my projects. Made for redundancy so I don't have duplicate code in my repositories.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.8.0.6</Version>
+    <Version>2.8.1</Version>
     <PackageReleaseNotes>
-      TryGetParent logical fix
+      More methods on FilePath and refactor some of its public-facing API
     </PackageReleaseNotes>
   </PropertyGroup>
 

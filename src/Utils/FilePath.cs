@@ -23,13 +23,19 @@ public readonly record struct FilePath
 
     public string FullPath => DotNetPath.GetFullPath(Path);
 
-    public bool IsDirectory { get; }
+    private readonly Lazy<bool> _isDirLazy;
+
+    public bool IsDirectory => _isDirLazy.Value;
 
     public FilePath(string path, bool? isDirectory = null)
     {
         Path = path ??
                throw new NullReferenceException($"The path of a constructed {nameof(FilePath)} should not be null.");
-        IsDirectory = isDirectory ?? (Directory.Exists(path) && !File.Exists(path));
+
+        _isDirLazy = new Lazy<bool>(isDirectory is null
+            ? () => Directory.Exists(path) && !File.Exists(path)
+            : () => isDirectory!.Value
+        );
     }
 
     public FilePath Resolve(string subPath, bool? isDirectory = null)
@@ -40,6 +46,7 @@ public readonly record struct FilePath
 
 
     public static FilePath operator /(FilePath left, string right) => left.Resolve(right);
+    public static FilePath operator /(FilePath left, FilePath right) => left.Resolve(right.Path, right.IsDirectory);
 
     public static FilePath operator --(FilePath curr) =>
         curr.TryGetParent(out var parentDir)
@@ -83,18 +90,37 @@ public readonly record struct FilePath
 
     public string NameWithoutExtension =>
         IsDirectory
-            ? DotNetPath.GetDirectoryName(Path)
+            ? DirectoryName
             : DotNetPath.GetFileNameWithoutExtension(Path);
 
     public bool ExistsAsFile => File.Exists(Path);
     public bool ExistsAsDirectory => Directory.Exists(Path);
 
-    public void Create()
+    public void CreateAsDirectory()
+    {
+        Directory.CreateDirectory(Path);
+    }
+
+    // copied from stdlib
+    internal const int DefaultBufferSize = 4096;
+
+    public FileStream CreateAsFileAndOpen(int bufferSize = DefaultBufferSize, FileOptions? fopt = null)
+    {
+        if (fopt is not { } fileOptions)
+            return File.Create(Path, bufferSize);
+
+        return File.Create(Path, bufferSize, fileOptions);
+    }
+
+    public void CreateAsFile() 
+        => File.Create(Path, 0, FileOptions.None).Dispose();
+
+    public void TryCreate()
     {
         if (IsDirectory)
-            Directory.CreateDirectory(Path);
+            CreateAsDirectory();
         else if (!ExistsAsFile)
-            File.Create(Path).Dispose();
+            CreateAsFile();
     }
 
     public IEnumerable<FilePath> EnumerateFiles(string searchPattern)
@@ -157,13 +183,19 @@ public readonly record struct FilePath
     public FileStream OpenRead() => File.OpenRead(Path);
     public FileStream OpenWrite() => File.OpenWrite(Path);
 
-    public FileStream OpenCreate()
-        => !ExistsAsFile ? File.Create(Path) : null;
-
     public override string ToString() => Path;
 
     public static implicit operator FilePath(string path) => new(path);
     public static implicit operator string(FilePath fp) => fp.ToString();
     public static implicit operator FilePath(DirectoryInfo di) => new(di.FullName, true);
     public static implicit operator FilePath(FileInfo fi) => new(fi.FullName, false);
+
+    public static implicit operator DirectoryInfo(FilePath fp) => new(fp.FullPath);
+    public static implicit operator FileInfo(FilePath fp) => new(fp.FullPath);
+}
+
+public static class FilePathExtensions
+{
+    public static FilePath Resolve(this string root, string subPath, bool? isDirectory = null) 
+        => new FilePath(root).Resolve(subPath, isDirectory);
 }
