@@ -112,7 +112,7 @@ public readonly record struct FilePath
         return File.Create(Path, bufferSize, fileOptions);
     }
 
-    public void CreateAsFile() 
+    public void CreateAsFile()
         => File.Create(Path, 0, FileOptions.None).Dispose();
 
     public void TryCreate()
@@ -164,10 +164,36 @@ public readonly record struct FilePath
             ? Directory.GetFiles(Path).Select(path => new FilePath(path, false)).ToList()
             : null;
 
+    public List<FilePath> GetFiles(string searchPattern) =>
+        IsDirectory
+            ? Directory.GetFiles(Path, searchPattern).Select(path => new FilePath(path, false)).ToList()
+            : null;
+
+    public List<FilePath> GetFiles(string searchPattern, SearchOption searchOption) =>
+        IsDirectory
+            ? Directory.GetFiles(Path, searchPattern, searchOption).Select(path => new FilePath(path, false)).ToList()
+            : null;
+
     public List<FilePath> GetSubdirectories() =>
         IsDirectory
             ? Directory.GetDirectories(Path).Select(path => new FilePath(path, true)).ToList()
             : null;
+
+    public List<FilePath> GetSubdirectories(string searchPattern) =>
+        IsDirectory
+            ? Directory.GetDirectories(Path, searchPattern).Select(path => new FilePath(path, true)).ToList()
+            : null;
+
+    public List<FilePath> GetSubdirectories(string searchPattern, SearchOption searchOption) =>
+        IsDirectory
+            ? Directory.GetDirectories(Path, searchPattern, searchOption).Select(path => new FilePath(path, true))
+                .ToList()
+            : null;
+
+    public string RelativeTo(FilePath filePath)
+    {
+        return Path.Replace(filePath.Path, string.Empty).TrimStart('/').TrimStart('\\');
+    }
 
     public void WriteAllText(string text) => File.WriteAllText(Path, text);
     public void WriteAllBytes(byte[] bytes) => File.WriteAllBytes(Path, bytes);
@@ -196,6 +222,6 @@ public readonly record struct FilePath
 
 public static class FilePathExtensions
 {
-    public static FilePath Resolve(this string root, string subPath, bool? isDirectory = null) 
+    public static FilePath Resolve(this string root, string subPath, bool? isDirectory = null)
         => new FilePath(root).Resolve(subPath, isDirectory);
 }
