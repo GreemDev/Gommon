@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct FilePath | Gommon </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct FilePath | Gommon ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/GreemDev/Gommon/new/master/apiSpec/new?filename=Gommon_FilePath.md&amp;value=---%0Auid%3A%20Gommon.FilePath%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Gommon">
+            Gommon
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Gommon.FilePath">
+
+
+
+  <h1 id="Gommon_FilePath" data-uid="Gommon.FilePath" class="text-break">
+Struct FilePath  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Gommon.html">Gommon</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Gommon.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly record struct FilePath : IEquatable&lt;FilePath&gt;</code></pre>
+  </div>
+
+
+
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_ApplyAsync__1___0_System_Func___0_System_Threading_Tasks_Task__">Extensions.ApplyAsync&lt;T&gt;(T, Func&lt;T, Task&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_Apply__1___0_System_Action___0__">Extensions.Apply&lt;T&gt;(T, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_IntoAsync__2___0_System_Func___0_System_Threading_Tasks_Task___1___">Extensions.IntoAsync&lt;T, TResult&gt;(T, Func&lt;T, Task&lt;TResult&gt;&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_Into__2___0_System_Func___0___1__">Extensions.Into&lt;TIn, TOut&gt;(TIn, Func&lt;TIn, TOut&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_RunAsync__1___0_System_Func___0_System_Threading_Tasks_Task__">Extensions.RunAsync&lt;T&gt;(T, Func&lt;T, Task&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_Run__1___0_System_Action___0__">Extensions.Run&lt;T&gt;(T, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Optional.html#Gommon_Optional_AsOptional__1___0_">Optional.AsOptional&lt;T&gt;(T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_Cast__1_System_Object_">Extensions.Cast&lt;T&gt;(object)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gommon.Extensions.html#Gommon_Extensions_HardCast__1_System_Object_">Extensions.HardCast&lt;T&gt;(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Gommon_FilePath__ctor_" data-uid="Gommon.FilePath.#ctor*"></a>
+
+  <h3 id="Gommon_FilePath__ctor_System_String_System_Nullable_System_Boolean__" data-uid="Gommon.FilePath.#ctor(System.String,System.Nullable{System.Boolean})">
+  FilePath(string, bool?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FilePath(string path, bool? isDirectory = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>isDirectory</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Gommon_FilePath_Data_" data-uid="Gommon.FilePath.Data*"></a>
+
+  <h3 id="Gommon_FilePath_Data" data-uid="Gommon.FilePath.Data">
+  Data
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FilePath Data { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_DirectoryName_" data-uid="Gommon.FilePath.DirectoryName*"></a>
+
+  <h3 id="Gommon_FilePath_DirectoryName" data-uid="Gommon.FilePath.DirectoryName">
+  DirectoryName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DirectoryName { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_ExistsAsDirectory_" data-uid="Gommon.FilePath.ExistsAsDirectory*"></a>
+
+  <h3 id="Gommon_FilePath_ExistsAsDirectory" data-uid="Gommon.FilePath.ExistsAsDirectory">
+  ExistsAsDirectory
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ExistsAsDirectory { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_ExistsAsFile_" data-uid="Gommon.FilePath.ExistsAsFile*"></a>
+
+  <h3 id="Gommon_FilePath_ExistsAsFile" data-uid="Gommon.FilePath.ExistsAsFile">
+  ExistsAsFile
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ExistsAsFile { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_Extension_" data-uid="Gommon.FilePath.Extension*"></a>
+
+  <h3 id="Gommon_FilePath_Extension" data-uid="Gommon.FilePath.Extension">
+  Extension
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Extension { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_FullPath_" data-uid="Gommon.FilePath.FullPath*"></a>
+
+  <h3 id="Gommon_FilePath_FullPath" data-uid="Gommon.FilePath.FullPath">
+  FullPath
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FullPath { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_IsDirectory_" data-uid="Gommon.FilePath.IsDirectory*"></a>
+
+  <h3 id="Gommon_FilePath_IsDirectory" data-uid="Gommon.FilePath.IsDirectory">
+  IsDirectory
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDirectory { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_Logs_" data-uid="Gommon.FilePath.Logs*"></a>
+
+  <h3 id="Gommon_FilePath_Logs" data-uid="Gommon.FilePath.Logs">
+  Logs
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FilePath Logs { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_Name_" data-uid="Gommon.FilePath.Name*"></a>
+
+  <h3 id="Gommon_FilePath_Name" data-uid="Gommon.FilePath.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_NameWithoutExtension_" data-uid="Gommon.FilePath.NameWithoutExtension*"></a>
+
+  <h3 id="Gommon_FilePath_NameWithoutExtension" data-uid="Gommon.FilePath.NameWithoutExtension">
+  NameWithoutExtension
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string NameWithoutExtension { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_Path_" data-uid="Gommon.FilePath.Path*"></a>
+
+  <h3 id="Gommon_FilePath_Path" data-uid="Gommon.FilePath.Path">
+  Path
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Path { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Gommon_FilePath_AppendAllLines_" data-uid="Gommon.FilePath.AppendAllLines*"></a>
+
+  <h3 id="Gommon_FilePath_AppendAllLines_System_Collections_Generic_IEnumerable_System_String__" data-uid="Gommon.FilePath.AppendAllLines(System.Collections.Generic.IEnumerable{System.String})">
+  AppendAllLines(IEnumerable&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendAllLines(IEnumerable&lt;string&gt; lines)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_AppendAllText_" data-uid="Gommon.FilePath.AppendAllText*"></a>
+
+  <h3 id="Gommon_FilePath_AppendAllText_System_String_" data-uid="Gommon.FilePath.AppendAllText(System.String)">
+  AppendAllText(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendAllText(string text)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_CreateAsDirectory_" data-uid="Gommon.FilePath.CreateAsDirectory*"></a>
+
+  <h3 id="Gommon_FilePath_CreateAsDirectory" data-uid="Gommon.FilePath.CreateAsDirectory">
+  CreateAsDirectory()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateAsDirectory()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_CreateAsFile_" data-uid="Gommon.FilePath.CreateAsFile*"></a>
+
+  <h3 id="Gommon_FilePath_CreateAsFile" data-uid="Gommon.FilePath.CreateAsFile">
+  CreateAsFile()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateAsFile()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_CreateAsFileAndOpen_" data-uid="Gommon.FilePath.CreateAsFileAndOpen*"></a>
+
+  <h3 id="Gommon_FilePath_CreateAsFileAndOpen_System_Int32_System_Nullable_System_IO_FileOptions__" data-uid="Gommon.FilePath.CreateAsFileAndOpen(System.Int32,System.Nullable{System.IO.FileOptions})">
+  CreateAsFileAndOpen(int, FileOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileStream CreateAsFileAndOpen(int bufferSize = 4096, FileOptions? fopt = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bufferSize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>fopt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.fileoptions">FileOptions</a>?</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.filestream">FileStream</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateDirectories_" data-uid="Gommon.FilePath.EnumerateDirectories*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateDirectories_System_String_" data-uid="Gommon.FilePath.EnumerateDirectories(System.String)">
+  EnumerateDirectories(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateDirectories(string searchPattern)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateDirectories_" data-uid="Gommon.FilePath.EnumerateDirectories*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateDirectories_System_String_System_IO_EnumerationOptions_" data-uid="Gommon.FilePath.EnumerateDirectories(System.String,System.IO.EnumerationOptions)">
+  EnumerateDirectories(string, EnumerationOptions)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateDirectories(string searchPattern, EnumerationOptions enumerationOptions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>enumerationOptions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.enumerationoptions">EnumerationOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateDirectories_" data-uid="Gommon.FilePath.EnumerateDirectories*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateDirectories_System_String_System_IO_SearchOption_" data-uid="Gommon.FilePath.EnumerateDirectories(System.String,System.IO.SearchOption)">
+  EnumerateDirectories(string, SearchOption)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateDirectories(string searchPattern, SearchOption searchOption)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>searchOption</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.searchoption">SearchOption</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateFileSystemEntries_" data-uid="Gommon.FilePath.EnumerateFileSystemEntries*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateFileSystemEntries_System_String_" data-uid="Gommon.FilePath.EnumerateFileSystemEntries(System.String)">
+  EnumerateFileSystemEntries(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateFileSystemEntries(string searchPattern)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateFileSystemEntries_" data-uid="Gommon.FilePath.EnumerateFileSystemEntries*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateFileSystemEntries_System_String_System_IO_EnumerationOptions_" data-uid="Gommon.FilePath.EnumerateFileSystemEntries(System.String,System.IO.EnumerationOptions)">
+  EnumerateFileSystemEntries(string, EnumerationOptions)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateFileSystemEntries(string searchPattern, EnumerationOptions enumerationOptions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>enumerationOptions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.enumerationoptions">EnumerationOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateFileSystemEntries_" data-uid="Gommon.FilePath.EnumerateFileSystemEntries*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateFileSystemEntries_System_String_System_IO_SearchOption_" data-uid="Gommon.FilePath.EnumerateFileSystemEntries(System.String,System.IO.SearchOption)">
+  EnumerateFileSystemEntries(string, SearchOption)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateFileSystemEntries(string searchPattern, SearchOption searchOption)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>searchOption</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.searchoption">SearchOption</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateFiles_" data-uid="Gommon.FilePath.EnumerateFiles*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateFiles_System_String_" data-uid="Gommon.FilePath.EnumerateFiles(System.String)">
+  EnumerateFiles(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateFiles(string searchPattern)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateFiles_" data-uid="Gommon.FilePath.EnumerateFiles*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateFiles_System_String_System_IO_EnumerationOptions_" data-uid="Gommon.FilePath.EnumerateFiles(System.String,System.IO.EnumerationOptions)">
+  EnumerateFiles(string, EnumerationOptions)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateFiles(string searchPattern, EnumerationOptions enumerationOptions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>enumerationOptions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.enumerationoptions">EnumerationOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_EnumerateFiles_" data-uid="Gommon.FilePath.EnumerateFiles*"></a>
+
+  <h3 id="Gommon_FilePath_EnumerateFiles_System_String_System_IO_SearchOption_" data-uid="Gommon.FilePath.EnumerateFiles(System.String,System.IO.SearchOption)">
+  EnumerateFiles(string, SearchOption)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FilePath&gt; EnumerateFiles(string searchPattern, SearchOption searchOption)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>searchOption</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.searchoption">SearchOption</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_GetFiles_" data-uid="Gommon.FilePath.GetFiles*"></a>
+
+  <h3 id="Gommon_FilePath_GetFiles" data-uid="Gommon.FilePath.GetFiles">
+  GetFiles()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FilePath&gt; GetFiles()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_GetFiles_" data-uid="Gommon.FilePath.GetFiles*"></a>
+
+  <h3 id="Gommon_FilePath_GetFiles_System_String_" data-uid="Gommon.FilePath.GetFiles(System.String)">
+  GetFiles(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FilePath&gt; GetFiles(string searchPattern)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_GetFiles_" data-uid="Gommon.FilePath.GetFiles*"></a>
+
+  <h3 id="Gommon_FilePath_GetFiles_System_String_System_IO_SearchOption_" data-uid="Gommon.FilePath.GetFiles(System.String,System.IO.SearchOption)">
+  GetFiles(string, SearchOption)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FilePath&gt; GetFiles(string searchPattern, SearchOption searchOption)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>searchOption</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.searchoption">SearchOption</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_GetSubdirectories_" data-uid="Gommon.FilePath.GetSubdirectories*"></a>
+
+  <h3 id="Gommon_FilePath_GetSubdirectories" data-uid="Gommon.FilePath.GetSubdirectories">
+  GetSubdirectories()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FilePath&gt; GetSubdirectories()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_GetSubdirectories_" data-uid="Gommon.FilePath.GetSubdirectories*"></a>
+
+  <h3 id="Gommon_FilePath_GetSubdirectories_System_String_" data-uid="Gommon.FilePath.GetSubdirectories(System.String)">
+  GetSubdirectories(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FilePath&gt; GetSubdirectories(string searchPattern)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_GetSubdirectories_" data-uid="Gommon.FilePath.GetSubdirectories*"></a>
+
+  <h3 id="Gommon_FilePath_GetSubdirectories_System_String_System_IO_SearchOption_" data-uid="Gommon.FilePath.GetSubdirectories(System.String,System.IO.SearchOption)">
+  GetSubdirectories(string, SearchOption)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FilePath&gt; GetSubdirectories(string searchPattern, SearchOption searchOption)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>searchPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>searchOption</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.searchoption">SearchOption</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Gommon.FilePath.html">FilePath</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_OpenRead_" data-uid="Gommon.FilePath.OpenRead*"></a>
+
+  <h3 id="Gommon_FilePath_OpenRead" data-uid="Gommon.FilePath.OpenRead">
+  OpenRead()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileStream OpenRead()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.filestream">FileStream</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_OpenWrite_" data-uid="Gommon.FilePath.OpenWrite*"></a>
+
+  <h3 id="Gommon_FilePath_OpenWrite" data-uid="Gommon.FilePath.OpenWrite">
+  OpenWrite()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileStream OpenWrite()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.filestream">FileStream</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_ReadAllBytes_" data-uid="Gommon.FilePath.ReadAllBytes*"></a>
+
+  <h3 id="Gommon_FilePath_ReadAllBytes" data-uid="Gommon.FilePath.ReadAllBytes">
+  ReadAllBytes()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] ReadAllBytes()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_ReadAllLines_" data-uid="Gommon.FilePath.ReadAllLines*"></a>
+
+  <h3 id="Gommon_FilePath_ReadAllLines_System_Text_Encoding_" data-uid="Gommon.FilePath.ReadAllLines(System.Text.Encoding)">
+  ReadAllLines(Encoding)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string[] ReadAllLines(Encoding encoding = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_ReadAllText_" data-uid="Gommon.FilePath.ReadAllText*"></a>
+
+  <h3 id="Gommon_FilePath_ReadAllText_System_Text_Encoding_" data-uid="Gommon.FilePath.ReadAllText(System.Text.Encoding)">
+  ReadAllText(Encoding)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ReadAllText(Encoding encoding = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_RelativeTo_" data-uid="Gommon.FilePath.RelativeTo*"></a>
+
+  <h3 id="Gommon_FilePath_RelativeTo_Gommon_FilePath_" data-uid="Gommon.FilePath.RelativeTo(Gommon.FilePath)">
+  RelativeTo(FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string RelativeTo(FilePath filePath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_Resolve_" data-uid="Gommon.FilePath.Resolve*"></a>
+
+  <h3 id="Gommon_FilePath_Resolve_System_String_System_Nullable_System_Boolean__" data-uid="Gommon.FilePath.Resolve(System.String,System.Nullable{System.Boolean})">
+  Resolve(string, bool?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FilePath Resolve(string subPath, bool? isDirectory = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>isDirectory</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_ToString_" data-uid="Gommon.FilePath.ToString*"></a>
+
+  <h3 id="Gommon_FilePath_ToString" data-uid="Gommon.FilePath.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the fully qualified type name of this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The fully qualified type name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_TryCreate_" data-uid="Gommon.FilePath.TryCreate*"></a>
+
+  <h3 id="Gommon_FilePath_TryCreate" data-uid="Gommon.FilePath.TryCreate">
+  TryCreate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TryCreate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_TryGetParent_" data-uid="Gommon.FilePath.TryGetParent*"></a>
+
+  <h3 id="Gommon_FilePath_TryGetParent_Gommon_FilePath__" data-uid="Gommon.FilePath.TryGetParent(Gommon.FilePath@)">
+  TryGetParent(out FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetParent(out FilePath filePath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_WriteAllBytes_" data-uid="Gommon.FilePath.WriteAllBytes*"></a>
+
+  <h3 id="Gommon_FilePath_WriteAllBytes_System_Byte___" data-uid="Gommon.FilePath.WriteAllBytes(System.Byte[])">
+  WriteAllBytes(byte[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void WriteAllBytes(byte[] bytes)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bytes</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_WriteAllLines_" data-uid="Gommon.FilePath.WriteAllLines*"></a>
+
+  <h3 id="Gommon_FilePath_WriteAllLines_System_Collections_Generic_IEnumerable_System_String__" data-uid="Gommon.FilePath.WriteAllLines(System.Collections.Generic.IEnumerable{System.String})">
+  WriteAllLines(IEnumerable&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void WriteAllLines(IEnumerable&lt;string&gt; lines)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>lines</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_WriteAllText_" data-uid="Gommon.FilePath.WriteAllText*"></a>
+
+  <h3 id="Gommon_FilePath_WriteAllText_System_String_" data-uid="Gommon.FilePath.WriteAllText(System.String)">
+  WriteAllText(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void WriteAllText(string text)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="Gommon_FilePath_op_Decrement_" data-uid="Gommon.FilePath.op_Decrement*"></a>
+
+  <h3 id="Gommon_FilePath_op_Decrement_Gommon_FilePath_" data-uid="Gommon.FilePath.op_Decrement(Gommon.FilePath)">
+  operator --(FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FilePath operator --(FilePath curr)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>curr</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Division_" data-uid="Gommon.FilePath.op_Division*"></a>
+
+  <h3 id="Gommon_FilePath_op_Division_Gommon_FilePath_Gommon_FilePath_" data-uid="Gommon.FilePath.op_Division(Gommon.FilePath,Gommon.FilePath)">
+  operator /(FilePath, FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FilePath operator /(FilePath left, FilePath right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Division_" data-uid="Gommon.FilePath.op_Division*"></a>
+
+  <h3 id="Gommon_FilePath_op_Division_Gommon_FilePath_System_String_" data-uid="Gommon.FilePath.op_Division(Gommon.FilePath,System.String)">
+  operator /(FilePath, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FilePath operator /(FilePath left, string right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Implicit_" data-uid="Gommon.FilePath.op_Implicit*"></a>
+
+  <h3 id="Gommon_FilePath_op_Implicit_Gommon_FilePath__System_IO_DirectoryInfo" data-uid="Gommon.FilePath.op_Implicit(Gommon.FilePath)~System.IO.DirectoryInfo">
+  implicit operator DirectoryInfo(FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator DirectoryInfo(FilePath fp)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fp</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.directoryinfo">DirectoryInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Implicit_" data-uid="Gommon.FilePath.op_Implicit*"></a>
+
+  <h3 id="Gommon_FilePath_op_Implicit_Gommon_FilePath__System_IO_FileInfo" data-uid="Gommon.FilePath.op_Implicit(Gommon.FilePath)~System.IO.FileInfo">
+  implicit operator FileInfo(FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L220"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FileInfo(FilePath fp)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fp</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.fileinfo">FileInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Implicit_" data-uid="Gommon.FilePath.op_Implicit*"></a>
+
+  <h3 id="Gommon_FilePath_op_Implicit_Gommon_FilePath__System_String" data-uid="Gommon.FilePath.op_Implicit(Gommon.FilePath)~System.String">
+  implicit operator string(FilePath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator string(FilePath fp)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fp</code> <a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Implicit_" data-uid="Gommon.FilePath.op_Implicit*"></a>
+
+  <h3 id="Gommon_FilePath_op_Implicit_System_IO_DirectoryInfo__Gommon_FilePath" data-uid="Gommon.FilePath.op_Implicit(System.IO.DirectoryInfo)~Gommon.FilePath">
+  implicit operator FilePath(DirectoryInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FilePath(DirectoryInfo di)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>di</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.directoryinfo">DirectoryInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Implicit_" data-uid="Gommon.FilePath.op_Implicit*"></a>
+
+  <h3 id="Gommon_FilePath_op_Implicit_System_IO_FileInfo__Gommon_FilePath" data-uid="Gommon.FilePath.op_Implicit(System.IO.FileInfo)~Gommon.FilePath">
+  implicit operator FilePath(FileInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L217"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FilePath(FileInfo fi)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fi</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.fileinfo">FileInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_FilePath_op_Implicit_" data-uid="Gommon.FilePath.op_Implicit*"></a>
+
+  <h3 id="Gommon_FilePath_op_Implicit_System_String__Gommon_FilePath" data-uid="Gommon.FilePath.op_Implicit(System.String)~Gommon.FilePath">
+  implicit operator FilePath(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FilePath(string path)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.FilePath.html">FilePath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/FilePath.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
