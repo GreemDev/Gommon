@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../src",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "output": "apimeta"
+    }
+  ],
+  "build": {
+    "maxParallelism": 6,
+    "content": [
+      {
+        "src": "api",
+        "files": [ "index.md", "toc.yml" ],
+        "dest": "api"
+      },
+      {
+        "src": "apimeta",
+        "files": [ "**.yml" ],
+        "dest": "api"
+      },
+      {
+        "files": [ "toc.yml", "index.md" ]
+      }
+    ],
+    "resource": [],
+    "output": "generated",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "Gommon",
+      "_appTitle": "Gommon",
+      "_enableSearch": true,
+      "pdf": false
+    }
+  }
+}

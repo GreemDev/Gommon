@@ -1,0 +1,42 @@
+name: Deploy Docs
+
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - 'master'
+    paths:
+      - 'docs/**'
+      - 'src/**'
+  workflow_dispatch:
+    inputs: {}
+jobs:
+  build:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5    
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Setup DocFX
+      run: dotnet tool install -g docfx --version 2.78.5
+
+    - name: Build Gommon docs
+      run: docfx docs/docfx.json
+
+    - name: Push to the gh-pages branch
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.DOCFX_GITHUB_TOKEN }}
+      with:
+        source-directory: 'docs/generated'
+        destination-github-username: 'GreemDev'
+        destination-repository-name: 'Gommon'
+        user-name: "GitHub Actions on behalf of GreemDev"
+        user-email: greemdev@ryujinx.app
+        target-branch: gh-pages

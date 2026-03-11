@@ -1,5 +1,9 @@
 .idea/
 .vs/
+docs/generated
+docs/apimeta
+docs/api/*.yml
+docs/api/.manifest
 src/bin/
 src/obj/
 src/Properties/

@@ -33,7 +33,6 @@ public static class StringUtil
     /// </summary>
     /// <param name="length"></param>
     /// <param name="allowRepeats"></param>
-    /// <returns></returns>
     public static string RandomAlphanumeric(int length, bool allowRepeats = true)
     {
         Guard.Ensure(length > 0, "length must be at least 1");
