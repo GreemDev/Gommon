@@ -40,3 +40,4 @@ jobs:
         user-name: "GitHub Actions on behalf of GreemDev"
         user-email: greemdev@ryujinx.app
         target-branch: gh-pages
+        target-directory: docs
