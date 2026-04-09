@@ -38,6 +38,8 @@ public readonly struct Result : IResult
     public bool IsSuccess => State is Success;
 
     public static implicit operator bool(Result res) => res.IsSuccess;
+    
+    public static implicit operator Result(string error) => Failure(new MessageError(error));
 
     public bool IsOf<TResultState>() where TResultState : IResultState => State is TResultState;
 
