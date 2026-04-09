@@ -5423,6 +5423,15 @@ references:
   fullName.vb: Gommon.Return(Of T).Value
   nameWithType: Return<T>.Value
   nameWithType.vb: Return(Of T).Value
+- uid: Gommon.Return`1.op_Implicit(Gommon.MessageError)~Gommon.Return{`0}
+  name: implicit operator Return<T>(MessageError)
+  href: api/Gommon.Return-1.html#Gommon_Return_1_op_Implicit_Gommon_MessageError__Gommon_Return__0_
+  commentId: M:Gommon.Return`1.op_Implicit(Gommon.MessageError)~Gommon.Return{`0}
+  name.vb: CType(MessageError)
+  fullName: Gommon.Return<T>.implicit operator Gommon.Return<T>(Gommon.MessageError)
+  fullName.vb: Gommon.Return(Of T).CType(Gommon.MessageError)
+  nameWithType: Return<T>.implicit operator Return<T>(MessageError)
+  nameWithType.vb: Return(Of T).CType(MessageError)
 - uid: Gommon.Return`1.op_Implicit(Gommon.Result)~Gommon.Return{`0}
   name: implicit operator Return<T>(Result)
   href: api/Gommon.Return-1.html#Gommon_Return_1_op_Implicit_Gommon_Result__Gommon_Return__0_
@@ -5441,15 +5450,6 @@ references:
   fullName.vb: Gommon.Return(Of T).CType(Gommon.Return(Of T))
   nameWithType: Return<T>.implicit operator bool(Return<T>)
   nameWithType.vb: Return(Of T).CType(Return(Of T))
-- uid: Gommon.Return`1.op_Implicit(System.String)~Gommon.Return{`0}
-  name: implicit operator Return<T>(string)
-  href: api/Gommon.Return-1.html#Gommon_Return_1_op_Implicit_System_String__Gommon_Return__0_
-  commentId: M:Gommon.Return`1.op_Implicit(System.String)~Gommon.Return{`0}
-  name.vb: CType(String)
-  fullName: Gommon.Return<T>.implicit operator Gommon.Return<T>(string)
-  fullName.vb: Gommon.Return(Of T).CType(String)
-  nameWithType: Return<T>.implicit operator Return<T>(string)
-  nameWithType.vb: Return(Of T).CType(String)
 - uid: Gommon.Return`1.op_Implicit(`0)~Gommon.Return{`0}
   name: implicit operator Return<T>(T)
   href: api/Gommon.Return-1.html#Gommon_Return_1_op_Implicit__0__Gommon_Return__0_
