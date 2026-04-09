@@ -352,7 +352,7 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
 
   <h3 id="Gommon_Return_1_IsOf__1" data-uid="Gommon.Return`1.IsOf``1">
   IsOf&lt;TResultState&gt;()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -388,7 +388,7 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
 
   <h3 id="Gommon_Return_1_IsOf__1___0__" data-uid="Gommon.Return`1.IsOf``1(``0@)">
   IsOf&lt;TResultState&gt;(out TResultState)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -429,7 +429,7 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
 
   <h3 id="Gommon_Return_1_TryUnwrap__0__System_Exception__" data-uid="Gommon.Return`1.TryUnwrap(`0@,System.Exception@)">
   TryUnwrap(out T?, out Exception?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -503,7 +503,7 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
 
   <h3 id="Gommon_Return_1_Unwrap" data-uid="Gommon.Return`1.Unwrap">
   Unwrap()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -534,7 +534,7 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
 
   <h3 id="Gommon_Return_1_UnwrapOptional_System_Exception__" data-uid="Gommon.Return`1.UnwrapOptional(System.Exception@)">
   UnwrapOptional(out Exception)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L62"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -610,7 +610,7 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
 
   <h3 id="Gommon_Return_1_op_Implicit_Gommon_Return__0___System_Boolean" data-uid="Gommon.Return`1.op_Implicit(Gommon.Return{`0})~System.Boolean">
   implicit operator bool(Return&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -629,6 +629,42 @@ Struct Return&lt;T&gt;  <a class="header-action link-secondary" title="View sour
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Gommon_Return_1_op_Implicit_" data-uid="Gommon.Return`1.op_Implicit*"></a>
+
+  <h3 id="Gommon_Return_1_op_Implicit_System_String__Gommon_Return__0_" data-uid="Gommon.Return`1.op_Implicit(System.String)~Gommon.Return{`0}">
+  implicit operator Return&lt;T&gt;(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/GreemDev/Gommon/blob/master/src/Utils/Results/Return.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator Return&lt;T&gt;(string error)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>error</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Gommon.Return-1.html">Return</a>&lt;T&gt;</dt>
     <dd></dd>
   </dl>
 
