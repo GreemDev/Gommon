@@ -36,7 +36,7 @@ public readonly struct Return<T> : IResult
 
     public static implicit operator Return<T>(Result fromResult) => Unspecified(fromResult.State);
 
-    public static implicit operator Return<T>(string error) => Failure(new MessageError(error));
+    public static implicit operator Return<T>(MessageError err) => Failure(err);
 
     public static implicit operator bool(Return<T> ret) => ret.IsSuccess;
 
